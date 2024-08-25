@@ -32,7 +32,7 @@ const Header = () => {
 									</NavigationMenuItem>
 									<NavigationMenuItem>
 										<NavLink
-											to={"/products"}
+											to={"/bikes"}
 											className={navigationMenuTriggerStyle()}
 										>
 											Bikes
@@ -40,7 +40,15 @@ const Header = () => {
 									</NavigationMenuItem>
 									<NavigationMenuItem>
 										<NavLink
-											to={"/manage-product"}
+											to={"/blogs"}
+											className={navigationMenuTriggerStyle()}
+										>
+											Blogs
+										</NavLink>
+									</NavigationMenuItem>
+									<NavigationMenuItem>
+										<NavLink
+											to={"/contact-us"}
 											className={navigationMenuTriggerStyle()}
 										>
 											Contact Us
@@ -87,7 +95,7 @@ const Header = () => {
 											</NavigationMenuItem>
 											<NavigationMenuItem>
 												<NavLink
-													to={"/products"}
+													to={"/bikes"}
 													className={navigationMenuTriggerStyle()}
 												>
 													Bikes
@@ -95,7 +103,15 @@ const Header = () => {
 											</NavigationMenuItem>
 											<NavigationMenuItem>
 												<NavLink
-													to={"/manage-product"}
+													to={"/blogs"}
+													className={navigationMenuTriggerStyle()}
+												>
+													Blogs
+												</NavLink>
+											</NavigationMenuItem>
+											<NavigationMenuItem>
+												<NavLink
+													to={"/contact-us"}
 													className={navigationMenuTriggerStyle()}
 												>
 													Contact Us
