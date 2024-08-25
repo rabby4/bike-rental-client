@@ -1,9 +1,11 @@
-import { Button } from "./components/ui/button"
+import { Outlet } from "react-router-dom"
+import Header from "./layouts/Header"
 
 function App() {
 	return (
 		<>
-			<Button className="font-orbitron">Click me</Button>
+			<Header />
+			<Outlet />
 		</>
 	)
 }
