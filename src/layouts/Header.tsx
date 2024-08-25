@@ -127,13 +127,12 @@ const Header = () => {
 								<NavigationMenuItem>
 									<NavLink to={"/"} className={navigationMenuTriggerStyle()}>
 										<Search />
-										Search
 									</NavLink>
 								</NavigationMenuItem>
 								<NavigationMenuItem className="relative">
 									<NavLink to={"/"} className={navigationMenuTriggerStyle()}>
 										<Heart />
-										<span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-green-600 absolute right-2 -top-[2px]">
+										<span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-accent-foreground absolute right-2 -top-[2px]">
 											0
 										</span>
 									</NavLink>
@@ -144,7 +143,7 @@ const Header = () => {
 										className={navigationMenuTriggerStyle()}
 									>
 										<ShoppingCart />
-										<span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-green absolute right-2 -top-[2px]">
+										<span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-accent-foreground absolute right-2 -top-[2px]">
 											<p>0</p>
 										</span>
 									</NavLink>
