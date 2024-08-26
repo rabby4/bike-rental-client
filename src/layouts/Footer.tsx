@@ -1,3 +1,4 @@
+import NavLinks from "@/components/footer/NavLinks"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -53,86 +54,31 @@ const Footer = () => {
 								</div>
 							</div>
 						</div>
+
 						<div className="relative">
 							<h2 className="text-xl font-bold mb-2 uppercase font-orbitron text-white">
 								Our Company
 							</h2>
 							<span className="w-28 h-[2px] bg-accent-foreground absolute"></span>
 							<div className="mt-5 flex flex-col gap-4 font-inter text-[#aaaaaa] ">
-								<NavLink to={"/"} className={"hover:text-white font-semibold"}>
-									Home
-								</NavLink>
-								<NavLink
-									to={"/about-us"}
-									className={"hover:text-white duration-300  font-semibold"}
-								>
-									About Us
-								</NavLink>
-								<NavLink
-									to={"/products"}
-									className={"hover:text-white duration-300  font-semibold"}
-								>
-									Our Bikes
-								</NavLink>
-								<NavLink
-									to={"/manage-product"}
-									className={"hover:text-white duration-300  font-semibold"}
-								>
-									Our Services
-								</NavLink>
-								<NavLink
-									to={"/cart"}
-									className={"hover:text-white duration-300  font-semibold"}
-								>
-									Our Blogs
-								</NavLink>
-								<NavLink
-									to={"/checkout"}
-									className={"hover:text-white duration-300 font-semibold"}
-								>
-									Contact Us
-								</NavLink>
+								<NavLinks link={"/about-us"} label={"About Us"} />
+								<NavLinks link={"/bikes"} label={"Bikes"} />
+								<NavLinks link={"/services"} label={"Our Services"} />
+								<NavLinks link={"/blogs"} label={"Blogs"} />
+								<NavLinks link={"/contact-us"} label={"Contact Us"} />
 							</div>
 						</div>
+
 						<div className="relative">
 							<h2 className="text-xl font-bold mb-2 uppercase font-orbitron text-white">
-								Quick Links
+								Help Center
 							</h2>
 							<span className="w-28 h-[2px] bg-accent-foreground absolute"></span>
 							<div className="mt-5 flex flex-col gap-4 font-inter text-[#aaaaaa]">
-								<NavLink to={"/"} className={"hover:text-white font-semibold"}>
-									Bikes for rent
-								</NavLink>
-								<NavLink
-									to={"/about-us"}
-									className={"hover:text-white duration-300  font-semibold"}
-								>
-									Our Shop
-								</NavLink>
-								<NavLink
-									to={"/products"}
-									className={"hover:text-white duration-300  font-semibold"}
-								>
-									Top Dealers
-								</NavLink>
-								<NavLink
-									to={"/manage-product"}
-									className={"hover:text-white duration-300  font-semibold"}
-								>
-									Dealer Register
-								</NavLink>
-								<NavLink
-									to={"/cart"}
-									className={"hover:text-white duration-300  font-semibold"}
-								>
-									Our Gallery
-								</NavLink>
-								<NavLink
-									to={"/checkout"}
-									className={"hover:text-white duration-300 font-semibold"}
-								>
-									Sign Up
-								</NavLink>
+								<NavLinks link={"/"} label={"Terms & Conditions"} />
+								<NavLinks link={"/privacy-policy"} label={"Privacy Policy"} />
+								<NavLinks link={"/team"} label={"Our Team"} />
+								<NavLinks link={"/services"} label={"Services"} />
 							</div>
 						</div>
 

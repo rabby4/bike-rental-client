@@ -76,6 +76,14 @@ module.exports = {
 				"accordion-up": "accordion-up 0.2s ease-out",
 			},
 		},
+		backgroundImage: {
+			"carousel-1":
+				"url('https://probike.templaza.net/wp-content/uploads/2023/08/Home-1-Slider-2.jpg')",
+			"carousel-2":
+				"url('https://probike.templaza.net/wp-content/uploads/2023/08/slide1.jpg')",
+			"about-us":
+				"url('https://ornaldo.themeftc.com/wp-content/uploads/2017/12/banner-shop1.jpg')",
+		},
 	},
 	plugins: [require("tailwindcss-animate")],
 }

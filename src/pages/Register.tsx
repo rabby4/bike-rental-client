@@ -19,7 +19,9 @@ const Register = () => {
 		<div className="min-h-[calc(100vh-90px)] grid grid-cols-1 items-center">
 			<Card className="mx-auto w-[550px]">
 				<CardHeader>
-					<CardTitle className="text-2xl font-orbitron">Registration</CardTitle>
+					<CardTitle className="text-2xl font-orbitron tracking-wider">
+						Sign Up
+					</CardTitle>
 					<CardDescription className="font-inter">
 						Enter your information below to create to your account!
 					</CardDescription>
@@ -90,8 +92,11 @@ const Register = () => {
 								{showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
 							</span>
 						</div>
-						<Button type="submit" className="w-full font-orbitron">
-							Login
+						<Button
+							type="submit"
+							className="w-full font-orbitron tracking-wider"
+						>
+							Sign Up
 						</Button>
 						<div className="grid grid-cols-2 gap-2 font-inter">
 							<Button variant="outline" className="w-full gap-2">

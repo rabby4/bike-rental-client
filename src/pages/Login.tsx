@@ -19,9 +19,11 @@ const Login = () => {
 		<div className="min-h-[calc(100vh-90px)] grid grid-cols-1 items-center">
 			<Card className="mx-auto max-w-sm">
 				<CardHeader>
-					<CardTitle className="text-2xl font-orbitron">Login</CardTitle>
+					<CardTitle className="text-2xl font-orbitron tracking-wider">
+						Sign In
+					</CardTitle>
 					<CardDescription className="font-inter">
-						Enter your email below to login to your account
+						Enter your email and password below to login to your account
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -57,8 +59,11 @@ const Login = () => {
 								{showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
 							</span>
 						</div>
-						<Button type="submit" className="w-full font-orbitron">
-							Login
+						<Button
+							type="submit"
+							className="w-full font-orbitron tracking-wider"
+						>
+							Sign In
 						</Button>
 						<div className="grid grid-cols-2 gap-2 font-inter">
 							<Button variant="outline" className="w-full gap-2">
