@@ -88,6 +88,9 @@ module.exports = {
 			testimonials: "url(https://i.ibb.co/b2vY4mW/testimonials.webp)",
 			contact:
 				"url(https://probike.templaza.net/wp-content/uploads/2023/08/bg-contact.jpg)",
+			"discount-1": "url(https://i.ibb.co/Br96pXJ/icon2.png)",
+			"discount-2": "url(https://i.ibb.co/t8vKZx6/icon1.png)",
+			"discount-3": "url(https://i.ibb.co/4PmLPpT/background-spot-oval.png)",
 		},
 	},
 	plugins: [require("tailwindcss-animate")],
