@@ -6,12 +6,13 @@ import {
 	CarouselItem,
 } from "../ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
+import FilterForm from "./FilterForm"
 
 const Carousel = () => {
 	return (
 		<div className="">
 			<Slider
-				className="w-full"
+				className="w-full -z-10"
 				plugins={[
 					Autoplay({
 						delay: 5000,
@@ -84,6 +85,9 @@ const Carousel = () => {
 					</CarouselItem>
 				</CarouselContent>
 			</Slider>
+			<div className="max-w-5xl mx-auto -mt-20 z-20">
+				<FilterForm />
+			</div>
 		</div>
 	)
 }
