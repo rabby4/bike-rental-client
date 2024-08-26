@@ -97,7 +97,7 @@ const Footer = () => {
 									<Input type="email" placeholder="Enter Your Email" />
 									<Button
 										type="submit"
-										className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full"
+										className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full font-orbitron tracking-wider"
 									>
 										Subscribe
 									</Button>

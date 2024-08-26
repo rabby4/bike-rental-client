@@ -24,7 +24,7 @@ const Testimonials = () => {
 		return stars
 	}
 	return (
-		<div className="bg-about-us bg-no-repeat bg-cover bg-center py-36 my-28">
+		<div className="bg-testimonials bg-no-repeat bg-cover bg-center py-36 my-28">
 			<div className="container">
 				<div className="md:w-2/4 mx-auto text-center space-y-3 text-white">
 					<img

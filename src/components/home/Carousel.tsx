@@ -41,6 +41,27 @@ const Carousel = () => {
 						</div>
 					</CarouselItem>
 					<CarouselItem>
+						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-3 bg-cover bg-no-repeat md:px-10 px-5">
+							<div className="container ">
+								<div className="grid grid-cols-2">
+									<div className="md:space-y-5">
+										<h1 className="md:text-[80px] text-6xl text-white font-orbitron font-semibold">
+											Better Bikes for Your Better Journey
+										</h1>
+										<p className="font-inter text-lg text-white">
+											Don’t overthink it. Mellow to mad. Wild to mild. Whatever
+											your trail riding style, Habit’s got what you need.
+										</p>
+										<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
+											<NavLink to={"/bikes"}>Discover Now</NavLink>
+										</Button>
+									</div>
+									<div></div>
+								</div>
+							</div>
+						</div>
+					</CarouselItem>
+					<CarouselItem>
 						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-2 bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
 								<div className="grid grid-cols-2">
