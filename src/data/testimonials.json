@@ -1,0 +1,34 @@
+[
+	{
+		"id": 1,
+		"name": "Elizabeth Bailey",
+		"img": "https://probike.templaza.net/wp-content/uploads/2023/08/33-300x300.jpg",
+		"role": "Customer",
+		"review": "I had a fantastic experience today buying my first road bike. I'm pretty intimidated by the sport, but Wayne never treated me like I was stupid.",
+		"rating": 5
+	},
+	{
+		"id": 2,
+		"name": "Elizabeth Bailey",
+		"img": "https://probike.templaza.net/wp-content/uploads/2023/08/co-founder2-300x300.jpg",
+		"role": "Customer",
+		"review": "I brought my Trek bike in to get the brakes adjusted. Not only did Daniel see me right away, but also he went above-and-beyond in checking out the bike.",
+		"rating": 4
+	},
+	{
+		"id": 3,
+		"name": "Shannon",
+		"role": "Customer",
+		"img": "https://probike.templaza.net/wp-content/uploads/2023/08/co-founder1.jpg",
+		"review": "I just purchased a 2013 Domane from the Springfield store. I want to pass along to you that I had an excellent experience working with them.",
+		"rating": 5
+	},
+	{
+		"id": 4,
+		"name": "Majida",
+		"role": "Customer",
+		"img": "https://probike.templaza.net/wp-content/uploads/2023/08/Why-Choose-Us.jpg",
+		"review": "I had a great experience with the salesmen who helped me. I wanted to let you know your staff have earned a loyal customer.",
+		"rating": 4
+	}
+]

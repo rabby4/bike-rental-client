@@ -83,6 +83,8 @@ module.exports = {
 				"url('https://probike.templaza.net/wp-content/uploads/2023/08/slide1.jpg')",
 			"about-us":
 				"url('https://ornaldo.themeftc.com/wp-content/uploads/2017/12/banner-shop1.jpg')",
+			testimonials:
+				"url(https://parkofideas.com/renroll/demo-2/wp-content/uploads/2020/01/renroll-1203463671.jpg)",
 		},
 	},
 	plugins: [require("tailwindcss-animate")],
