@@ -1,8 +1,16 @@
+import AboutUs from "@/components/about/AboutUs"
+import Journey from "@/components/about/Journey"
+import Mission from "@/components/about/Mission"
+import Team from "@/components/about/Team"
+
 const About = () => {
 	return (
-		<div>
-			<h2>Thi is about us page</h2>
-		</div>
+		<>
+			<AboutUs />
+			<Mission />
+			<Journey />
+			<Team />
+		</>
 	)
 }
 

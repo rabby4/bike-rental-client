@@ -84,7 +84,7 @@ module.exports = {
 			"carousel-3":
 				"url('https://askproject.net/venturo/wp-content/uploads/sites/84/2022/06/josh-nuttall-XVTWFHcNIko-unsplash.jpg')",
 			"about-us":
-				"url('https://ornaldo.themeftc.com/wp-content/uploads/2017/12/banner-shop1.jpg')",
+				"url('https://probike.templaza.net/wp-content/uploads/2023/07/bg-breadcrumb.jpg')",
 			testimonials: "url(https://i.ibb.co/b2vY4mW/testimonials.webp)",
 			contact:
 				"url(https://probike.templaza.net/wp-content/uploads/2023/08/bg-contact.jpg)",
