@@ -13,7 +13,11 @@ const ChooseUs = () => {
 				</p>
 			</div>
 			<div className="grid grid-cols-3 gap-5 mt-10 lg:px-0 px-10">
-				<div className="flex flex-col justify-around w-3/4 justify-self-end">
+				<div
+					className="flex flex-col justify-around w-3/4 justify-self-end"
+					data-aos="fade-right"
+					data-aos-duration="1500"
+				>
 					<div className="space-y-5">
 						<h2 className="font-orbitron text-3xl font-bold text-right">
 							Fully Insured Rental Service
@@ -31,14 +35,18 @@ const ChooseUs = () => {
 						</p>
 					</div>
 				</div>
-				<div>
+				<div data-aos="fade-up" data-aos-duration="1500">
 					<img
 						src="https://i.ibb.co/phJ2Wpg/renroll-1104289928.webp"
 						alt=""
 						className="mx-auto"
 					/>
 				</div>
-				<div className="flex flex-col justify-around w-3/4">
+				<div
+					className="flex flex-col justify-around w-3/4"
+					data-aos="fade-left"
+					data-aos-duration="1500"
+				>
 					<div className="space-y-5">
 						<h2 className="font-orbitron text-3xl font-bold ">
 							Fully Insured Rental Service

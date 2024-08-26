@@ -1,4 +1,4 @@
-import NavLinks from "@/components/footer/NavLinks"
+import NavLinks from "@/components/shared/NavLinks"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {

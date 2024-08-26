@@ -24,7 +24,7 @@ const FilterForm = () => {
 	}
 	return (
 		<>
-			<Card className=" rounded-none shadow-xl">
+			<Card className="rounded-none shadow-xl">
 				<CardContent className="items-center p-12">
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className="grid grid-cols-3 justify-between items-center gap-4">

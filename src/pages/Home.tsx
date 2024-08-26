@@ -9,7 +9,9 @@ const Home = () => {
 	return (
 		<>
 			<Carousel />
-			<FeaturedBikes />
+			<div data-aos="fade-up" data-aos-duration="1500">
+				<FeaturedBikes />
+			</div>
 			<ChooseUs />
 			<Testimonials />
 			<Discount />

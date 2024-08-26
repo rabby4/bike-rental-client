@@ -12,7 +12,7 @@ const Contact = () => {
 				<div className="grid lg:grid-cols-2 grid-cols-1 gap-20 mt-10 lg:px-0 md:px-10 px-5">
 					<div
 						className="space-y-10 order-2"
-						data-aos="fade-right"
+						data-aos="fade-left"
 						data-aos-duration="1000"
 					>
 						<div>
@@ -37,7 +37,7 @@ const Contact = () => {
 
 					<div
 						className="space-y-10 order-1"
-						data-aos="fade-left"
+						data-aos="fade-right"
 						data-aos-duration="1000"
 					>
 						<Card className="rounded-none">
