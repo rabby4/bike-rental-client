@@ -11,9 +11,21 @@ import { Label } from "@/components/ui/label"
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import {
+	useForm,
+	SubmitHandler,
+	FieldValues,
+	Controller,
+} from "react-hook-form"
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false)
+
+	const { control, handleSubmit } = useForm({})
+
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		console.log(data)
+	}
 
 	return (
 		<div className="min-h-[calc(100vh-90px)] grid grid-cols-1 items-center">
@@ -27,14 +39,21 @@ const Login = () => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<div className="grid gap-4">
+					<form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
 						<div className="grid gap-2">
 							<Label htmlFor="email">Email</Label>
-							<Input
-								id="email"
-								type="email"
-								placeholder="example@gmail.com"
-								required
+							<Controller
+								name="email"
+								control={control}
+								rules={{ required: true }}
+								render={({ field }) => (
+									<Input
+										{...field}
+										placeholder="example@gmail.com"
+										type="email"
+										defaultValue={""}
+									/>
+								)}
 							/>
 						</div>
 						<div className="grid gap-2 relative">
@@ -47,11 +66,15 @@ const Login = () => {
 									Forgot your password?
 								</Link>
 							</div>
-							<Input
-								id="password"
-								type={showPassword ? "text" : "password"}
-								required
+							<Controller
+								name="password"
+								control={control}
+								rules={{ required: true }}
+								render={({ field }) => (
+									<Input {...field} type={showPassword ? "text" : "password"} />
+								)}
 							/>
+
 							<span
 								className="cursor-pointer absolute right-3 bottom-2"
 								onClick={() => setShowPassword(!showPassword)}
@@ -65,14 +88,14 @@ const Login = () => {
 						>
 							Sign In
 						</Button>
-						<div className="grid grid-cols-2 gap-2 font-inter">
-							<Button variant="outline" className="w-full gap-2">
-								Login with Google
-							</Button>
-							<Button variant="outline" className="w-full gap-2">
-								Login with Github
-							</Button>
-						</div>
+					</form>
+					<div className="grid grid-cols-2 gap-2 font-inter mt-2">
+						<Button variant="outline" className="w-full gap-2">
+							Login with Google
+						</Button>
+						<Button variant="outline" className="w-full gap-2">
+							Login with Github
+						</Button>
 					</div>
 					<div className="mt-4 text-center text-sm">
 						Don&apos;t have an account?

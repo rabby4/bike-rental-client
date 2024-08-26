@@ -11,9 +11,21 @@ import { Label } from "@/components/ui/label"
 import { Eye, EyeOff, Github, Mail } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import {
+	useForm,
+	SubmitHandler,
+	FieldValues,
+	Controller,
+} from "react-hook-form"
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false)
+
+	const { control, handleSubmit } = useForm({})
+
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		console.log(data)
+	}
 
 	return (
 		<div className="min-h-[calc(100vh-90px)] grid grid-cols-1 items-center">
@@ -27,63 +39,105 @@ const Register = () => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="font-inter">
-					<div className="grid gap-4">
+					<form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
 						<div className="grid grid-cols-2 gap-2">
 							<div className="grid gap-2">
 								<Label htmlFor="firstName">First Name</Label>
-								<Input
-									id="firstName"
-									type="text"
-									placeholder="First Name"
-									required
+								<Controller
+									name="firstName"
+									control={control}
+									rules={{ required: true }}
+									render={({ field }) => (
+										<Input
+											{...field}
+											id="firstName"
+											type="text"
+											placeholder="First Name"
+										/>
+									)}
 								/>
 							</div>
 							<div className="grid gap-2">
 								<Label htmlFor="lastName">Last Name</Label>
-								<Input
-									id="lastName"
-									type="text"
-									placeholder="Last Name"
-									required
+								<Controller
+									name="lastName"
+									control={control}
+									rules={{ required: true }}
+									render={({ field }) => (
+										<Input
+											{...field}
+											id="lastName"
+											type="text"
+											placeholder="Last Name"
+										/>
+									)}
 								/>
 							</div>
 						</div>
 						<div className="grid grid-cols-2 gap-2">
 							<div className="grid gap-2">
 								<Label htmlFor="phone">Phone Number</Label>
-								<Input
-									id="phone"
-									type="text"
-									placeholder="Phone Number"
-									required
+								<Controller
+									name="phone"
+									control={control}
+									rules={{ required: true }}
+									render={({ field }) => (
+										<Input
+											{...field}
+											id="phone"
+											type="text"
+											placeholder="Phone Number"
+										/>
+									)}
 								/>
 							</div>
 							<div className="grid gap-2">
 								<Label htmlFor="address">Address</Label>
-								<Input
-									id="address"
-									type="text"
-									placeholder="Address..."
-									required
+								<Controller
+									name="address"
+									control={control}
+									rules={{ required: true }}
+									render={({ field }) => (
+										<Input
+											{...field}
+											id="address"
+											type="text"
+											placeholder="Address..."
+										/>
+									)}
 								/>
 							</div>
 						</div>
 
 						<div className="grid gap-2">
 							<Label htmlFor="email">Email</Label>
-							<Input
-								id="email"
-								type="email"
-								placeholder="example@gmail.com"
-								required
+							<Controller
+								name="email"
+								control={control}
+								rules={{ required: true }}
+								render={({ field }) => (
+									<Input
+										{...field}
+										id="email"
+										type="email"
+										placeholder="example@gmail.com"
+									/>
+								)}
 							/>
 						</div>
 						<div className="grid gap-2 relative">
 							<Label htmlFor="password">Password</Label>
-							<Input
-								id="password"
-								type={showPassword ? "text" : "password"}
-								required
+							<Controller
+								name="password"
+								control={control}
+								rules={{ required: true }}
+								render={({ field }) => (
+									<Input
+										{...field}
+										id="password"
+										type={showPassword ? "text" : "password"}
+									/>
+								)}
 							/>
 							<span
 								className="cursor-pointer absolute right-3 bottom-2"
@@ -98,16 +152,16 @@ const Register = () => {
 						>
 							Sign Up
 						</Button>
-						<div className="grid grid-cols-2 gap-2 font-inter">
-							<Button variant="outline" className="w-full gap-2">
-								<Mail size={18} />
-								Login with Google
-							</Button>
-							<Button variant="outline" className="w-full gap-2">
-								<Github size={20} />
-								Login with Github
-							</Button>
-						</div>
+					</form>
+					<div className="grid grid-cols-2 gap-2 font-inter mt-2">
+						<Button variant="outline" className="w-full gap-2">
+							<Mail size={18} />
+							Login with Google
+						</Button>
+						<Button variant="outline" className="w-full gap-2">
+							<Github size={20} />
+							Login with Github
+						</Button>
 					</div>
 					<div className="mt-4 text-center text-sm">
 						Already have an account?
