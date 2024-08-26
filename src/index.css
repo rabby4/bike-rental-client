@@ -72,3 +72,13 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+/* Card action button */
+.action-buttons {
+	translate: 0px 55px;
+	transition: 0.7s;
+}
+
+.action-hover:hover .action-buttons {
+	translate: 0px -10px;
+}
