@@ -30,7 +30,7 @@ import {
 	useForm,
 } from "react-hook-form"
 
-const CreateBike = () => {
+const UpdateBike = () => {
 	const { control, handleSubmit } = useForm({})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -43,9 +43,9 @@ const CreateBike = () => {
 					<div className="col-span-2">
 						<Card x-chunk="dashboard-07-chunk-0">
 							<CardHeader>
-								<CardTitle className="font-orbitron">Upload A Bike</CardTitle>
+								<CardTitle className="font-orbitron">Update Bike</CardTitle>
 								<CardDescription className="font-inter">
-									Add the details of a bike and upload the bike
+									Edit the details of this bike and update the bike
 								</CardDescription>
 							</CardHeader>
 							<CardContent className="font-inter">
@@ -353,7 +353,7 @@ const CreateBike = () => {
 								size="sm"
 								className="bg-accent-foreground font-orbitron tracking-wider px-10 py-5 rounded-none duration-500"
 							>
-								Upload Bike
+								Update Bike
 							</Button>
 						</div>
 					</div>
@@ -363,4 +363,4 @@ const CreateBike = () => {
 	)
 }
 
-export default CreateBike
+export default UpdateBike

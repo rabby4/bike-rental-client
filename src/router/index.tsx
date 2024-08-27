@@ -14,6 +14,7 @@ import Login from "@/pages/Login"
 import Profile from "@/pages/Profile"
 import Register from "@/pages/Register"
 import ReturnBike from "@/pages/ReturnBike"
+import UpdateBike from "@/pages/UpdateBike"
 import UserManagement from "@/pages/UserManagement"
 import { createBrowserRouter } from "react-router-dom"
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
 					{
 						path: "create-bike",
 						element: <CreateBike />,
+					},
+					{
+						path: "update-bike",
+						element: <UpdateBike />,
 					},
 					{
 						path: "bike-management",

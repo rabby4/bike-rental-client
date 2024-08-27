@@ -36,11 +36,14 @@
     "react-resizable-panels": "^2.1.1",
     "react-router-dom": "^6.26.1",
     "redux-persist": "^6.0.0",
+    "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.1"
+    "vaul": "^0.9.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@types/aos": "^3.0.7",
     "@types/node": "^22.5.0",
     "@types/react": "^18.3.3",

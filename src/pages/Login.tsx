@@ -17,14 +17,22 @@ import {
 	FieldValues,
 	Controller,
 } from "react-hook-form"
+import authApi from "@/redux/features/auth/authApi"
+import { toast } from "sonner"
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false)
-
+	const [login] = authApi.useLoginUserMutation()
 	const { control, handleSubmit } = useForm({})
 
-	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		console.log(data)
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		const toastId = toast.loading("Logging in...")
+		try {
+			const res = await login(data).unwrap()
+			toast.success(res.message, { id: toastId })
+		} catch (error) {
+			toast.error("Login Failed...", { id: toastId })
+		}
 	}
 
 	return (
