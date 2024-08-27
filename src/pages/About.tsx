@@ -2,6 +2,7 @@ import AboutUs from "@/components/about/AboutUs"
 import Journey from "@/components/about/Journey"
 import Mission from "@/components/about/Mission"
 import Team from "@/components/about/Team"
+import Contact from "@/components/home/Contact"
 
 const About = () => {
 	return (
@@ -10,6 +11,7 @@ const About = () => {
 			<Mission />
 			<Journey />
 			<Team />
+			<Contact />
 		</>
 	)
 }

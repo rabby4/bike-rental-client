@@ -2,15 +2,19 @@ import App from "@/App"
 import Welcome from "@/components/shared/Welcome"
 import About from "@/pages/About"
 import BikeDetails from "@/pages/BikeDetails"
+import BikeManagement from "@/pages/BikeManagement"
 import Bikes from "@/pages/Bikes"
 import Blogs from "@/pages/Blogs"
 import Contact from "@/pages/Contact"
+import CreateBike from "@/pages/CreateBike"
 import Dashboard from "@/pages/Dashboard"
 import Error from "@/pages/Error"
 import Home from "@/pages/Home"
 import Login from "@/pages/Login"
 import Profile from "@/pages/Profile"
 import Register from "@/pages/Register"
+import ReturnBike from "@/pages/ReturnBike"
+import UserManagement from "@/pages/UserManagement"
 import { createBrowserRouter } from "react-router-dom"
 
 const router = createBrowserRouter([
@@ -72,12 +76,24 @@ const router = createBrowserRouter([
 						element: <Welcome />,
 					},
 					{
-						path: "create-product",
-						// element: <CreateProduct />,
-					},
-					{
 						path: "my-profile",
 						element: <Profile />,
+					},
+					{
+						path: "create-bike",
+						element: <CreateBike />,
+					},
+					{
+						path: "bike-management",
+						element: <BikeManagement />,
+					},
+					{
+						path: "user-management",
+						element: <UserManagement />,
+					},
+					{
+						path: "return-bike",
+						element: <ReturnBike />,
 					},
 				],
 			},

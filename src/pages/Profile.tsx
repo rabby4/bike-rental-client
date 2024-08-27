@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import {
@@ -34,7 +35,7 @@ const Profile = () => {
 							<span>
 								<Camera />
 							</span>
-							<span>Edit</span>
+							<span className="font-inter">Edit</span>
 						</label>
 					</div>
 				</div>
@@ -61,10 +62,13 @@ const Profile = () => {
 						</div>
 					</div>
 					<div className="mt-4 max-w-2xl mx-auto">
-						<h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+						<h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white font-orbitron tracking-wider">
 							Golam Rabby
 						</h3>
-						<p className="font-medium">Admin</p>
+						<p className="font-medium font-inter italic">
+							<Badge className="text-sm">Admin</Badge>
+						</p>
+
 						<div className="mt-10">
 							<Card>
 								<CardHeader className="pb-0 items-end">
@@ -72,7 +76,7 @@ const Profile = () => {
 										<SquarePen />
 									</Button>
 								</CardHeader>
-								<CardContent className="flex items-center justify-between p-8">
+								<CardContent className="flex items-center justify-between p-8 font-inter">
 									<div>
 										<p className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green text-lg">
 											<User size={20} />
@@ -96,7 +100,7 @@ const Profile = () => {
 								</CardContent>
 								<CardFooter className="justify-center">
 									<div className="mt-6.5">
-										<h4 className="mb-3.5 font-medium text-black dark:text-white">
+										<h4 className="mb-3.5 font-medium text-black dark:text-white text-lg font-orbitron">
 											Follow me on
 										</h4>
 										<div className="flex items-center justify-center gap-3.5">

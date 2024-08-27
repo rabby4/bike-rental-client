@@ -18,6 +18,7 @@ import {
 import {
 	CreditCard,
 	Heart,
+	LayoutDashboard,
 	LifeBuoy,
 	LogOut,
 	Menu,
@@ -41,14 +42,7 @@ const Header = () => {
 											Home
 										</NavLink>
 									</NavigationMenuItem>
-									<NavigationMenuItem>
-										<NavLink
-											to={"/about-us"}
-											className={navigationMenuTriggerStyle()}
-										>
-											About Us
-										</NavLink>
-									</NavigationMenuItem>
+
 									<NavigationMenuItem>
 										<NavLink
 											to={"/bikes"}
@@ -63,6 +57,14 @@ const Header = () => {
 											className={navigationMenuTriggerStyle()}
 										>
 											Blogs
+										</NavLink>
+									</NavigationMenuItem>
+									<NavigationMenuItem>
+										<NavLink
+											to={"/about-us"}
+											className={navigationMenuTriggerStyle()}
+										>
+											About Us
 										</NavLink>
 									</NavigationMenuItem>
 									<NavigationMenuItem>
@@ -104,14 +106,7 @@ const Header = () => {
 													Home
 												</NavLink>
 											</NavigationMenuItem>
-											<NavigationMenuItem>
-												<NavLink
-													to={"/about-us"}
-													className={navigationMenuTriggerStyle()}
-												>
-													About Us
-												</NavLink>
-											</NavigationMenuItem>
+
 											<NavigationMenuItem>
 												<NavLink
 													to={"/bikes"}
@@ -126,6 +121,14 @@ const Header = () => {
 													className={navigationMenuTriggerStyle()}
 												>
 													Blogs
+												</NavLink>
+											</NavigationMenuItem>
+											<NavigationMenuItem>
+												<NavLink
+													to={"/about-us"}
+													className={navigationMenuTriggerStyle()}
+												>
+													About Us
 												</NavLink>
 											</NavigationMenuItem>
 											<NavigationMenuItem>
@@ -191,6 +194,10 @@ const Header = () => {
 											<DropdownMenuLabel>My Account</DropdownMenuLabel>
 											<DropdownMenuSeparator />
 											<DropdownMenuGroup>
+												<DropdownMenuItem>
+													<LayoutDashboard className="mr-2 h-4 w-4" />
+													<NavLink to={"/dashboard"}>Dashboard</NavLink>
+												</DropdownMenuItem>
 												<DropdownMenuItem>
 													<User className="mr-2 h-4 w-4" />
 													<NavLink to={"/dashboard/my-profile"}>

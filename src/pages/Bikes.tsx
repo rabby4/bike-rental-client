@@ -35,8 +35,10 @@ const Bikes = () => {
 					<CardContent className="items-center p-12">
 						<div className="grid grid-cols-5 gap-5 items-end">
 							<div className="flex flex-col gap-3">
-								<h2 className="text-lg self-start font-medium">Search Bikes</h2>
-								<div className="relative ml-auto flex-1 md:grow-0 w-full">
+								<h2 className="self-start font-medium font-orbitron">
+									Search Bikes
+								</h2>
+								<div className="relative ml-auto flex-1 md:grow-0 w-full text-inter">
 									<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 									<Input
 										type="search"
@@ -48,10 +50,10 @@ const Bikes = () => {
 								</div>
 							</div>
 							<div className="flex flex-col gap-3">
-								<h2 className="text-lg self-start font-medium">
+								<h2 className="self-start font-medium font-orbitron">
 									Filter by Status
 								</h2>
-								<div className="w-full md:w-auto mb-2 md:mb-0">
+								<div className="w-full md:w-auto mb-2 md:mb-0 font-inter">
 									<Select onValueChange={(value) => setStatus(value)}>
 										<SelectTrigger>
 											<SelectValue placeholder="Select A Status" />
@@ -70,10 +72,10 @@ const Bikes = () => {
 							</div>
 
 							<div className="flex flex-col gap-3">
-								<h2 className="text-lg self-start font-medium">
+								<h2 className="self-start font-medium font-orbitron">
 									Filter by Category
 								</h2>
-								<div className="w-full md:w-auto mb-2 md:mb-0 rounded-full">
+								<div className="w-full md:w-auto mb-2 md:mb-0 rounded-full font-inter">
 									<Select onValueChange={(value) => setCategory(value)}>
 										<SelectTrigger>
 											<SelectValue placeholder="Select A Category" />
@@ -91,10 +93,10 @@ const Bikes = () => {
 							</div>
 
 							<div className="flex flex-col gap-3">
-								<h2 className="text-lg self-start font-medium">
+								<h2 className="self-start font-medium font-orbitron">
 									Filter by Brand
 								</h2>
-								<div className="w-full rounded-full md:w-auto mb-2 md:mb-0">
+								<div className="w-full rounded-full md:w-auto mb-2 md:mb-0 font-inter">
 									<Select onValueChange={(value) => setBrand(value)}>
 										<SelectTrigger>
 											<SelectValue placeholder="Select A Brand" />
