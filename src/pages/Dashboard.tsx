@@ -1,0 +1,22 @@
+import UserSidebar from "@/layouts/UserSidebar"
+import { Outlet } from "react-router-dom"
+
+const Dashboard = () => {
+	return (
+		<div className=" grid w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+			<UserSidebar />
+			<main className="min-h-[calc(100vh-60px)] flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+				<div
+					className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+					x-chunk="dashboard-02-chunk-1"
+				>
+					<div className=" flex flex-col">
+						<Outlet />
+					</div>
+				</div>
+			</main>
+		</div>
+	)
+}
+
+export default Dashboard

@@ -1,12 +1,15 @@
 import App from "@/App"
+import Welcome from "@/components/shared/Welcome"
 import About from "@/pages/About"
 import BikeDetails from "@/pages/BikeDetails"
 import Bikes from "@/pages/Bikes"
 import Blogs from "@/pages/Blogs"
 import Contact from "@/pages/Contact"
+import Dashboard from "@/pages/Dashboard"
 import Error from "@/pages/Error"
 import Home from "@/pages/Home"
 import Login from "@/pages/Login"
+import Profile from "@/pages/Profile"
 import Register from "@/pages/Register"
 import { createBrowserRouter } from "react-router-dom"
 
@@ -61,20 +64,20 @@ const router = createBrowserRouter([
 				// element: <ThankYou />,
 			},
 			{
-				path: "/manage-product",
-				// element: <ManageProduct />,
+				path: "/dashboard",
+				element: <Dashboard />,
 				children: [
 					{
 						index: true,
-						// element: <Manage />,
+						element: <Welcome />,
 					},
 					{
 						path: "create-product",
 						// element: <CreateProduct />,
 					},
 					{
-						path: "update-product/:id",
-						// element: <UpdateProduct />,
+						path: "my-profile",
+						element: <Profile />,
 					},
 				],
 			},
