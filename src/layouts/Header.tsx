@@ -1,11 +1,30 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
 	NavigationMenu,
 	NavigationMenuItem,
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { Heart, Menu, Search, ShoppingCart } from "lucide-react"
+import {
+	CreditCard,
+	Heart,
+	LifeBuoy,
+	LogOut,
+	Menu,
+	Search,
+	Settings,
+	User,
+} from "lucide-react"
 import { NavLink } from "react-router-dom"
 
 const Header = () => {
@@ -154,15 +173,58 @@ const Header = () => {
 									</NavLink>
 								</NavigationMenuItem>
 								<NavigationMenuItem className="relative">
-									<NavLink
+									{/* <NavLink
 										to={"/cart"}
 										className={navigationMenuTriggerStyle()}
-									>
-										<ShoppingCart />
-										<span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-accent-foreground absolute right-2 -top-[2px]">
-											<p>0</p>
-										</span>
-									</NavLink>
+									> */}
+									<DropdownMenu>
+										<DropdownMenuTrigger asChild className="cursor-pointer">
+											<Avatar>
+												<AvatarImage
+													src="https://github.com/shadcn.png"
+													alt="@shadcn"
+												/>
+												<AvatarFallback>CN</AvatarFallback>
+											</Avatar>
+										</DropdownMenuTrigger>
+										<DropdownMenuContent className="w-56 transform-none">
+											<DropdownMenuLabel>My Account</DropdownMenuLabel>
+											<DropdownMenuSeparator />
+											<DropdownMenuGroup>
+												<DropdownMenuItem>
+													<User className="mr-2 h-4 w-4" />
+													<NavLink to={"/dashboard/my-profile"}>
+														Profile
+													</NavLink>
+												</DropdownMenuItem>
+												<DropdownMenuItem>
+													<CreditCard className="mr-2 h-4 w-4" />
+													<span>Billing</span>
+												</DropdownMenuItem>
+												<DropdownMenuItem>
+													<Settings className="mr-2 h-4 w-4" />
+													<span>Settings</span>
+												</DropdownMenuItem>
+											</DropdownMenuGroup>
+											<DropdownMenuSeparator />
+
+											<DropdownMenuItem>
+												<LifeBuoy className="mr-2 h-4 w-4" />
+												<span>Support</span>
+											</DropdownMenuItem>
+
+											<DropdownMenuSeparator />
+											<DropdownMenuItem>
+												<LogOut className="mr-2 h-4 w-4" />
+												<span>Log out</span>
+											</DropdownMenuItem>
+										</DropdownMenuContent>
+									</DropdownMenu>
+									{/* <ShoppingCart /> */}
+									{/* <span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-accent-foreground absolute right-2 -top-[2px]">
+										<p>0</p>
+									</span> */}
+									{/* </NavLink> */}
 								</NavigationMenuItem>
 							</NavigationMenuList>
 						</NavigationMenu>
