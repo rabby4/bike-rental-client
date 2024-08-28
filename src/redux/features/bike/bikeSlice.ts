@@ -1,17 +1,5 @@
+import { TBike } from "@/types/bikes.type"
 import { createSlice } from "@reduxjs/toolkit"
-
-type TBike = {
-	_id: string
-	name: string
-	description: string
-	pricePerHour: number
-	isAvailable: boolean
-	cc: number
-	year: number
-	model: string
-	brand: string
-	__v: number
-}
 
 type TInitialState = {
 	data: TBike[]
@@ -22,14 +10,13 @@ const initialState: TInitialState = {
 }
 
 const bikeSlice = createSlice({
-	name: "product",
+	name: "bike",
 	initialState,
 	reducers: {
-		// setCart: (state, action) => {
-		// 	console.log(state?.data)
-		// 	const data = action.payload
-		// 	state.data = data
-		// },
+		setWish: (state, action) => {
+			const data = action.payload
+			state.data = data
+		},
 		// addProduct: (state, action) => {
 		// 	try {
 		// 		const existingProduct = state?.data?.find(
@@ -53,5 +40,5 @@ const bikeSlice = createSlice({
 	},
 })
 
-export const {} = bikeSlice.actions
+export const { setWish } = bikeSlice.actions
 export default bikeSlice.reducer

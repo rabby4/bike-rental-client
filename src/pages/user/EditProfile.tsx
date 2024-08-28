@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import authApi from "@/redux/features/auth/authApi"
 import { useAppSelector } from "@/redux/hook"
-import { Badge, Camera } from "lucide-react"
+import { Camera } from "lucide-react"
 import {
 	Controller,
 	FieldValues,
@@ -15,17 +15,17 @@ import { toast } from "sonner"
 
 const EditProfile = () => {
 	const token = useAppSelector((state) => state.user.token)
-	const { data: userData } = authApi.useGetMeQuery(token)
+	const { data: userData } = authApi.useGetMeQuery(token, {
+		pollingInterval: 1000,
+	})
 	const [updateMe] = authApi.useUpdateMeMutation()
 
 	const user = userData?.data
-	console.log(user)
 
 	const { control, handleSubmit } = useForm({})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Singing in...")
-		console.log(data)
 		const userInfo = {
 			data,
 			token,
@@ -33,7 +33,6 @@ const EditProfile = () => {
 		try {
 			const res = await updateMe(userInfo).unwrap()
 			toast.success(res.message, { id: toastId })
-			console.log(res)
 		} catch (error) {
 			toast.error("Profile Update Process Failed...", { id: toastId })
 		}

@@ -76,16 +76,16 @@ const Profile = () => {
 					</div>
 					<div className="mt-4 max-w-2xl mx-auto">
 						<h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white font-orbitron tracking-wider">
-							{user.firstName} {user.lastName}
+							{user?.firstName} {user?.lastName}
 						</h3>
 						<p className="font-medium font-inter italic">
 							<Badge className="text-sm capitalize">{user.role}</Badge>
 						</p>
 
 						<div className="mt-10">
-							<Card>
+							<Card className="relative">
 								<CardHeader className="pb-0 items-end">
-									<Button className="rounded-md px-2">
+									<Button className="rounded-md px-2 absolute right-0 top-0">
 										<NavLink to={"/dashboard/edit-profile"}>
 											<SquarePen />
 										</NavLink>

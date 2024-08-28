@@ -16,25 +16,48 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { CircleAlert } from "lucide-react"
+import bikeApi from "@/redux/features/bike/bikeApi"
 import {
 	Controller,
 	FieldValues,
 	SubmitHandler,
 	useForm,
 } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 const CreateBike = () => {
+	const [createBike] = bikeApi.useCreateBikeMutation()
 	const { control, handleSubmit } = useForm({})
+	const navigate = useNavigate()
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		const toastId = toast.loading("Logging in...")
+
 		console.log(data)
+		const bikeData = {
+			...data,
+			cc: Number(data.cc),
+			year: Number(data.year),
+			frame: Number(data.frame),
+			weight: Number(data.support),
+			support: Number(data.support),
+			isAvailable: true,
+			pricePerHour: Number(data.support),
+		}
+		console.log(bikeData)
+
+		try {
+			const res = await createBike(bikeData).unwrap()
+			toast.success(res.message, { id: toastId })
+			console.log(res)
+			if (res.success) {
+				toast.success(res.message, { id: toastId })
+				navigate("/dashboard/bike-management")
+			}
+		} catch (error) {
+			toast.error("Failed to create bike...", { id: toastId })
+		}
 	}
 	return (
 		<div className="w-full p-24 pt-8">
@@ -55,7 +78,7 @@ const CreateBike = () => {
 										<Controller
 											name="name"
 											control={control}
-											// rules={{ required: true }}
+											rules={{ required: true }}
 											render={({ field }) => (
 												<Input
 													{...field}
@@ -73,7 +96,7 @@ const CreateBike = () => {
 											<Controller
 												name="brand"
 												control={control}
-												defaultValue=""
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Select
 														{...field}
@@ -106,7 +129,7 @@ const CreateBike = () => {
 											<Controller
 												name="model"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -119,13 +142,29 @@ const CreateBike = () => {
 										</div>
 									</div>
 
-									<div className="grid grid-cols-2 gap-5 justify-between">
+									<div className="grid grid-cols-3 gap-5 justify-between">
+										<div className="grid gap-3">
+											<Label>Bike CC</Label>
+											<Controller
+												name="cc"
+												control={control}
+												rules={{ required: true }}
+												render={({ field }) => (
+													<Input
+														{...field}
+														type="text"
+														className="w-full"
+														placeholder="Write you bike CC"
+													/>
+												)}
+											/>
+										</div>
 										<div className="grid gap-3">
 											<Label>Release Year</Label>
 											<Controller
 												name="year"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -137,11 +176,11 @@ const CreateBike = () => {
 											/>
 										</div>
 										<div className="grid gap-3">
-											<Label>Frame Size</Label>
+											<Label>Frame Size (cm)</Label>
 											<Controller
 												name="frame"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -156,11 +195,11 @@ const CreateBike = () => {
 
 									<div className="grid grid-cols-2 gap-5 justify-between">
 										<div className="grid gap-3">
-											<Label>Max. support</Label>
+											<Label>Max. support (km/h)</Label>
 											<Controller
 												name="support"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -236,11 +275,11 @@ const CreateBike = () => {
 											/>
 										</div>
 										<div className="grid gap-3">
-											<Label>Weight</Label>
+											<Label>Weight (kg)</Label>
 											<Controller
 												name="weight"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -257,7 +296,7 @@ const CreateBike = () => {
 										<Controller
 											name="description"
 											control={control}
-											// rules={{ required: true }}
+											rules={{ required: true }}
 											render={({ field }) => (
 												<Textarea
 													{...field}
@@ -276,49 +315,30 @@ const CreateBike = () => {
 					<div className="col-span-1 space-y-10">
 						<Card x-chunk="dashboard-07-chunk-3">
 							<CardHeader>
-								<CardTitle className="font-orbitron">
-									Bike Availability
-								</CardTitle>
+								<CardTitle className="font-orbitron">Bike Price</CardTitle>
 							</CardHeader>
 							<CardContent className="font-inter">
 								<div className="grid gap-6">
 									<div className="grid gap-3">
-										<Label htmlFor="status" className="flex items-center gap-4">
-											Availability
-											<TooltipProvider>
-												<Tooltip>
-													<TooltipTrigger>
-														<CircleAlert size={16} />
-													</TooltipTrigger>
-													<TooltipContent>
-														<p>Default is Available</p>
-													</TooltipContent>
-												</Tooltip>
-											</TooltipProvider>
-										</Label>
+										<Label>Price Per Hour</Label>
 										<Controller
-											name="isAvailable"
+											name="pricePerHour"
 											control={control}
-											defaultValue="true"
+											rules={{ required: true }}
 											render={({ field }) => (
-												<Select
+												<Input
 													{...field}
-													onValueChange={(value) => field.onChange(value)}
-												>
-													<SelectTrigger>
-														<SelectValue placeholder="Select Availability" />
-													</SelectTrigger>
-													<SelectContent>
-														<SelectItem value="true">Available</SelectItem>
-														<SelectItem value="false">Unavailable</SelectItem>
-													</SelectContent>
-												</Select>
+													type="text"
+													className="w-full"
+													placeholder="Write you bike Weight"
+												/>
 											)}
 										/>
 									</div>
 								</div>
 							</CardContent>
 						</Card>
+
 						<Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
 							<CardHeader>
 								<CardTitle className="font-orbitron">Product Image</CardTitle>
