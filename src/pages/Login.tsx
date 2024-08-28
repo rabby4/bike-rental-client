@@ -19,17 +19,26 @@ import {
 } from "react-hook-form"
 import authApi from "@/redux/features/auth/authApi"
 import { toast } from "sonner"
+import { verifyToken } from "@/utils/verifyToken"
+import { useAppDispatch } from "@/redux/hook"
+import { setUser } from "@/redux/features/auth/userSlice"
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false)
 	const [login] = authApi.useLoginUserMutation()
 	const { control, handleSubmit } = useForm({})
+	const dispatch = useAppDispatch()
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Logging in...")
 		try {
 			const res = await login(data).unwrap()
 			toast.success(res.message, { id: toastId })
+			console.log(res)
+			const user = verifyToken(res.token)
+
+			dispatch(setUser({ user: user, token: res.token }))
+			toast.success("Logged in success", { id: toastId })
 		} catch (error) {
 			toast.error("Login Failed...", { id: toastId })
 		}

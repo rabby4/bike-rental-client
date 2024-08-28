@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Divide, Eye, EyeOff, Github, Mail } from "lucide-react"
+import { Eye, EyeOff, Github, Mail } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import {
@@ -24,15 +24,11 @@ const Register = () => {
 	const [showPassword, setShowPassword] = useState(false)
 	const [registration] = authApi.useRegistrationMutation()
 
-	const {
-		control,
-		handleSubmit,
-		formState: { errors },
-	} = useForm({})
+	const { control, handleSubmit } = useForm({})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Singing in...")
-		console.log("form error", errors)
+
 		const userInfo = {
 			...data,
 			role: "user",
@@ -58,137 +54,6 @@ const Register = () => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="font-inter">
-					{/* <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
-						<div className="grid grid-cols-2 gap-2">
-							<div className="grid gap-2">
-								<Label htmlFor="firstName">First Name</Label>
-								<Controller
-									name="firstName"
-									control={control}
-									// rules={{ required: true }}
-									render={({ field }) => (
-										<>
-											<Input
-												{...field}
-												id="firstName"
-												type="text"
-												placeholder="First Name"
-											/>
-										</>
-									)}
-								/>
-							</div>
-							<div className="grid gap-2">
-								<Label htmlFor="lastName">Last Name</Label>
-								<Controller
-									name="lastName"
-									control={control}
-									// rules={{ required: true }}
-									render={({ field }) => (
-										<Input
-											{...field}
-											id="lastName"
-											type="text"
-											placeholder="Last Name"
-										/>
-									)}
-								/>
-							</div>
-						</div>
-						<div className="grid grid-cols-2 gap-2">
-							<div className="grid gap-2">
-								<Label htmlFor="phone">Phone Number</Label>
-								<Controller
-									name="phone"
-									control={control}
-									// rules={{ required: true }}
-									render={({ field }) => (
-										<Input
-											{...field}
-											id="phone"
-											type="text"
-											placeholder="Phone Number"
-										/>
-									)}
-								/>
-							</div>
-							<div className="grid gap-2">
-								<Label htmlFor="address">Address</Label>
-								<Controller
-									name="address"
-									control={control}
-									// rules={{ required: true }}
-									render={({ field }) => (
-										<Input
-											{...field}
-											id="address"
-											type="text"
-											placeholder="Address..."
-										/>
-									)}
-								/>
-							</div>
-						</div>
-
-						<div className="grid gap-2">
-							<Label>Profile Picture</Label>
-							<Controller
-								name="image"
-								control={control}
-								// rules={{ required: true }}
-								render={({ field }) => (
-									<Input
-										{...field}
-										type="text"
-										placeholder="Your profile image link"
-									/>
-								)}
-							/>
-						</div>
-						<div className="grid gap-2">
-							<Label htmlFor="email">Email</Label>
-							<Controller
-								name="email"
-								control={control}
-								// rules={{ required: true }}
-								render={({ field }) => (
-									<Input
-										{...field}
-										id="email"
-										type="email"
-										placeholder="example@gmail.com"
-									/>
-								)}
-							/>
-						</div>
-						<div className="grid gap-2 relative">
-							<Label htmlFor="password">Password</Label>
-							<Controller
-								name="password"
-								control={control}
-								// rules={{ required: true }}
-								render={({ field }) => (
-									<Input
-										{...field}
-										id="password"
-										type={showPassword ? "text" : "password"}
-									/>
-								)}
-							/>
-							<span
-								className="cursor-pointer absolute right-3 bottom-2"
-								onClick={() => setShowPassword(!showPassword)}
-							>
-								{showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
-							</span>
-						</div>
-						<Button
-							type="submit"
-							className="w-full font-orbitron tracking-wider"
-						>
-							Sign Up
-						</Button>
-					</form> */}
 					<form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
 						<div className="grid grid-cols-2 gap-2">
 							<div className="grid gap-2">
@@ -204,9 +69,6 @@ const Register = () => {
 												type="text"
 												placeholder="First Name"
 											/>
-											{errors.firstName && (
-												<span>{errors.firstName.message}</span>
-											)}
 										</>
 									)}
 								/>
@@ -224,9 +86,6 @@ const Register = () => {
 												type="text"
 												placeholder="Last Name"
 											/>
-											{errors.lastName && (
-												<span>{errors.lastName.message}</span>
-											)}
 										</>
 									)}
 								/>
@@ -246,7 +105,6 @@ const Register = () => {
 												type="text"
 												placeholder="Phone Number"
 											/>
-											{errors.phone && <span>{errors.phone.message}</span>}
 										</>
 									)}
 								/>
@@ -264,7 +122,6 @@ const Register = () => {
 												type="text"
 												placeholder="Address"
 											/>
-											{errors.address && <span>{errors.address.message}</span>}
 										</>
 									)}
 								/>
@@ -282,7 +139,6 @@ const Register = () => {
 											type="text"
 											placeholder="Your profile image link"
 										/>
-										{errors.image && <span>{errors.image.message}</span>}
 									</>
 								)}
 							/>
@@ -300,7 +156,6 @@ const Register = () => {
 											type="email"
 											placeholder="example@gmail.com"
 										/>
-										{errors.email && <span>{errors.email.message}</span>}
 									</>
 								)}
 							/>
@@ -317,7 +172,6 @@ const Register = () => {
 											id="password"
 											type={showPassword ? "text" : "password"}
 										/>
-										{errors.password && <span>{errors.password.message}</span>}
 									</>
 								)}
 							/>

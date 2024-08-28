@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import bikeReducer from "./features/bikeSlice"
-import userReducer from "./features/userSlice"
+import userReducer from "./features/auth/userSlice"
 
 import baseApi from "./api/baseApi"
 import storage from "redux-persist/lib/storage"
@@ -20,13 +19,12 @@ const persistConfig = {
 	storage,
 }
 
-const persistedProductReducer = persistReducer(persistConfig, bikeReducer)
+const persistedUserReducer = persistReducer(persistConfig, userReducer)
 
 export const store = configureStore({
 	reducer: {
 		[baseApi.reducerPath]: baseApi.reducer,
-		bike: persistedProductReducer,
-		user: userReducer,
+		user: persistedUserReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
