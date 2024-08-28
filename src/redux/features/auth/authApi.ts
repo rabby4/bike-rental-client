@@ -20,6 +20,15 @@ const authApi = baseApi.injectEndpoints({
 				}
 			},
 		}),
+		getAllUsers: builder.query({
+			query: (token) => {
+				return {
+					url: "/users",
+					method: "GET",
+					headers: { Authorization: `${token}` },
+				}
+			},
+		}),
 		getMe: builder.query({
 			query: (token) => {
 				return {
