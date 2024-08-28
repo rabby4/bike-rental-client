@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
 import {
 	DropdownMenu,
@@ -15,6 +16,8 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { logout } from "@/redux/features/auth/userSlice"
+import { useAppDispatch } from "@/redux/hook"
 import {
 	CreditCard,
 	Heart,
@@ -29,6 +32,12 @@ import {
 import { NavLink } from "react-router-dom"
 
 const Header = () => {
+	const dispatch = useAppDispatch()
+
+	const handleLogout = () => {
+		dispatch(logout())
+	}
+
 	return (
 		<>
 			<div className="py-4">
@@ -223,7 +232,12 @@ const Header = () => {
 											<DropdownMenuSeparator />
 											<DropdownMenuItem>
 												<LogOut className="mr-2 h-4 w-4" />
-												<span>Log out</span>
+												<Button
+													onClick={handleLogout}
+													className="bg-transparent p-0 hover:bg-transparent text-black hover:text-accent-foreground"
+												>
+													Log out
+												</Button>
 											</DropdownMenuItem>
 										</DropdownMenuContent>
 									</DropdownMenu>

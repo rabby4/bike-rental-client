@@ -20,6 +20,25 @@ const authApi = baseApi.injectEndpoints({
 				}
 			},
 		}),
+		getMe: builder.query({
+			query: (token) => {
+				return {
+					url: "/users/me",
+					method: "GET",
+					headers: { Authorization: `${token}` },
+				}
+			},
+		}),
+		updateMe: builder.mutation({
+			query: (userInfo) => {
+				return {
+					url: "/users/me",
+					method: "PUT",
+					body: userInfo.data,
+					headers: { Authorization: `${userInfo.token}` },
+				}
+			},
+		}),
 	}),
 })
 export default authApi

@@ -11,7 +11,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import baseApi from "@/redux/api/baseApi"
+import bikeApi from "@/redux/features/bike/bikeApi"
 import { Search } from "lucide-react"
 import { ChangeEvent, useState } from "react"
 
@@ -20,7 +20,7 @@ const Bikes = () => {
 	const [category, setCategory] = useState("")
 	const [status, setStatus] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
-	const { data } = baseApi.useGetBikeQuery(undefined)
+	const { data } = bikeApi.useGetBikeQuery(undefined)
 	console.log(data)
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

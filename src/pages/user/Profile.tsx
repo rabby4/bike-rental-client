@@ -1,6 +1,8 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import authApi from "@/redux/features/auth/authApi"
+import { useAppSelector } from "@/redux/hook"
 import {
 	Camera,
 	Facebook,
@@ -13,8 +15,19 @@ import {
 	User,
 	Youtube,
 } from "lucide-react"
+import { NavLink } from "react-router-dom"
 
 const Profile = () => {
+	const token = useAppSelector((state) => state.user.token)
+	const { data, isLoading } = authApi.useGetMeQuery(token)
+
+	if (isLoading) {
+		return <p>Loading...</p>
+	}
+
+	const user = data?.data
+	console.log(user)
+
 	return (
 		<div>
 			<div className="overflow-hidden rounded-sm bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -63,38 +76,41 @@ const Profile = () => {
 					</div>
 					<div className="mt-4 max-w-2xl mx-auto">
 						<h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white font-orbitron tracking-wider">
-							Golam Rabby
+							{user.firstName} {user.lastName}
 						</h3>
 						<p className="font-medium font-inter italic">
-							<Badge className="text-sm">Admin</Badge>
+							<Badge className="text-sm capitalize">{user.role}</Badge>
 						</p>
 
 						<div className="mt-10">
 							<Card>
 								<CardHeader className="pb-0 items-end">
 									<Button className="rounded-md px-2">
-										<SquarePen />
+										<NavLink to={"/dashboard/edit-profile"}>
+											<SquarePen />
+										</NavLink>
 									</Button>
 								</CardHeader>
 								<CardContent className="flex items-center justify-between p-8 font-inter">
 									<div>
 										<p className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green text-lg">
 											<User size={20} />
-											Golam Rabby
+											<span>{user.firstName}</span>
+											<span>{user.lastName}</span>
 										</p>
 										<p className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green text-lg">
 											<MapPin size={20} />
-											Kachua, Chandpur, Bangladesh
+											{user.address}
 										</p>
 									</div>
 									<div>
 										<p className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green text-lg">
 											<PhoneCall size={20} />
-											+0123456789
+											{user.phone}
 										</p>
 										<p className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green text-lg">
 											<Mail size={20} />
-											admin@gmail.com
+											{user.email}
 										</p>
 									</div>
 								</CardContent>
