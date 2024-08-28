@@ -1,3 +1,4 @@
+import { TBike } from "@/types/bikes.type"
 import { Button } from "../ui/button"
 import {
 	Card,
@@ -7,18 +8,18 @@ import {
 	CardHeader,
 	CardTitle,
 } from "../ui/card"
+import { NavLink } from "react-router-dom"
 
-const BikeCard = () => {
+type BikeCardProps = {
+	bike: TBike
+}
+
+const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 	return (
 		<div>
 			<Card className="action-hover overflow-hidden rounded-none">
 				<CardHeader className="p-0 relative ">
-					<img
-						src={
-							"https://probike.templaza.net/wp-content/uploads/2023/08/2.jpg"
-						}
-						alt=""
-					/>
+					<img src={bike?.image} alt="" />
 					<div className="action-buttons flex justify-center px-5 z-0 absolute bottom-0 w-full">
 						<Button className="bg-accent-foreground font-inter">
 							Add To Compare
@@ -27,47 +28,49 @@ const BikeCard = () => {
 				</CardHeader>
 				<CardContent className="space-y-2 pt-2 z-10 relative bg-white">
 					<p className=" text-gray-400 font-inter font-light text-sm italic tracking-wider">
-						E-Bike
+						{bike.category.replace(/_/g, " ")}
 					</p>
 					<CardTitle className="text-2xl font-orbitron tracking-wider font-bold">
-						Mondraker CHASER RX
+						{bike?.name}
 					</CardTitle>
 					<hr />
 					<CardDescription>
-						<div className="flex gap-7 my-7">
-							<div className="space-y-3">
+						<div className="flex gap-7 my-7 text-base">
+							<div className="space-y-3 capitalize w-1/2">
 								<p>
-									Brand: <strong>Mondrake</strong>
+									Brand: <strong>{bike?.brand}</strong>
 								</p>
 								<p>
-									Torque: <strong>50 Nm - 70 Nm</strong>
+									Model: <strong>{bike?.model}</strong>
 								</p>
 								<p>
-									Color: <strong>violet</strong>
+									Bike CC: <strong>{bike?.cc} CC</strong>
 								</p>
 								<p>
-									Chain: <strong>Shimano CN-M6100</strong>
+									R. Year: <strong>{bike?.year}</strong>
 								</p>
 							</div>
-							<div className="space-y-3">
+							<div className="space-y-3 capitalize w-1/2">
 								<p>
-									Brand: <strong>Mondrake</strong>
+									Color: <strong>{bike?.color}</strong>
 								</p>
 								<p>
-									Torque: <strong>50 Nm - 70 Nm</strong>
+									Frame Size: <strong>{bike?.frame} CM</strong>
 								</p>
 								<p>
-									Color: <strong>violet</strong>
+									Max Support: <strong>{bike?.support} KM/h</strong>
 								</p>
 								<p>
-									Chain: <strong>Shimano CN-M6100</strong>
+									Weight: <strong>{bike?.weight} KG</strong>
 								</p>
 							</div>
 						</div>
 					</CardDescription>
 					<CardFooter className="p-0">
 						<Button className="w-full bg-accent-foreground hover:text-white md:px-10 md:py-6 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
-							View Details - ($100 / hr)
+							<NavLink to={`/bike-details/${bike._id}`}>
+								View Details - (${bike.pricePerHour} / hr)
+							</NavLink>
 						</Button>
 					</CardFooter>
 				</CardContent>

@@ -21,15 +21,15 @@ const bikeApi = baseApi.injectEndpoints({
 			},
 			providesTags: ["bike"],
 		}),
-		// getSingleBike: builder.query({
-		// 	query: (id) => {
-		// 		return {
-		// 			url: `/bikes/${id}`,
-		// 			method: "GET",
-		// 		}
-		// 	},
-		// 	providesTags: ["bike"],
-		// }),
+		getSingleBike: builder.query({
+			query: (id) => {
+				return {
+					url: `/bikes/${id}`,
+					method: "GET",
+				}
+			},
+			providesTags: ["bike"],
+		}),
 
 		// updateBike: builder.mutation({
 		// 	query: (options) => {

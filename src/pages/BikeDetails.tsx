@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
+import bikeApi from "@/redux/features/bike/bikeApi"
 import { PlusCircle, Share2 } from "lucide-react"
 import {
 	Controller,
@@ -12,13 +13,23 @@ import {
 	SubmitHandler,
 	useForm,
 } from "react-hook-form"
+import { useParams } from "react-router-dom"
 
 const BikeDetails = () => {
+	const { id } = useParams()
+	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(id)
+	const bike = singleBikeData?.data
+
 	const { control, handleSubmit } = useForm({})
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data)
 	}
+
+	if (isLoading) {
+		return <p>Loading...</p>
+	}
+
 	return (
 		<div>
 			<div className="bg-about-us bg-bottom h-64 flex justify-center items-center">
@@ -27,41 +38,21 @@ const BikeDetails = () => {
 			<div className="container">
 				<div className="grid grid-cols-3 gap-10 my-28">
 					<div className="col-span-2 space-y-10">
-						<h2 className="text-4xl font-orbitron font-bold">
-							Cube Stereo Hybrid 120
-						</h2>
+						<h2 className="text-4xl font-orbitron font-bold">{bike.name}</h2>
 						<div className="space-x-10 font-orbitron">
 							<Button className="hover:bg-accent-foreground bg-transparent text-black hover:text-white border">
-								<PlusCircle className="mr-2 size-4" /> Login with Email
+								<PlusCircle className="mr-2 size-4" /> Compare Bike
 							</Button>
 							<Button className="hover:bg-accent-foreground bg-transparent text-black hover:text-white border">
 								<Share2 className="mr-2 size-4" /> Share This Bike
 							</Button>
 						</div>
 						<div>
-							<img
-								src="https://probike.templaza.net/wp-content/uploads/2023/08/15.jpg"
-								alt=""
-							/>
+							<img src={bike.image} alt="" />
 						</div>
 						<div className="space-y-5">
 							<h2 className="text-4xl font-orbitron font-bold">Description</h2>
-							<p className="font-inter">
-								The Arcadex serves as the connection between the human spirit
-								and the natural world beyond, enhancing every sense, from the
-								crispness of colours to the feeling of friendship among
-								companions. This bike creates an instant connection to the
-								simple pleasure of riding and will help you to perform to the
-								best of your ability, no matter the terrain. Everything is
-								intensified. Nature is amplified.. The name Arcadex takes
-								inspiration from Arcadia (Ἀρκαδία), the legendary region of
-								Greek and Roman myth and tied inextricably to visions of natural
-								harmony. Bianchi brings its hallmark dedication to detail to the
-								gravel world. The frame design has been aerodynamically
-								optimised for performance, while clearance for 700×42 or 650×47
-								tyres delivers more than enough scope to tackle any rough
-								terrain you might choose.
-							</p>
+							<p className="font-inter">{bike.description}</p>
 						</div>
 
 						<div className="space-y-5">
@@ -81,9 +72,9 @@ const BikeDetails = () => {
 							>
 								<div className="">
 									<div className="">
-										<Label>First Name</Label>
+										<Label>Comment</Label>
 										<Controller
-											name="firstName"
+											name="comment"
 											control={control}
 											rules={{ required: true }}
 											render={({ field }) => (
@@ -158,7 +149,7 @@ const BikeDetails = () => {
 													Price
 												</span>
 												<span className="text-3xl font-orbitron font-bold">
-													$100
+													${bike.pricePerHour}
 												</span>
 											</li>
 										</ul>
@@ -183,36 +174,85 @@ const BikeDetails = () => {
 								<CardContent className=" text-sm">
 									<div className="grid gap-3 font-inter">
 										<div className="font-semibold"></div>
-										<ul className="grid gap-3">
+										<ul className="grid gap-3 capitalize">
 											<li className="flex items-center justify-between">
 												<span className="text-muted-foreground text-base">
 													Category
 												</span>
-												<span className="font-semibold text-base">E-Bike</span>
+												<span className="font-semibold text-base">
+													{bike.category.replace(/_/g, " ")}
+												</span>
 											</li>
 											<Separator />
 											<li className="flex items-center justify-between">
 												<span className="text-muted-foreground text-base">
 													Brand
 												</span>
-												<span className="font-semibold text-base">Cube</span>
-											</li>
-											<Separator />
-											<li className="flex items-center justify-between">
-												<span className="text-muted-foreground text-base">
-													Battery
-												</span>
 												<span className="font-semibold text-base">
-													Bosch Power tube 750Wh
+													{bike.brand}
 												</span>
 											</li>
 											<Separator />
 											<li className="flex items-center justify-between">
 												<span className="text-muted-foreground text-base">
-													Charger
+													Model
 												</span>
 												<span className="font-semibold text-base">
-													Bosch 4A
+													{bike.model}
+												</span>
+											</li>
+											<Separator />
+											<li className="flex items-center justify-between">
+												<span className="text-muted-foreground text-base">
+													Bike CC
+												</span>
+												<span className="font-semibold text-base">
+													{bike.cc} CC
+												</span>
+											</li>
+											<Separator />
+											<li className="flex items-center justify-between">
+												<span className="text-muted-foreground text-base">
+													Release year
+												</span>
+												<span className="font-semibold text-base">
+													{bike.year}
+												</span>
+											</li>
+											<Separator />
+											<li className="flex items-center justify-between">
+												<span className="text-muted-foreground text-base">
+													Bike color
+												</span>
+												<span className="font-semibold text-base">
+													{bike.color}
+												</span>
+											</li>
+											<Separator />
+											<li className="flex items-center justify-between">
+												<span className="text-muted-foreground text-base">
+													Frame Size
+												</span>
+												<span className="font-semibold text-base">
+													{bike.frame} CM
+												</span>
+											</li>
+											<Separator />
+											<li className="flex items-center justify-between">
+												<span className="text-muted-foreground text-base">
+													Max. Support
+												</span>
+												<span className="font-semibold text-base">
+													{bike.support} Km/h
+												</span>
+											</li>
+											<Separator />
+											<li className="flex items-center justify-between">
+												<span className="text-muted-foreground text-base">
+													Weight
+												</span>
+												<span className="font-semibold text-base">
+													{bike.weight} Kg
 												</span>
 											</li>
 										</ul>

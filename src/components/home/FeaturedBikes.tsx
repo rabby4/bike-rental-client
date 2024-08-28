@@ -1,5 +1,3 @@
-import BikeCard from "../shared/BikeCard"
-
 const FeaturedBikes = () => {
 	return (
 		<div className="container my-28">
@@ -14,11 +12,7 @@ const FeaturedBikes = () => {
 					Visit our bike page and see our amazing bikes.
 				</p>
 			</div>
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 mt-10 lg:px-0 px-10">
-				<BikeCard />
-				<BikeCard />
-				<BikeCard />
-			</div>
+			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 mt-10 lg:px-0 px-10"></div>
 		</div>
 	)
 }

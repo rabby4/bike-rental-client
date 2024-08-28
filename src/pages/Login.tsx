@@ -34,7 +34,7 @@ const Login = () => {
 		try {
 			const res = await login(data).unwrap()
 			toast.success(res.message, { id: toastId })
-			console.log(res)
+
 			const user = verifyToken(res.token)
 
 			dispatch(setUser({ user: user, token: res.token }))

@@ -12,6 +12,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import bikeApi from "@/redux/features/bike/bikeApi"
+import { TBike } from "@/types/bikes.type"
 import { Search } from "lucide-react"
 import { ChangeEvent, useState } from "react"
 
@@ -20,14 +21,19 @@ const Bikes = () => {
 	const [category, setCategory] = useState("")
 	const [status, setStatus] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
-	const { data } = bikeApi.useGetBikeQuery(undefined)
-	console.log(data)
+	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(undefined)
+
+	const bikes = bikeData?.data
+	console.log(bikes)
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value)
 	}
 	console.log({ brand, category, status, searchTerm })
 
+	if (isLoading) {
+		return <p>Loading...</p>
+	}
 	return (
 		<div>
 			<div className="bg-about-us bg-bottom h-64 flex justify-center items-center">
@@ -126,9 +132,9 @@ const Bikes = () => {
 			<div className="container lg:px-0 md:px-10 px-5">
 				<div className="my-20">
 					<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
-						<BikeCard />
-						<BikeCard />
-						<BikeCard />
+						{bikes.map((bike: TBike) => (
+							<BikeCard bike={bike} />
+						))}
 					</div>
 				</div>
 			</div>
