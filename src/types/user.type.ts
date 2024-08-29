@@ -11,3 +11,6 @@ export type TUser = {
 	updatedAt: string
 	__v: number
 }
+export type JwtPayload = {
+	role: string
+}

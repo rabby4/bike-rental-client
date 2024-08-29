@@ -32,6 +32,7 @@ import {
 	User,
 } from "lucide-react"
 import { NavLink, useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 const Header = () => {
 	const dispatch = useAppDispatch()
@@ -42,9 +43,14 @@ const Header = () => {
 
 	const user = data?.data
 
-	const handleLogout = () => {
-		dispatch(logout())
-		navigate("/")
+	const handleLogout = async () => {
+		try {
+			dispatch(logout())
+			toast.success("User logged out successfully!")
+			navigate("/")
+		} catch (error) {
+			toast.error("Something went wrong!")
+		}
 	}
 
 	return (

@@ -1,6 +1,8 @@
 import { Separator } from "@/components/ui/separator"
-import { logout } from "@/redux/features/auth/userSlice"
-import { useAppDispatch } from "@/redux/hook"
+import { currentToken, logout } from "@/redux/features/auth/userSlice"
+import { useAppDispatch, useAppSelector } from "@/redux/hook"
+import { JwtPayload } from "@/types/user.type"
+import { verifyToken } from "@/utils/verifyToken"
 import {
 	Bike,
 	Cog,
@@ -16,8 +18,11 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const UserSidebar = () => {
+	const token = useAppSelector(currentToken)
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
+
+	const { role } = verifyToken(token as string) as JwtPayload
 
 	const handleLogout = () => {
 		dispatch(logout())
@@ -47,51 +52,58 @@ const UserSidebar = () => {
 							</NavLink>
 							<Separator />
 							{/* these routes for only admins */}
-							<NavLink
-								to="/dashboard/bike-management"
-								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
-							>
-								<Cog size={22} />
-								Bike Management
-							</NavLink>
-							<NavLink
-								to="/dashboard/user-management"
-								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
-							>
-								<Users size={22} />
-								User Management
-							</NavLink>
-							<NavLink
-								to="/dashboard/create-bike"
-								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
-							>
-								<PencilRuler size={22} />
-								Create Bikes
-							</NavLink>
-							<NavLink
-								to="/dashboard/return-bike"
-								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
-							>
-								<Handshake size={22} />
-								Return Bikes
-							</NavLink>
-							<Separator />
+							{role === "admin" ? (
+								<>
+									<NavLink
+										to="/dashboard/bike-management"
+										className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+									>
+										<Cog size={22} />
+										Bike Management
+									</NavLink>
+									<NavLink
+										to="/dashboard/user-management"
+										className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+									>
+										<Users size={22} />
+										User Management
+									</NavLink>
+									<NavLink
+										to="/dashboard/create-bike"
+										className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+									>
+										<PencilRuler size={22} />
+										Create Bikes
+									</NavLink>
+									<NavLink
+										to="/dashboard/return-bike"
+										className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+									>
+										<Handshake size={22} />
+										Return Bikes
+									</NavLink>
+									<Separator />
+								</>
+							) : (
+								<>
+									<NavLink
+										to="/dashboard/all-bikes"
+										className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+									>
+										<Bike size={22} />
+										All Bikes
+									</NavLink>
+									<NavLink
+										to="/bikes"
+										className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+									>
+										<ListCheck size={22} />
+										My Rentals
+									</NavLink>
+								</>
+							)}
 
 							{/* these routes for users */}
-							<NavLink
-								to="/bikes"
-								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
-							>
-								<Bike size={22} />
-								All Bikes
-							</NavLink>
-							<NavLink
-								to="/bikes"
-								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
-							>
-								<ListCheck size={22} />
-								My Rentals
-							</NavLink>
 
 							{/* this route for admin and user */}
 							<NavLink

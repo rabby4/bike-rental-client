@@ -19,6 +19,8 @@ import UserManagement from "@/pages/admin/UserManagement"
 import { createBrowserRouter } from "react-router-dom"
 import EditProfile from "@/pages/user/EditProfile"
 import Compare from "@/pages/Compare"
+import ProtectedRoute from "@/layouts/ProtectedRoute"
+import AllBikes from "@/pages/user/AllBikes"
 
 const router = createBrowserRouter([
 	{
@@ -63,20 +65,12 @@ const router = createBrowserRouter([
 				element: <Compare />,
 			},
 			{
-				path: "/cart",
-				// element: <Cart />,
-			},
-			{
-				path: "/checkout",
-				// element: <Checkout />,
-			},
-			{
-				path: "/thank-you",
-				// element: <ThankYou />,
-			},
-			{
 				path: "/dashboard",
-				element: <Dashboard />,
+				element: (
+					<ProtectedRoute>
+						<Dashboard />
+					</ProtectedRoute>
+				),
 				children: [
 					{
 						index: true,
@@ -93,6 +87,10 @@ const router = createBrowserRouter([
 					{
 						path: "create-bike",
 						element: <CreateBike />,
+					},
+					{
+						path: "all-bikes",
+						element: <AllBikes />,
 					},
 					{
 						path: "update-bike/:id",
