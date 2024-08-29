@@ -1,6 +1,18 @@
+import { ChangeEventHandler, useState } from "react"
+import { setHours, setMinutes } from "date-fns"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
@@ -14,9 +26,13 @@ import {
 	useForm,
 } from "react-hook-form"
 import { useParams } from "react-router-dom"
+import { Calendar } from "@/components/ui/calendar"
+import rentApi from "@/redux/features/rent/rentApi"
+import { toast } from "sonner"
 
 const BikeDetails = () => {
 	const { id } = useParams()
+	const [createRent] = rentApi.useRentBikeMutation()
 	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(id)
 	const bike = singleBikeData?.data
 
@@ -24,6 +40,54 @@ const BikeDetails = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data)
+	}
+
+	const [selected, setSelected] = useState<Date>()
+	const [timeValue, setTimeValue] = useState<string>("00:00")
+
+	const handleTimeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+		const time = e.target.value
+		if (!selected) {
+			setTimeValue(time)
+			return
+		}
+		const [hours, minutes] = time.split(":").map((str) => parseInt(str, 10))
+		const newSelectedDate = setHours(setMinutes(selected, minutes), hours)
+		setSelected(newSelectedDate)
+		setTimeValue(time)
+	}
+
+	const handleDaySelect = (date: Date | undefined) => {
+		if (!timeValue || !date) {
+			setSelected(date)
+			return
+		}
+		const [hours, minutes] = timeValue
+			.split(":")
+			.map((str) => parseInt(str, 10))
+		const newDate = new Date(
+			date.getFullYear(),
+			date.getMonth(),
+			date.getDate(),
+			hours,
+			minutes
+		)
+		setSelected(newDate)
+	}
+
+	const handleRentBike = async () => {
+		const toastId = toast.loading("Bike rent processing...")
+		const rentInfo = {
+			bikeId: bike._id,
+			startTime: selected?.toISOString(),
+		}
+		try {
+			const res = await createRent(rentInfo).unwrap()
+			toast.success(res.message, { id: toastId })
+			console.log(res)
+		} catch (error) {
+			toast.error("Bike rent Process Failed...", { id: toastId })
+		}
 	}
 
 	if (isLoading) {
@@ -153,12 +217,73 @@ const BikeDetails = () => {
 												</span>
 											</li>
 										</ul>
-										<Button
-											type="submit"
-											className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase"
-										>
-											Book Now
-										</Button>
+
+										<Dialog>
+											<DialogTrigger asChild>
+												<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
+													Rent Now
+												</Button>
+											</DialogTrigger>
+											<DialogContent className="sm:max-w-[425px] font-inter">
+												<DialogHeader>
+													<DialogTitle>Edit profile</DialogTitle>
+													<DialogDescription>
+														Make changes to your profile here. Click save when
+														you're done.
+													</DialogDescription>
+												</DialogHeader>
+												<form style={{ marginBlockEnd: "1em" }}>
+													<label>
+														Set the time:{" "}
+														<input
+															type="time"
+															value={timeValue}
+															onChange={handleTimeChange}
+														/>
+													</label>
+												</form>
+												<Calendar
+													mode="single"
+													selected={selected}
+													onSelect={handleDaySelect}
+													footer={`Selected date: ${
+														selected ? selected.toLocaleString() : "none"
+													}`}
+													className="rounded-md border font-inter"
+												/>
+												{/* <div className="grid gap-4 py-4">
+													<div className="grid grid-cols-4 items-center gap-4">
+														<Label htmlFor="name" className="text-right">
+															Name
+														</Label>
+														<Input
+															id="name"
+															defaultValue="Pedro Duarte"
+															className="col-span-3"
+														/>
+													</div>
+													<div className="grid grid-cols-4 items-center gap-4">
+														<Label htmlFor="username" className="text-right">
+															Username
+														</Label>
+														<Input
+															id="username"
+															defaultValue="@peduarte"
+															className="col-span-3"
+														/>
+													</div>
+												</div> */}
+												<DialogFooter>
+													<Button
+														onClick={handleRentBike}
+														type="submit"
+														className="bg-accent-foreground font-orbitron"
+													>
+														Rent This Bike
+													</Button>
+												</DialogFooter>
+											</DialogContent>
+										</Dialog>
 									</div>
 								</CardContent>
 							</Card>
