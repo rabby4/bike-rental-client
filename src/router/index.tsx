@@ -21,6 +21,7 @@ import EditProfile from "@/pages/user/EditProfile"
 import Compare from "@/pages/Compare"
 import ProtectedRoute from "@/layouts/ProtectedRoute"
 import AllBikes from "@/pages/user/AllBikes"
+import Rentals from "@/pages/user/Rentals"
 
 const router = createBrowserRouter([
 	{
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
 					{
 						path: "all-bikes",
 						element: <AllBikes />,
+					},
+					{
+						path: "my-rentals",
+						element: <Rentals />,
 					},
 					{
 						path: "update-bike/:id",

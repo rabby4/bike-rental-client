@@ -234,8 +234,8 @@ const BikeDetails = () => {
 												</DialogHeader>
 												<form style={{ marginBlockEnd: "1em" }}>
 													<label>
-														Set the time:{" "}
-														<input
+														Set the time:
+														<Input
 															type="time"
 															value={timeValue}
 															onChange={handleTimeChange}

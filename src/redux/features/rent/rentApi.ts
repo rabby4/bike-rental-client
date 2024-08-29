@@ -22,6 +22,16 @@ const rentApi = baseApi.injectEndpoints({
 			},
 			providesTags: ["rent"],
 		}),
+		returnBike: builder.mutation({
+			query: (returnInfo) => {
+				return {
+					url: `/rentals/${returnInfo.id}/return`,
+					method: "PUT",
+					headers: { Authorization: returnInfo.token },
+				}
+			},
+			invalidatesTags: ["rent"],
+		}),
 	}),
 })
 export default rentApi
