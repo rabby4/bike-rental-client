@@ -11,15 +11,15 @@ import {
 	SubmitHandler,
 	useForm,
 } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const EditProfile = () => {
 	const token = useAppSelector((state) => state.user.token)
 	const { data: userData } = authApi.useGetMeQuery(token)
 	const [updateMe] = authApi.useUpdateMeMutation()
-
 	const user = userData?.data
-
+	const navigate = useNavigate()
 	const { control, handleSubmit } = useForm({})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -31,6 +31,7 @@ const EditProfile = () => {
 		try {
 			const res = await updateMe(userInfo).unwrap()
 			toast.success(res.message, { id: toastId })
+			navigate("/dashboard/my-profile")
 		} catch (error) {
 			toast.error("Profile Update Process Failed...", { id: toastId })
 		}

@@ -33,11 +33,14 @@ const Login = () => {
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Logging in...")
 		try {
-			const res = await login(data).unwrap()
-			toast.success(res.message, { id: toastId })
+			const res = await login(data)
+			if (res?.error) {
+				return toast.error(res.error?.data?.message)
+			}
+			toast.success(res.data.message, { id: toastId })
 
-			const user = verifyToken(res.token)
-			dispatch(setUser({ user: user, token: res.token }))
+			const user = verifyToken(res.data.token)
+			dispatch(setUser({ user: user, token: res.data.token }))
 
 			navigate("/dashboard")
 		} catch (error) {

@@ -14,22 +14,162 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table"
+import { Input } from "@/components/ui/input"
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select"
+import { Search } from "lucide-react"
 import bikeApi from "@/redux/features/bike/bikeApi"
-import { TBike } from "@/types/bikes.type"
+import { TBike, TQueryParam } from "@/types/bikes.type"
+import { ChangeEvent, useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
+import { Badge } from "@/components/ui/badge"
 
 const AllBikes = () => {
-	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(undefined)
-	const bikes = bikeData?.data
+	const [brand, setBrand] = useState("")
+	const [category, setCategory] = useState("")
+	const [searchTerm, setSearchTerm] = useState("")
+	const [params, setParams] = useState<TQueryParam[]>([])
+	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params)
+	const bikes = bikeData?.data.filter(
+		(bike: TBike) => bike.isAvailable === true
+	)
+
+	useEffect(() => {
+		const params = []
+
+		if (brand) {
+			params.push({ name: "brand", value: brand })
+		}
+		if (category) {
+			params.push({ name: "category", value: category })
+		}
+		if (searchTerm) {
+			params.push({ name: "searchTerm", value: searchTerm })
+		}
+
+		setParams(params)
+	}, [brand, category, searchTerm])
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setSearchTerm(event.target.value)
+	}
+
+	const handleResetFilter = () => {
+		setParams([])
+		setSearchTerm("")
+	}
 
 	if (isLoading) return <p>Loading...</p>
 	return (
 		<div>
 			<Card>
 				<CardHeader>
-					<CardTitle className="font-orbitron tracking-wider">
+					<CardTitle className="font-orbitron tracking-wider text-center mb-5">
 						All Bike
 					</CardTitle>
+					<div className="max-w-6xl mx-auto z-20">
+						<Card className="rounded-none shadow-md">
+							<CardContent className="items-center p-12">
+								<div className="grid grid-cols-4 gap-5 items-end">
+									<div className="flex flex-col gap-3">
+										<h2 className="self-start font-medium font-orbitron">
+											Search Bikes
+										</h2>
+										<div className="relative ml-auto flex-1 md:grow-0 w-full text-inter">
+											<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+											<Input
+												type="search"
+												placeholder="Search..."
+												className="w-full bg-background pl-8 "
+												value={searchTerm}
+												onChange={handleChange}
+											/>
+										</div>
+									</div>
+
+									<div className="flex flex-col gap-3">
+										<h2 className="self-start font-medium font-orbitron">
+											Filter by Category
+										</h2>
+										<div className="w-full md:w-auto mb-2 md:mb-0 rounded-full font-inter">
+											<Select onValueChange={(value) => setCategory(value)}>
+												<SelectTrigger>
+													<SelectValue placeholder="Select A Category" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														<SelectLabel>Categories</SelectLabel>
+														<SelectItem value="road_bike">Road Bike</SelectItem>
+														<SelectItem value="mountain_bike">
+															Mountain Bike
+														</SelectItem>
+														<SelectItem value="hybrid_bike">
+															Hybrid Bike
+														</SelectItem>
+														<SelectItem value="cruiser_bike">
+															Cruiser Bike
+														</SelectItem>
+														<SelectItem value="electric_bike">
+															Electric Bike
+														</SelectItem>
+														<SelectItem value="bmx_bike">BMX Bike</SelectItem>
+														<SelectItem value="gravel_bike">
+															Gravel Bike
+														</SelectItem>
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</div>
+									</div>
+
+									<div className="flex flex-col gap-3">
+										<h2 className="self-start font-medium font-orbitron">
+											Filter by Brand
+										</h2>
+										<div className="w-full rounded-full md:w-auto mb-2 md:mb-0 font-inter">
+											<Select onValueChange={(value) => setBrand(value)}>
+												<SelectTrigger>
+													<SelectValue placeholder="Select A Brand" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														<SelectLabel>Brands</SelectLabel>
+														<SelectItem value="trek">Trek</SelectItem>
+														<SelectItem value="specialized">
+															Specialized
+														</SelectItem>
+														<SelectItem value="giant">Giant</SelectItem>
+														<SelectItem value="cannondale">
+															Cannondale
+														</SelectItem>
+														<SelectItem value="scott">Scott</SelectItem>
+														<SelectItem value="santa_cruz">
+															Santa Cruz
+														</SelectItem>
+														<SelectItem value="bianchi">Bianchi</SelectItem>
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</div>
+									</div>
+
+									<Button
+										onClick={handleResetFilter}
+										className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full font-orbitron tracking-wider"
+									>
+										Reset Filter
+									</Button>
+								</div>
+							</CardContent>
+						</Card>
+					</div>
 				</CardHeader>
 				<CardContent className="font-inter">
 					<Table>
@@ -45,6 +185,9 @@ const AllBikes = () => {
 								<TableHead className="hidden md:table-cell">Category</TableHead>
 								<TableHead>Bike Color</TableHead>
 								<TableHead className="hidden md:table-cell">Price</TableHead>
+								<TableHead className="hidden md:table-cell">
+									Availability
+								</TableHead>
 
 								<TableHead>
 									<span>Actions</span>
@@ -75,6 +218,13 @@ const AllBikes = () => {
 									<TableCell className="capitalize">{bike.color}</TableCell>
 									<TableCell className="hidden md:table-cell">
 										${bike.pricePerHour}
+									</TableCell>
+									<TableCell className="hidden md:table-cell">
+										{bike.isAvailable ? (
+											<Badge className="bg-accent-foreground">Available</Badge>
+										) : (
+											<Badge variant={"destructive"}>Not Available</Badge>
+										)}
 									</TableCell>
 
 									<TableCell>

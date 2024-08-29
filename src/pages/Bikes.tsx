@@ -24,6 +24,10 @@ const Bikes = () => {
 	const [params, setParams] = useState<TQueryParam[]>([])
 	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params)
 
+	const bikes = bikeData?.data.filter(
+		(bike: TBike) => bike.isAvailable === true
+	)
+
 	useEffect(() => {
 		const params = []
 
@@ -39,8 +43,6 @@ const Bikes = () => {
 
 		setParams(params)
 	}, [brand, category, searchTerm])
-
-	const bikes = bikeData?.data
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value)

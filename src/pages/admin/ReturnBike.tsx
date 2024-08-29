@@ -31,8 +31,6 @@ const ReturnBike = () => {
 	const { data: rentalData } = rentApi.useGetRentQuery(token)
 	const rentalBikes = rentalData?.data
 
-	console.log(rentalBikes)
-
 	const handleReturn = async (id: string) => {
 		const toastId = toast.loading("Bike return processing...")
 		const returnInfo = {

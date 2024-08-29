@@ -21,13 +21,11 @@ import { NavLink } from "react-router-dom"
 const Profile = () => {
 	const token = useAppSelector(currentToken)
 	const { data, isLoading } = authApi.useGetMeQuery(token)
+	const user = data?.data
 
 	if (isLoading) {
 		return <p>Loading...</p>
 	}
-
-	const user = data?.data
-	console.log(user)
 
 	return (
 		<div>
