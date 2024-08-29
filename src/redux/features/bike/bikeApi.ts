@@ -1,4 +1,5 @@
 import baseApi from "@/redux/api/baseApi"
+import { TQueryParam } from "@/types/bikes.type"
 
 const bikeApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
@@ -13,10 +14,18 @@ const bikeApi = baseApi.injectEndpoints({
 			invalidatesTags: ["bike"],
 		}),
 		getBike: builder.query({
-			query: () => {
+			query: (args) => {
+				const params = new URLSearchParams()
+
+				if (args) {
+					args.forEach((item: TQueryParam) => {
+						params.append(item.name, item.value as string)
+					})
+				}
 				return {
-					url: `/bikes`,
+					url: `/bikes?${params.toString()}`,
 					method: "GET",
+					// params: params,
 				}
 			},
 			providesTags: ["bike"],

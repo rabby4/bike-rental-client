@@ -10,6 +10,7 @@ const authApi = baseApi.injectEndpoints({
 					body: data,
 				}
 			},
+			invalidatesTags: ["user"],
 		}),
 		registration: builder.mutation({
 			query: (data) => {
@@ -28,6 +29,7 @@ const authApi = baseApi.injectEndpoints({
 					headers: { Authorization: `${token}` },
 				}
 			},
+			providesTags: ["user"],
 		}),
 		getMe: builder.query({
 			query: (token) => {
@@ -37,6 +39,7 @@ const authApi = baseApi.injectEndpoints({
 					headers: { Authorization: `${token}` },
 				}
 			},
+			providesTags: ["user"],
 		}),
 		updateMe: builder.mutation({
 			query: (userInfo) => {
@@ -47,6 +50,7 @@ const authApi = baseApi.injectEndpoints({
 					headers: { Authorization: `${userInfo.token}` },
 				}
 			},
+			invalidatesTags: ["user"],
 		}),
 	}),
 })

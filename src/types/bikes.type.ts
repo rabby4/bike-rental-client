@@ -18,3 +18,7 @@ export type TBike = {
 	updatedAt: string
 	__v: number
 }
+export type TQueryParam = {
+	name: string
+	value: string | React.Key
+}

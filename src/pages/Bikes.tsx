@@ -12,24 +12,43 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import bikeApi from "@/redux/features/bike/bikeApi"
-import { TBike } from "@/types/bikes.type"
+import { TBike, TQueryParam } from "@/types/bikes.type"
 import { Search } from "lucide-react"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 
 const Bikes = () => {
 	const [brand, setBrand] = useState("")
 	const [category, setCategory] = useState("")
-	const [status, setStatus] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
-	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(undefined)
+	const [params, setParams] = useState<TQueryParam[]>([])
+	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params)
+
+	useEffect(() => {
+		const params = []
+
+		if (brand) {
+			params.push({ name: "brand", value: brand })
+		}
+		if (category) {
+			params.push({ name: "category", value: category })
+		}
+		if (searchTerm) {
+			params.push({ name: "searchTerm", value: searchTerm })
+		}
+
+		setParams(params)
+	}, [brand, category, searchTerm])
 
 	const bikes = bikeData?.data
-	console.log(bikes)
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value)
 	}
-	console.log({ brand, category, status, searchTerm })
+
+	const handleResetFilter = () => {
+		setParams([])
+		setSearchTerm("")
+	}
 
 	if (isLoading) {
 		return <p>Loading...</p>
@@ -42,7 +61,7 @@ const Bikes = () => {
 			<div className="max-w-6xl mx-auto -mt-16 z-20">
 				<Card className="rounded-none shadow-xl">
 					<CardContent className="items-center p-12">
-						<div className="grid grid-cols-5 gap-5 items-end">
+						<div className="grid grid-cols-4 gap-5 items-end">
 							<div className="flex flex-col gap-3">
 								<h2 className="self-start font-medium font-orbitron">
 									Search Bikes
@@ -58,27 +77,6 @@ const Bikes = () => {
 									/>
 								</div>
 							</div>
-							<div className="flex flex-col gap-3">
-								<h2 className="self-start font-medium font-orbitron">
-									Filter by Status
-								</h2>
-								<div className="w-full md:w-auto mb-2 md:mb-0 font-inter">
-									<Select onValueChange={(value) => setStatus(value)}>
-										<SelectTrigger>
-											<SelectValue placeholder="Select A Status" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectGroup>
-												<SelectLabel>Availability</SelectLabel>
-												<SelectItem value="available">Available</SelectItem>
-												<SelectItem value="notAvailable">
-													Not Available
-												</SelectItem>
-											</SelectGroup>
-										</SelectContent>
-									</Select>
-								</div>
-							</div>
 
 							<div className="flex flex-col gap-3">
 								<h2 className="self-start font-medium font-orbitron">
@@ -92,9 +90,19 @@ const Bikes = () => {
 										<SelectContent>
 											<SelectGroup>
 												<SelectLabel>Categories</SelectLabel>
-												<SelectItem value="eBike">E-Bike</SelectItem>
-												<SelectItem value="roadBike">Road Bike</SelectItem>
-												<SelectItem value="kidsBike">Kids Bike</SelectItem>
+												<SelectItem value="road_bike">Road Bike</SelectItem>
+												<SelectItem value="mountain_bike">
+													Mountain Bike
+												</SelectItem>
+												<SelectItem value="hybrid_bike">Hybrid Bike</SelectItem>
+												<SelectItem value="cruiser_bike">
+													Cruiser Bike
+												</SelectItem>
+												<SelectItem value="electric_bike">
+													Electric Bike
+												</SelectItem>
+												<SelectItem value="bmx_bike">BMX Bike</SelectItem>
+												<SelectItem value="gravel_bike">Gravel Bike</SelectItem>
 											</SelectGroup>
 										</SelectContent>
 									</Select>
@@ -113,16 +121,23 @@ const Bikes = () => {
 										<SelectContent>
 											<SelectGroup>
 												<SelectLabel>Brands</SelectLabel>
-												<SelectItem value="eBike">E-Bike</SelectItem>
-												<SelectItem value="roadBike">Road Bike</SelectItem>
-												<SelectItem value="kidsBike">Kids Bike</SelectItem>
+												<SelectItem value="trek">Trek</SelectItem>
+												<SelectItem value="specialized">Specialized</SelectItem>
+												<SelectItem value="giant">Giant</SelectItem>
+												<SelectItem value="cannondale">Cannondale</SelectItem>
+												<SelectItem value="scott">Scott</SelectItem>
+												<SelectItem value="santa_cruz">Santa Cruz</SelectItem>
+												<SelectItem value="bianchi">Bianchi</SelectItem>
 											</SelectGroup>
 										</SelectContent>
 									</Select>
 								</div>
 							</div>
 
-							<Button className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full font-orbitron tracking-wider">
+							<Button
+								onClick={handleResetFilter}
+								className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full font-orbitron tracking-wider"
+							>
 								Reset Filter
 							</Button>
 						</div>
@@ -133,7 +148,7 @@ const Bikes = () => {
 				<div className="my-20">
 					<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
 						{bikes.map((bike: TBike) => (
-							<BikeCard bike={bike} />
+							<BikeCard key={bike._id} bike={bike} />
 						))}
 					</div>
 				</div>

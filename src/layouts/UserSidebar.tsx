@@ -1,4 +1,6 @@
 import { Separator } from "@/components/ui/separator"
+import { logout } from "@/redux/features/auth/userSlice"
+import { useAppDispatch } from "@/redux/hook"
 import {
 	Bike,
 	Cog,
@@ -10,9 +12,18 @@ import {
 	User,
 	Users,
 } from "lucide-react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 const UserSidebar = () => {
+	const dispatch = useAppDispatch()
+	const navigate = useNavigate()
+
+	const handleLogout = () => {
+		dispatch(logout())
+		toast.success("User logged out successfully!")
+		navigate("/")
+	}
 	return (
 		<div>
 			<div className="md:h-[89vh] my-5 border-r bg-muted/40 block lg:p-5 md:p-2 rounded-md">
@@ -88,7 +99,7 @@ const UserSidebar = () => {
 								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
 							>
 								<LogOut size={22} />
-								Log Our
+								<span onClick={handleLogout}>Log Out</span>
 							</NavLink>
 						</nav>
 					</div>

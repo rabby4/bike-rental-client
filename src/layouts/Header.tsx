@@ -16,26 +16,33 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { logout } from "@/redux/features/auth/userSlice"
-import { useAppDispatch } from "@/redux/hook"
+import authApi from "@/redux/features/auth/authApi"
+import { currentToken, logout } from "@/redux/features/auth/userSlice"
+import { useAppDispatch, useAppSelector } from "@/redux/hook"
 import {
 	CreditCard,
-	Heart,
 	LayoutDashboard,
 	LifeBuoy,
 	LogOut,
 	Menu,
+	Repeat,
 	Search,
 	Settings,
 	User,
 } from "lucide-react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 
 const Header = () => {
 	const dispatch = useAppDispatch()
+	const token = useAppSelector(currentToken)
+	const { data } = authApi.useGetMeQuery(token)
+	const navigate = useNavigate()
+
+	const user = data?.data
 
 	const handleLogout = () => {
 		dispatch(logout())
+		navigate("/")
 	}
 
 	return (
@@ -178,75 +185,83 @@ const Header = () => {
 								</NavigationMenuItem>
 								<NavigationMenuItem className="relative">
 									<NavLink to={"/"} className={navigationMenuTriggerStyle()}>
-										<Heart />
+										<Repeat />
 										<span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-accent-foreground absolute right-2 -top-[2px]">
 											0
 										</span>
 									</NavLink>
 								</NavigationMenuItem>
-								<NavigationMenuItem className="relative">
-									{/* <NavLink
-										to={"/cart"}
-										className={navigationMenuTriggerStyle()}
-									> */}
-									<DropdownMenu>
-										<DropdownMenuTrigger asChild className="cursor-pointer">
-											<Avatar>
-												<AvatarImage
-													src="https://github.com/shadcn.png"
-													alt="@shadcn"
-												/>
-												<AvatarFallback>CN</AvatarFallback>
-											</Avatar>
-										</DropdownMenuTrigger>
-										<DropdownMenuContent className="w-56 transform-none">
-											<DropdownMenuLabel>My Account</DropdownMenuLabel>
-											<DropdownMenuSeparator />
-											<DropdownMenuGroup>
-												<DropdownMenuItem>
-													<LayoutDashboard className="mr-2 h-4 w-4" />
-													<NavLink to={"/dashboard"}>Dashboard</NavLink>
-												</DropdownMenuItem>
-												<DropdownMenuItem>
-													<User className="mr-2 h-4 w-4" />
-													<NavLink to={"/dashboard/my-profile"}>
-														Profile
-													</NavLink>
-												</DropdownMenuItem>
-												<DropdownMenuItem>
-													<CreditCard className="mr-2 h-4 w-4" />
-													<span>Billing</span>
-												</DropdownMenuItem>
-												<DropdownMenuItem>
-													<Settings className="mr-2 h-4 w-4" />
-													<span>Settings</span>
-												</DropdownMenuItem>
-											</DropdownMenuGroup>
-											<DropdownMenuSeparator />
+								{user ? (
+									<NavigationMenuItem className="relative">
+										<DropdownMenu>
+											<DropdownMenuTrigger asChild className="cursor-pointer">
+												<Avatar>
+													<AvatarImage
+														src={
+															user
+																? user.image
+																	? user.image
+																	: "https://i.ibb.co/WPy59Zn/logo.png"
+																: "https://i.ibb.co/WPy59Zn/logo.png"
+														}
+														alt="@shadcn"
+													/>
+													<AvatarFallback>CN</AvatarFallback>
+												</Avatar>
+											</DropdownMenuTrigger>
+											<DropdownMenuContent className="w-56 transform-none">
+												<DropdownMenuLabel>My Account</DropdownMenuLabel>
+												<DropdownMenuSeparator />
+												<DropdownMenuGroup>
+													<DropdownMenuItem>
+														<LayoutDashboard className="mr-2 h-4 w-4" />
+														<NavLink to={"/dashboard"}>Dashboard</NavLink>
+													</DropdownMenuItem>
+													<DropdownMenuItem>
+														<User className="mr-2 h-4 w-4" />
+														<NavLink to={"/dashboard/my-profile"}>
+															Profile
+														</NavLink>
+													</DropdownMenuItem>
+													<DropdownMenuItem>
+														<CreditCard className="mr-2 h-4 w-4" />
+														<span>Billing</span>
+													</DropdownMenuItem>
+													<DropdownMenuItem>
+														<Settings className="mr-2 h-4 w-4" />
+														<span>Settings</span>
+													</DropdownMenuItem>
+												</DropdownMenuGroup>
+												<DropdownMenuSeparator />
 
-											<DropdownMenuItem>
-												<LifeBuoy className="mr-2 h-4 w-4" />
-												<span>Support</span>
-											</DropdownMenuItem>
+												<DropdownMenuItem>
+													<LifeBuoy className="mr-2 h-4 w-4" />
+													<span>Support</span>
+												</DropdownMenuItem>
 
-											<DropdownMenuSeparator />
-											<DropdownMenuItem>
-												<LogOut className="mr-2 h-4 w-4" />
-												<Button
-													onClick={handleLogout}
-													className="bg-transparent p-0 hover:bg-transparent text-black hover:text-accent-foreground"
-												>
-													Log out
-												</Button>
-											</DropdownMenuItem>
-										</DropdownMenuContent>
-									</DropdownMenu>
-									{/* <ShoppingCart /> */}
-									{/* <span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-accent-foreground absolute right-2 -top-[2px]">
-										<p>0</p>
-									</span> */}
-									{/* </NavLink> */}
-								</NavigationMenuItem>
+												<DropdownMenuSeparator />
+												<DropdownMenuItem>
+													<LogOut className="mr-2 h-4 w-4" />
+													<Button
+														onClick={handleLogout}
+														className="bg-transparent p-0 hover:bg-transparent text-black hover:text-accent-foreground"
+													>
+														Log out
+													</Button>
+												</DropdownMenuItem>
+											</DropdownMenuContent>
+										</DropdownMenu>
+									</NavigationMenuItem>
+								) : (
+									<NavLink to={"/login"}>
+										<Button
+											type="submit"
+											className="bg-accent-foreground w-full font-orbitron tracking-wider px-10"
+										>
+											LogIn
+										</Button>
+									</NavLink>
+								)}
 							</NavigationMenuList>
 						</NavigationMenu>
 					</div>

@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import authApi from "@/redux/features/auth/authApi"
+import { currentToken } from "@/redux/features/auth/userSlice"
 import { useAppSelector } from "@/redux/hook"
 import {
 	Camera,
@@ -18,7 +19,7 @@ import {
 import { NavLink } from "react-router-dom"
 
 const Profile = () => {
-	const token = useAppSelector((state) => state.user.token)
+	const token = useAppSelector(currentToken)
 	const { data, isLoading } = authApi.useGetMeQuery(token)
 
 	if (isLoading) {

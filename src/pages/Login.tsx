@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {
 	useForm,
 	SubmitHandler,
@@ -28,6 +28,7 @@ const Login = () => {
 	const [login] = authApi.useLoginUserMutation()
 	const { control, handleSubmit } = useForm({})
 	const dispatch = useAppDispatch()
+	const navigate = useNavigate()
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Logging in...")
@@ -36,9 +37,9 @@ const Login = () => {
 			toast.success(res.message, { id: toastId })
 
 			const user = verifyToken(res.token)
-
 			dispatch(setUser({ user: user, token: res.token }))
-			toast.success("Logged in success", { id: toastId })
+
+			navigate("/dashboard")
 		} catch (error) {
 			toast.error("Login Failed...", { id: toastId })
 		}

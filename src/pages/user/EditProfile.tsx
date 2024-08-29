@@ -15,9 +15,7 @@ import { toast } from "sonner"
 
 const EditProfile = () => {
 	const token = useAppSelector((state) => state.user.token)
-	const { data: userData } = authApi.useGetMeQuery(token, {
-		pollingInterval: 1000,
-	})
+	const { data: userData } = authApi.useGetMeQuery(token)
 	const [updateMe] = authApi.useUpdateMeMutation()
 
 	const user = userData?.data
