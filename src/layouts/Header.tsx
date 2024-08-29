@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import authApi from "@/redux/features/auth/authApi"
 import { currentToken, logout } from "@/redux/features/auth/userSlice"
+import { currentCompareData } from "@/redux/features/bike/bikeSlice"
 import { useAppDispatch, useAppSelector } from "@/redux/hook"
 import {
 	CreditCard,
@@ -35,8 +36,10 @@ import { NavLink, useNavigate } from "react-router-dom"
 const Header = () => {
 	const dispatch = useAppDispatch()
 	const token = useAppSelector(currentToken)
+	const bikes = useAppSelector(currentCompareData)
 	const { data } = authApi.useGetMeQuery(token)
 	const navigate = useNavigate()
+	console.log(bikes)
 
 	const user = data?.data
 
@@ -184,10 +187,13 @@ const Header = () => {
 									</NavLink>
 								</NavigationMenuItem>
 								<NavigationMenuItem className="relative">
-									<NavLink to={"/"} className={navigationMenuTriggerStyle()}>
+									<NavLink
+										to={"/compare"}
+										className={navigationMenuTriggerStyle()}
+									>
 										<Repeat />
 										<span className="size-5 flex items-center justify-center rounded-full text-sm text-white bg-accent-foreground absolute right-2 -top-[2px]">
-											0
+											{bikes.length}
 										</span>
 									</NavLink>
 								</NavigationMenuItem>

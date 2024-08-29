@@ -9,19 +9,28 @@ import {
 	CardTitle,
 } from "../ui/card"
 import { NavLink } from "react-router-dom"
+import { addBike } from "@/redux/features/bike/bikeSlice"
+import { useAppDispatch } from "@/redux/hook"
 
 type BikeCardProps = {
 	bike: TBike
 }
 
 const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
+	const dispatch = useAppDispatch()
+	const handleCompare = (data: TBike) => {
+		dispatch(addBike(data))
+	}
 	return (
 		<div>
 			<Card className="action-hover overflow-hidden rounded-none">
 				<CardHeader className="p-0 relative ">
 					<img src={bike?.image} alt="" />
 					<div className="action-buttons flex justify-center px-5 z-0 absolute bottom-0 w-full">
-						<Button className="bg-accent-foreground font-inter">
+						<Button
+							onClick={() => handleCompare(bike)}
+							className="bg-accent-foreground font-inter"
+						>
 							Add To Compare
 						</Button>
 					</div>

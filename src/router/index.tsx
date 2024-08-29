@@ -18,6 +18,7 @@ import UpdateBike from "@/pages/admin/UpdateBike"
 import UserManagement from "@/pages/admin/UserManagement"
 import { createBrowserRouter } from "react-router-dom"
 import EditProfile from "@/pages/user/EditProfile"
+import Compare from "@/pages/Compare"
 
 const router = createBrowserRouter([
 	{
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
 			{
 				path: "/registration",
 				element: <Register />,
+			},
+			{
+				path: "/compare",
+				element: <Compare />,
 			},
 			{
 				path: "/cart",

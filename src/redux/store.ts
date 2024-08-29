@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import userReducer from "./features/auth/userSlice"
+import compareReducer from "./features/bike/bikeSlice"
 
 import baseApi from "./api/baseApi"
 import storage from "redux-persist/lib/storage"
@@ -18,13 +19,19 @@ const persistConfig = {
 	key: "bike",
 	storage,
 }
+const persistConfig1 = {
+	key: "compare",
+	storage,
+}
 
 const persistedUserReducer = persistReducer(persistConfig, userReducer)
+const persistedBikeReducer = persistReducer(persistConfig1, compareReducer)
 
 export const store = configureStore({
 	reducer: {
 		[baseApi.reducerPath]: baseApi.reducer,
 		user: persistedUserReducer,
+		compare: persistedBikeReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({

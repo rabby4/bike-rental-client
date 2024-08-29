@@ -12,6 +12,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import bikeApi from "@/redux/features/bike/bikeApi"
+
 import { TBike, TQueryParam } from "@/types/bikes.type"
 import { Search } from "lucide-react"
 import { ChangeEvent, useEffect, useState } from "react"
