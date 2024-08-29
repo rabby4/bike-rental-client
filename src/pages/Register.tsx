@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff, Github, Mail } from "lucide-react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {
 	useForm,
 	SubmitHandler,
@@ -23,6 +23,7 @@ import { toast } from "sonner"
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false)
 	const [registration] = authApi.useRegistrationMutation()
+	const navigate = useNavigate()
 
 	const { control, handleSubmit } = useForm({})
 
@@ -36,7 +37,7 @@ const Register = () => {
 		try {
 			const res = await registration(userInfo).unwrap()
 			toast.success(res.message, { id: toastId })
-			console.log(res)
+			navigate("/login")
 		} catch (error) {
 			toast.error("Sign Up process Failed...", { id: toastId })
 		}

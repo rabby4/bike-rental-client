@@ -39,26 +39,26 @@ const bikeApi = baseApi.injectEndpoints({
 			},
 			providesTags: ["bike"],
 		}),
-
-		// updateBike: builder.mutation({
-		// 	query: (options) => {
-		// 		return {
-		// 			url: `/bikes/${options.id}`,
-		// 			method: "PUT",
-		// 			body: options.data,
-		// 		}
-		// 	},
-		// 	invalidatesTags: ["bike"],
-		// }),
-		// deleteBike: builder.mutation({
-		// 	query: (id) => {
-		// 		return {
-		// 			url: `/bikes/${id}`,
-		// 			method: "DELETE",
-		// 		}
-		// 	},
-		// 	invalidatesTags: ["bike"],
-		// }),
+		updateBike: builder.mutation({
+			query: (options) => {
+				return {
+					url: `/bikes/${options.id}`,
+					method: "PUT",
+					body: options.data,
+					headers: { Authorization: `${options.token}` },
+				}
+			},
+			invalidatesTags: ["bike"],
+		}),
+		deleteBike: builder.mutation({
+			query: (id) => {
+				return {
+					url: `/bikes/${id}`,
+					method: "DELETE",
+				}
+			},
+			invalidatesTags: ["bike"],
+		}),
 	}),
 })
 export default bikeApi

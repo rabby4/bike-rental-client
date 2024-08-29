@@ -95,7 +95,7 @@ const router = createBrowserRouter([
 						element: <CreateBike />,
 					},
 					{
-						path: "update-bike",
+						path: "update-bike/:id",
 						element: <UpdateBike />,
 					},
 					{

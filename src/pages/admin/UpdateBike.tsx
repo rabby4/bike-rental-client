@@ -16,36 +16,74 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { CircleAlert } from "lucide-react"
+import { currentToken } from "@/redux/features/auth/userSlice"
+import bikeApi from "@/redux/features/bike/bikeApi"
+import { useAppSelector } from "@/redux/hook"
 import {
 	Controller,
 	FieldValues,
 	SubmitHandler,
 	useForm,
 } from "react-hook-form"
+import { useParams } from "react-router-dom"
+import { toast } from "sonner"
 
 const UpdateBike = () => {
-	const { control, handleSubmit } = useForm({})
+	const { id } = useParams()
+	const token = useAppSelector(currentToken)
+	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(id)
+	const [updateBike] = bikeApi.useUpdateBikeMutation()
+
+	const bike = singleBikeData?.data
+
+	const { control, handleSubmit } = useForm({
+		defaultValues: {
+			name: bike?.name,
+			brand: bike?.brand,
+			category: bike?.category,
+			cc: bike?.cc,
+			color: bike?.color,
+			description: bike?.description,
+			frame: bike?.frame,
+			image: bike?.image,
+			model: bike?.model,
+			pricePerHour: bike?.pricePerHour,
+			support: bike?.support,
+			weight: bike?.weight,
+			year: bike?.year,
+		},
+	})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		console.log(data)
+		const toastId = toast.loading("Updating bike info...")
+		const bikeInfo = {
+			id,
+			data,
+			token,
+		}
+		try {
+			const res = await updateBike(bikeInfo).unwrap()
+			toast.success(res.message, { id: toastId })
+		} catch (error) {
+			toast.error("Bike Update Process Failed...", { id: toastId })
+		}
 	}
+
+	if (isLoading) return <p>Loading...</p>
+
 	return (
 		<div className="w-full p-24 pt-8">
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				defaultValue={singleBikeData?.data}
+			>
 				<div className="grid grid-cols-3 gap-10 mt-10">
 					<div className="col-span-2">
 						<Card x-chunk="dashboard-07-chunk-0">
 							<CardHeader>
-								<CardTitle className="font-orbitron">Update Bike</CardTitle>
+								<CardTitle className="font-orbitron">Upload A Bike</CardTitle>
 								<CardDescription className="font-inter">
-									Edit the details of this bike and update the bike
+									Add the details of a bike and upload the bike
 								</CardDescription>
 							</CardHeader>
 							<CardContent className="font-inter">
@@ -55,7 +93,7 @@ const UpdateBike = () => {
 										<Controller
 											name="name"
 											control={control}
-											// rules={{ required: true }}
+											rules={{ required: true }}
 											render={({ field }) => (
 												<Input
 													{...field}
@@ -73,7 +111,7 @@ const UpdateBike = () => {
 											<Controller
 												name="brand"
 												control={control}
-												defaultValue=""
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Select
 														{...field}
@@ -106,7 +144,7 @@ const UpdateBike = () => {
 											<Controller
 												name="model"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -119,13 +157,29 @@ const UpdateBike = () => {
 										</div>
 									</div>
 
-									<div className="grid grid-cols-2 gap-5 justify-between">
+									<div className="grid grid-cols-3 gap-5 justify-between">
+										<div className="grid gap-3">
+											<Label>Bike CC</Label>
+											<Controller
+												name="cc"
+												control={control}
+												rules={{ required: true }}
+												render={({ field }) => (
+													<Input
+														{...field}
+														type="text"
+														className="w-full"
+														placeholder="Write you bike CC"
+													/>
+												)}
+											/>
+										</div>
 										<div className="grid gap-3">
 											<Label>Release Year</Label>
 											<Controller
 												name="year"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -137,11 +191,11 @@ const UpdateBike = () => {
 											/>
 										</div>
 										<div className="grid gap-3">
-											<Label>Frame Size</Label>
+											<Label>Frame Size (cm)</Label>
 											<Controller
 												name="frame"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -156,11 +210,11 @@ const UpdateBike = () => {
 
 									<div className="grid grid-cols-2 gap-5 justify-between">
 										<div className="grid gap-3">
-											<Label>Max. support</Label>
+											<Label>Max. support (km/h)</Label>
 											<Controller
 												name="support"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -236,11 +290,11 @@ const UpdateBike = () => {
 											/>
 										</div>
 										<div className="grid gap-3">
-											<Label>Weight</Label>
+											<Label>Weight (kg)</Label>
 											<Controller
 												name="weight"
 												control={control}
-												// rules={{ required: true }}
+												rules={{ required: true }}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -257,7 +311,7 @@ const UpdateBike = () => {
 										<Controller
 											name="description"
 											control={control}
-											// rules={{ required: true }}
+											rules={{ required: true }}
 											render={({ field }) => (
 												<Textarea
 													{...field}
@@ -276,49 +330,30 @@ const UpdateBike = () => {
 					<div className="col-span-1 space-y-10">
 						<Card x-chunk="dashboard-07-chunk-3">
 							<CardHeader>
-								<CardTitle className="font-orbitron">
-									Bike Availability
-								</CardTitle>
+								<CardTitle className="font-orbitron">Bike Price</CardTitle>
 							</CardHeader>
 							<CardContent className="font-inter">
 								<div className="grid gap-6">
 									<div className="grid gap-3">
-										<Label htmlFor="status" className="flex items-center gap-4">
-											Availability
-											<TooltipProvider>
-												<Tooltip>
-													<TooltipTrigger>
-														<CircleAlert size={16} />
-													</TooltipTrigger>
-													<TooltipContent>
-														<p>Default is Available</p>
-													</TooltipContent>
-												</Tooltip>
-											</TooltipProvider>
-										</Label>
+										<Label>Price Per Hour</Label>
 										<Controller
-											name="isAvailable"
+											name="pricePerHour"
 											control={control}
-											defaultValue="true"
+											rules={{ required: true }}
 											render={({ field }) => (
-												<Select
+												<Input
 													{...field}
-													onValueChange={(value) => field.onChange(value)}
-												>
-													<SelectTrigger>
-														<SelectValue placeholder="Select Availability" />
-													</SelectTrigger>
-													<SelectContent>
-														<SelectItem value="true">Available</SelectItem>
-														<SelectItem value="false">Unavailable</SelectItem>
-													</SelectContent>
-												</Select>
+													type="text"
+													className="w-full"
+													placeholder="Write you bike Weight"
+												/>
 											)}
 										/>
 									</div>
 								</div>
 							</CardContent>
 						</Card>
+
 						<Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
 							<CardHeader>
 								<CardTitle className="font-orbitron">Product Image</CardTitle>
@@ -353,7 +388,7 @@ const UpdateBike = () => {
 								size="sm"
 								className="bg-accent-foreground font-orbitron tracking-wider px-10 py-5 rounded-none duration-500"
 							>
-								Update Bike
+								Upload Bike
 							</Button>
 						</div>
 					</div>

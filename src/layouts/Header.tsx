@@ -39,7 +39,6 @@ const Header = () => {
 	const bikes = useAppSelector(currentCompareData)
 	const { data } = authApi.useGetMeQuery(token)
 	const navigate = useNavigate()
-	console.log(bikes)
 
 	const user = data?.data
 

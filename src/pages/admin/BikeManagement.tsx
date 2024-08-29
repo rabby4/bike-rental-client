@@ -26,6 +26,7 @@ import bikeApi from "@/redux/features/bike/bikeApi"
 import { TBike } from "@/types/bikes.type"
 import { MoreHorizontal } from "lucide-react"
 import moment from "moment"
+import { NavLink } from "react-router-dom"
 
 const BikeManagement = () => {
 	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(undefined)
@@ -107,8 +108,18 @@ const BikeManagement = () => {
 											</DropdownMenuTrigger>
 											<DropdownMenuContent align="end">
 												<DropdownMenuLabel>Actions</DropdownMenuLabel>
-												<DropdownMenuItem>Edit</DropdownMenuItem>
-												<DropdownMenuItem>Delete</DropdownMenuItem>
+												<DropdownMenuItem>
+													<NavLink to={`/dashboard/update-bike/${bike._id}`}>
+														<Button className="w-full bg-transparent text-black hover:bg-transparent text-base hover:text-accent-foreground">
+															Edit
+														</Button>
+													</NavLink>
+												</DropdownMenuItem>
+												<DropdownMenuItem>
+													<Button className="w-full bg-transparent text-black hover:bg-transparent text-base hover:text-red-600">
+														Delete
+													</Button>
+												</DropdownMenuItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
 									</TableCell>
