@@ -27,12 +27,22 @@ import { TBike } from "@/types/bikes.type"
 import { MoreHorizontal } from "lucide-react"
 import moment from "moment"
 import { NavLink } from "react-router-dom"
+import { toast } from "sonner"
 
 const BikeManagement = () => {
 	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(undefined)
+	const [deleteBike] = bikeApi.useDeleteBikeMutation()
 	const bikes = bikeData?.data
 
-	console.log(bikes)
+	const handleDeleteBike = async (id: string) => {
+		const toastId = toast.loading("Deleting bike...")
+		try {
+			const res = await deleteBike(id).unwrap()
+			toast.success(res.message, { id: toastId })
+		} catch (error) {
+			toast.error("Bike Update Process Failed...", { id: toastId })
+		}
+	}
 
 	if (isLoading) {
 		return <p>loading...</p>
@@ -116,7 +126,10 @@ const BikeManagement = () => {
 													</NavLink>
 												</DropdownMenuItem>
 												<DropdownMenuItem>
-													<Button className="w-full bg-transparent text-black hover:bg-transparent text-base hover:text-red-600">
+													<Button
+														onClick={() => handleDeleteBike(bike._id)}
+														className="w-full bg-transparent text-black hover:bg-transparent text-base hover:text-red-600"
+													>
 														Delete
 													</Button>
 												</DropdownMenuItem>
@@ -129,9 +142,9 @@ const BikeManagement = () => {
 					</Table>
 				</CardContent>
 				<CardFooter>
-					<div className="text-xs text-muted-foreground">
+					{/* <div className="text-xs text-muted-foreground">
 						Showing <strong>1-10</strong> of <strong>32</strong> products
-					</div>
+					</div> */}
 				</CardFooter>
 			</Card>
 		</div>

@@ -23,14 +23,51 @@ import {
 	TableRow,
 } from "@/components/ui/table"
 import authApi from "@/redux/features/auth/authApi"
+import { currentToken } from "@/redux/features/auth/userSlice"
+import { useAppSelector } from "@/redux/hook"
 import { TUser } from "@/types/user.type"
 import { MoreHorizontal } from "lucide-react"
+import { toast } from "sonner"
 
 const UserManagement = () => {
+	const [updateUserToAdmin] = authApi.useUpdateUserToAdminMutation()
+	const [deleteUser] = authApi.useDeleteUserMutation()
+
 	const { data: userData, isLoading } = authApi.useGetAllUsersQuery(undefined)
+	const token = useAppSelector(currentToken)
 	const users = userData?.data
 
-	console.log(users)
+	const handleUpdateUser = async (id: string) => {
+		const toastId = toast.loading("Updating user...")
+
+		const userInfo = {
+			id,
+			token,
+		}
+
+		try {
+			const res = await updateUserToAdmin(userInfo).unwrap()
+			toast.success(res.message, { id: toastId })
+		} catch (error) {
+			toast.error("User Update Process Failed...", { id: toastId })
+		}
+	}
+
+	const handleDeleteUser = async (id: string) => {
+		const toastId = toast.loading("Deleting user...")
+
+		const userInfo = {
+			id,
+			token,
+		}
+
+		try {
+			const res = await deleteUser(userInfo).unwrap()
+			toast.success(res.message, { id: toastId })
+		} catch (error) {
+			toast.error("User Delete Process Failed...", { id: toastId })
+		}
+	}
 
 	if (isLoading) {
 		return <p>loading...</p>
@@ -99,8 +136,22 @@ const UserManagement = () => {
 											</DropdownMenuTrigger>
 											<DropdownMenuContent align="end">
 												<DropdownMenuLabel>Actions</DropdownMenuLabel>
-												<DropdownMenuItem>Edit</DropdownMenuItem>
-												<DropdownMenuItem>Delete</DropdownMenuItem>
+												<DropdownMenuItem>
+													<Button
+														onClick={() => handleUpdateUser(user._id)}
+														className="w-full bg-transparent text-black hover:bg-transparent text-base hover:text-accent-foreground"
+													>
+														Make Admin
+													</Button>
+												</DropdownMenuItem>
+												<DropdownMenuItem>
+													<Button
+														onClick={() => handleDeleteUser(user._id)}
+														className="w-full bg-transparent text-black hover:bg-transparent text-base hover:text-red-600"
+													>
+														Delete
+													</Button>
+												</DropdownMenuItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
 									</TableCell>

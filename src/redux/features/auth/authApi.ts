@@ -52,6 +52,26 @@ const authApi = baseApi.injectEndpoints({
 			},
 			invalidatesTags: ["user"],
 		}),
+		updateUserToAdmin: builder.mutation({
+			query: (userInfo) => {
+				return {
+					url: `/users/${userInfo.id}`,
+					method: "PATCH",
+					headers: { Authorization: `${userInfo.token}` },
+				}
+			},
+			invalidatesTags: ["user"],
+		}),
+		deleteUser: builder.mutation({
+			query: (userInfo) => {
+				return {
+					url: `/users/${userInfo.id}`,
+					method: "DELETE",
+					headers: { Authorization: `${userInfo.token}` },
+				}
+			},
+			invalidatesTags: ["user"],
+		}),
 	}),
 })
 export default authApi

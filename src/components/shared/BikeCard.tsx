@@ -11,6 +11,7 @@ import {
 import { NavLink } from "react-router-dom"
 import { addBike } from "@/redux/features/bike/bikeSlice"
 import { useAppDispatch } from "@/redux/hook"
+import { toast } from "sonner"
 
 type BikeCardProps = {
 	bike: TBike
@@ -20,6 +21,7 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 	const dispatch = useAppDispatch()
 	const handleCompare = (data: TBike) => {
 		dispatch(addBike(data))
+		toast.success("Successfully add to compare list!")
 	}
 	return (
 		<div>

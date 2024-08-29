@@ -25,7 +25,7 @@ import {
 	SubmitHandler,
 	useForm,
 } from "react-hook-form"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
 const UpdateBike = () => {
@@ -33,6 +33,7 @@ const UpdateBike = () => {
 	const token = useAppSelector(currentToken)
 	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(id)
 	const [updateBike] = bikeApi.useUpdateBikeMutation()
+	const navigate = useNavigate()
 
 	const bike = singleBikeData?.data
 
@@ -64,6 +65,7 @@ const UpdateBike = () => {
 		try {
 			const res = await updateBike(bikeInfo).unwrap()
 			toast.success(res.message, { id: toastId })
+			navigate("/dashboard/bike-management")
 		} catch (error) {
 			toast.error("Bike Update Process Failed...", { id: toastId })
 		}
