@@ -91,20 +91,18 @@ const BikeDetails = () => {
 			startTime: selected?.toISOString(),
 		}
 		try {
-			const res = await createRent(rentInfo).unwrap()
-			toast.success(res.message, { id: toastId })
-			console.log(res)
-			// redirect to payment page page
-			window.location.href = res.data.paymentSession.payment_url
+			if (!user) {
+				toast.error("You should login first!", { id: toastId })
+				return
+			} else {
+				const res = await createRent(rentInfo).unwrap()
+				toast.success(res.message, { id: toastId })
+
+				// redirect to payment page page
+				window.location.href = res.data.paymentSession.payment_url
+			}
 		} catch (error) {
 			toast.error("Bike rent Process Failed...", { id: toastId })
-		}
-	}
-
-	const handleBookNow = () => {
-		if (!user) {
-			toast.error("You should login first!")
-			return
 		}
 	}
 
@@ -244,10 +242,7 @@ const BikeDetails = () => {
 
 										<Dialog>
 											<DialogTrigger asChild>
-												<Button
-													onClick={handleBookNow}
-													className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase"
-												>
+												<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
 													Book Now
 												</Button>
 											</DialogTrigger>
@@ -279,28 +274,6 @@ const BikeDetails = () => {
 													}`}
 													className="rounded-md border font-inter"
 												/>
-												{/* <div className="grid gap-4 py-4">
-													<div className="grid grid-cols-4 items-center gap-4">
-														<Label htmlFor="name" className="text-right">
-															Name
-														</Label>
-														<Input
-															id="name"
-															defaultValue="Pedro Duarte"
-															className="col-span-3"
-														/>
-													</div>
-													<div className="grid grid-cols-4 items-center gap-4">
-														<Label htmlFor="username" className="text-right">
-															Username
-														</Label>
-														<Input
-															id="username"
-															defaultValue="@peduarte"
-															className="col-span-3"
-														/>
-													</div>
-												</div> */}
 												<DialogFooter>
 													<Button
 														onClick={handleRentBike}

@@ -22,6 +22,8 @@ import { TRental } from "@/types/rentals.type"
 import CurrentTime from "@/utils/CurrentTime"
 import { CircleAlert } from "lucide-react"
 import moment from "moment"
+import { useState } from "react"
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "sonner"
 
 const Rentals = () => {
@@ -29,13 +31,44 @@ const Rentals = () => {
 	const [fullPayment] = rentApi.useFullPaymentMutation()
 	const { data: rentalData } = rentApi.useGetRentQuery(token)
 	const rentalBikes = rentalData?.data
-
+	const [totalAmount, setTotalAmount] = useState(0)
+	console.log(rentalBikes)
+	console.log(totalAmount)
 	const unpaidRentals = rentalBikes?.filter(
 		(bike: TRental) => bike.fullPay === false
 	)
 	const paidRentals = rentalBikes?.filter(
 		(bike: TRental) => bike.fullPay === true
 	)
+
+	const { handleSubmit, register } = useForm<FieldValues>()
+
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		const findBike = rentalBikes.find(
+			(bike: TRental) => String(bike?._id) === String(data?.bikeId)
+		)
+
+		if (data.coupon === "OFF5") {
+			const amount = (findBike.totalCost / 100) * 95
+			setTotalAmount(amount)
+		}
+		if (data.coupon === "OFF10") {
+			const amount = (findBike.totalCost / 100) * 90
+			setTotalAmount(amount)
+		}
+		if (data.coupon === "OFF15") {
+			const amount = (findBike.totalCost / 100) * 85
+			setTotalAmount(amount)
+		}
+		if (data.coupon === "OFF20") {
+			const amount = (findBike.totalCost / 100) * 80
+			setTotalAmount(amount)
+		}
+		if (data.coupon === "OFF25") {
+			const amount = (findBike.totalCost / 100) * 75
+			setTotalAmount(amount)
+		}
+	}
 
 	const handleFullPay = async (id: string) => {
 		const toastId = toast.loading("Payment processing...")
@@ -44,6 +77,10 @@ const Rentals = () => {
 			token,
 		}
 		try {
+			if (!rentalBikes.isReturned) {
+				toast.error("This bike is not return yet!", { id: toastId })
+				return
+			}
 			const res = await fullPayment(paymentInfo).unwrap()
 			if (res.success) {
 				toast.success(res.message, { id: toastId })
@@ -90,6 +127,9 @@ const Rentals = () => {
 										<TableHead className="hidden md:table-cell">
 											Return Time
 										</TableHead>
+										<TableHead className="hidden md:table-cell">
+											Coupon
+										</TableHead>
 										<TableHead>Total Cost</TableHead>
 										<TableHead>Action</TableHead>
 									</TableRow>
@@ -135,10 +175,37 @@ const Rentals = () => {
 												)}
 											</TableCell>
 
+											<TableCell className="hidden md:table-cell w-16">
+												<form
+													onSubmit={handleSubmit(onSubmit)}
+													className="flex flex-col gap-3"
+												>
+													<input
+														type="text"
+														{...register("coupon")}
+														className="flex h-10 w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+													/>
+													<input
+														type="hidden"
+														value={bike._id}
+														{...register("bikeId")}
+													/>
+
+													<Button type="submit">Submit Coupon</Button>
+												</form>
+											</TableCell>
 											<TableCell className="hidden md:table-cell">
-												<p>Total Amount: ${bike.totalCost}</p>
+												<p>
+													Total Amount: $
+													{totalAmount ? totalAmount : bike?.totalCost}
+												</p>
 												<p>Advance Pay: ${bike.advancePay}</p>
-												<p>Due Amount: ${bike.totalCost - bike.advancePay}</p>
+												<p>
+													Due Amount: $
+													{totalAmount
+														? totalAmount - bike.advancePay
+														: bike.totalCost - bike.advancePay}
+												</p>
 											</TableCell>
 											<TableCell className="hidden md:table-cell">
 												<Button

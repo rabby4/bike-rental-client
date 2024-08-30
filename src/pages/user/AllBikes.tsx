@@ -243,28 +243,6 @@ const AllBikes = () => {
 												Details
 											</Button>
 										</NavLink>
-										{/* <DropdownMenu>
-											<DropdownMenuTrigger asChild>
-												<Button
-													aria-haspopup="true"
-													size="icon"
-													variant="ghost"
-												>
-													<MoreHorizontal className="h-4 w-4" />
-													<span className="sr-only">Toggle menu</span>
-												</Button>
-											</DropdownMenuTrigger>
-											<DropdownMenuContent align="end">
-												<DropdownMenuLabel>Actions</DropdownMenuLabel>
-												<DropdownMenuItem>
-													<NavLink to={`/dashboard/update-bike/${bike._id}`}>
-														<Button className="w-full bg-transparent text-black hover:bg-transparent text-base hover:text-accent-foreground">
-															Edit
-														</Button>
-													</NavLink>
-												</DropdownMenuItem>
-											</DropdownMenuContent>
-										</DropdownMenu> */}
 									</TableCell>
 								</TableRow>
 							))}
