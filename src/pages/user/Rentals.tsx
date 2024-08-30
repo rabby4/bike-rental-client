@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import {
 	Table,
@@ -21,12 +22,37 @@ import { TRental } from "@/types/rentals.type"
 import CurrentTime from "@/utils/CurrentTime"
 import { CircleAlert } from "lucide-react"
 import moment from "moment"
+import { toast } from "sonner"
 
 const Rentals = () => {
 	const token = useAppSelector(currentToken)
+	const [fullPayment] = rentApi.useFullPaymentMutation()
 	const { data: rentalData } = rentApi.useGetRentQuery(token)
 	const rentalBikes = rentalData?.data
-	console.log(rentalBikes)
+
+	const unpaidRentals = rentalBikes?.filter(
+		(bike: TRental) => bike.fullPay === false
+	)
+	const paidRentals = rentalBikes?.filter(
+		(bike: TRental) => bike.fullPay === true
+	)
+
+	const handleFullPay = async (id: string) => {
+		const toastId = toast.loading("Payment processing...")
+		const paymentInfo = {
+			id,
+			token,
+		}
+		try {
+			const res = await fullPayment(paymentInfo).unwrap()
+			if (res.success) {
+				toast.success(res.message, { id: toastId })
+				window.location.href = res.data.paymentSession.payment_url
+			}
+		} catch (error) {
+			toast.error("Bike rent Process Failed...", { id: toastId })
+		}
+	}
 
 	return (
 		<div className="p-10">
@@ -35,14 +61,8 @@ const Rentals = () => {
 					Rentals Bikes
 				</h2>
 			</div>
-			<Tabs defaultValue="all" className="flex flex-col items-center">
+			<Tabs defaultValue="unpaid" className="flex flex-col items-center">
 				<TabsList className="w-full">
-					<TabsTrigger
-						value="all"
-						className="h-full flex-1 text-sm font-orbitron tracking-wider"
-					>
-						All Rentals
-					</TabsTrigger>
 					<TabsTrigger
 						value="unpaid"
 						className="h-full flex-1 text-sm font-orbitron tracking-wider"
@@ -56,58 +76,6 @@ const Rentals = () => {
 						Paid Rentals
 					</TabsTrigger>
 				</TabsList>
-				<TabsContent value="all" className="w-full">
-					<Card className="w-full">
-						<CardContent className="font-inter">
-							<Table>
-								<TableHeader>
-									<TableRow>
-										<TableHead className="hidden w-[100px] sm:table-cell">
-											<span className="sr-only">img</span>
-										</TableHead>
-										<TableHead>Name</TableHead>
-										<TableHead>Start Time</TableHead>
-										<TableHead className="hidden md:table-cell">
-											Return Time
-										</TableHead>
-										<TableHead>Total Cost</TableHead>
-									</TableRow>
-								</TableHeader>
-								<TableBody>
-									{rentalBikes?.map((bike: TRental) => (
-										<TableRow key={bike._id}>
-											<TableCell className="hidden sm:table-cell">
-												<img
-													alt="Product img"
-													className="aspect-square rounded-md object-cover"
-													height="64"
-													src={bike?.bikeId?.image}
-													width="64"
-												/>
-											</TableCell>
-											<TableCell className="font-medium">
-												{bike.bikeId.name}
-											</TableCell>
-											<TableCell className="capitalize">
-												{moment(bike.startTime).format("DD-MM-YYYY, h:mm a")}
-											</TableCell>
-											<TableCell className="hidden md:table-cell">
-												{bike.returnTime
-													? moment(bike.returnTime).format("DD-MM-YYYY, h:mm a")
-													: "Did`t return yet"}
-											</TableCell>
-
-											<TableCell className="hidden md:table-cell">
-												${bike.totalCost}
-											</TableCell>
-										</TableRow>
-									))}
-								</TableBody>
-							</Table>
-						</CardContent>
-						<CardFooter></CardFooter>
-					</Card>
-				</TabsContent>
 				<TabsContent value="unpaid" className="w-full">
 					<Card className="w-full">
 						<CardContent className="font-inter">
@@ -123,10 +91,11 @@ const Rentals = () => {
 											Return Time
 										</TableHead>
 										<TableHead>Total Cost</TableHead>
+										<TableHead>Action</TableHead>
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{rentalBikes?.map((bike: TRental) => (
+									{unpaidRentals?.map((bike: TRental) => (
 										<TableRow key={bike._id}>
 											<TableCell className="hidden sm:table-cell">
 												<img
@@ -167,7 +136,17 @@ const Rentals = () => {
 											</TableCell>
 
 											<TableCell className="hidden md:table-cell">
-												${bike.totalCost}
+												<p>Total Amount: ${bike.totalCost}</p>
+												<p>Advance Pay: ${bike.advancePay}</p>
+												<p>Due Amount: ${bike.totalCost - bike.advancePay}</p>
+											</TableCell>
+											<TableCell className="hidden md:table-cell">
+												<Button
+													onClick={() => handleFullPay(bike?._id)}
+													className="bg-accent-foreground font-orbitron tracking-wider px-10 py-5 rounded-none duration-500"
+												>
+													Payment
+												</Button>
 											</TableCell>
 										</TableRow>
 									))}
@@ -195,7 +174,7 @@ const Rentals = () => {
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{rentalBikes?.map((bike: TRental) => (
+									{paidRentals?.map((bike: TRental) => (
 										<TableRow key={bike._id}>
 											<TableCell className="hidden sm:table-cell">
 												<img

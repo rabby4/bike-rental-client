@@ -27,6 +27,8 @@ import {
 } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
+import UseAnimations from "react-useanimations"
+import activity from "react-useanimations/lib/activity"
 
 const UpdateBike = () => {
 	const { id } = useParams()
@@ -56,6 +58,7 @@ const UpdateBike = () => {
 	})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		console.log(data)
 		const toastId = toast.loading("Updating bike info...")
 		const bikeInfo = {
 			id,
@@ -71,7 +74,15 @@ const UpdateBike = () => {
 		}
 	}
 
-	if (isLoading) return <p>Loading...</p>
+	if (isLoading) {
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-center">
+					<UseAnimations size={50} animation={activity} />
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<div className="w-full p-24 pt-8">
@@ -390,7 +401,7 @@ const UpdateBike = () => {
 								size="sm"
 								className="bg-accent-foreground font-orbitron tracking-wider px-10 py-5 rounded-none duration-500"
 							>
-								Upload Bike
+								Update Bike
 							</Button>
 						</div>
 					</div>

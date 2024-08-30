@@ -29,11 +29,20 @@ import { useParams } from "react-router-dom"
 import { Calendar } from "@/components/ui/calendar"
 import rentApi from "@/redux/features/rent/rentApi"
 import { toast } from "sonner"
+import UseAnimations from "react-useanimations"
+import activity from "react-useanimations/lib/activity"
+import { useAppSelector } from "@/redux/hook"
+import { currentUser } from "@/redux/features/auth/userSlice"
 
 const BikeDetails = () => {
 	const { id } = useParams()
+	const user = useAppSelector(currentUser)
 	const [createRent] = rentApi.useRentBikeMutation()
-	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(id)
+	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(
+		id,
+		{ pollingInterval: 30000 }
+	)
+
 	const bike = singleBikeData?.data
 
 	const { control, handleSubmit } = useForm({})
@@ -85,13 +94,28 @@ const BikeDetails = () => {
 			const res = await createRent(rentInfo).unwrap()
 			toast.success(res.message, { id: toastId })
 			console.log(res)
+			// redirect to payment page page
+			window.location.href = res.data.paymentSession.payment_url
 		} catch (error) {
 			toast.error("Bike rent Process Failed...", { id: toastId })
 		}
 	}
 
+	const handleBookNow = () => {
+		if (!user) {
+			toast.error("You should login first!")
+			return
+		}
+	}
+
 	if (isLoading) {
-		return <p>Loading...</p>
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-center">
+					<UseAnimations size={50} animation={activity} />
+				</div>
+			</div>
+		)
 	}
 
 	return (
@@ -220,16 +244,20 @@ const BikeDetails = () => {
 
 										<Dialog>
 											<DialogTrigger asChild>
-												<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
-													Rent Now
+												<Button
+													onClick={handleBookNow}
+													className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase"
+												>
+													Book Now
 												</Button>
 											</DialogTrigger>
 											<DialogContent className="sm:max-w-[425px] font-inter">
 												<DialogHeader>
-													<DialogTitle>Edit profile</DialogTitle>
+													<DialogTitle className="font-orbitron">
+														Set Time
+													</DialogTitle>
 													<DialogDescription>
-														Make changes to your profile here. Click save when
-														you're done.
+														Set your rent start time and enjoy your ride.
 													</DialogDescription>
 												</DialogHeader>
 												<form style={{ marginBlockEnd: "1em" }}>

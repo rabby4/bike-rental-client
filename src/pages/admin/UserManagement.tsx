@@ -28,6 +28,8 @@ import { useAppSelector } from "@/redux/hook"
 import { TUser } from "@/types/user.type"
 import { MoreHorizontal } from "lucide-react"
 import { toast } from "sonner"
+import UseAnimations from "react-useanimations"
+import activity from "react-useanimations/lib/activity"
 
 const UserManagement = () => {
 	const [updateUserToAdmin] = authApi.useUpdateUserToAdminMutation()
@@ -70,7 +72,13 @@ const UserManagement = () => {
 	}
 
 	if (isLoading) {
-		return <p>loading...</p>
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-center">
+					<UseAnimations size={50} animation={activity} />
+				</div>
+			</div>
+		)
 	}
 	return (
 		<div>

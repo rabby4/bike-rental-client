@@ -22,6 +22,7 @@ import Compare from "@/pages/Compare"
 import ProtectedRoute from "@/layouts/ProtectedRoute"
 import AllBikes from "@/pages/user/AllBikes"
 import Rentals from "@/pages/user/Rentals"
+import Success from "@/pages/Success"
 
 const router = createBrowserRouter([
 	{
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
 			{
 				path: "/compare",
 				element: <Compare />,
+			},
+			{
+				path: "/confirmation",
+				element: <Success />,
 			},
 			{
 				path: "/dashboard",

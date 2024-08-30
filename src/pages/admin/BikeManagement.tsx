@@ -39,7 +39,9 @@ import { MoreHorizontal } from "lucide-react"
 import moment from "moment"
 import { ChangeEvent, useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
-import { toast } from "sonner"
+import UseAnimations from "react-useanimations"
+import activity from "react-useanimations/lib/activity"
+import Swal from "sweetalert2"
 
 const BikeManagement = () => {
 	const [brand, setBrand] = useState("")
@@ -53,13 +55,24 @@ const BikeManagement = () => {
 	)
 
 	const handleDeleteBike = async (id: string) => {
-		const toastId = toast.loading("Deleting bike...")
-		try {
-			const res = await deleteBike(id).unwrap()
-			toast.success(res.message, { id: toastId })
-		} catch (error) {
-			toast.error("Bike Update Process Failed...", { id: toastId })
-		}
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				deleteBike(id).unwrap()
+				Swal.fire({
+					title: "Deleted!",
+					text: "Bike data has been deleted.",
+					icon: "success",
+				})
+			}
+		})
 	}
 
 	useEffect(() => {
@@ -88,8 +101,15 @@ const BikeManagement = () => {
 	}
 
 	if (isLoading) {
-		return <p>loading...</p>
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-center">
+					<UseAnimations size={50} animation={activity} />
+				</div>
+			</div>
+		)
 	}
+
 	return (
 		<div>
 			<Card>

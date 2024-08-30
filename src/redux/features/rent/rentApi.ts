@@ -32,6 +32,16 @@ const rentApi = baseApi.injectEndpoints({
 			},
 			invalidatesTags: ["rent"],
 		}),
+		fullPayment: builder.mutation({
+			query: (paymentInfo) => {
+				return {
+					url: `/rentals/${paymentInfo.id}/full-payment`,
+					method: "PATCH",
+					headers: { Authorization: paymentInfo.token },
+				}
+			},
+			invalidatesTags: ["rent"],
+		}),
 	}),
 })
 export default rentApi

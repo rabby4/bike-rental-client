@@ -17,14 +17,24 @@ import {
 	Youtube,
 } from "lucide-react"
 import { NavLink } from "react-router-dom"
+import UseAnimations from "react-useanimations"
+import activity from "react-useanimations/lib/activity"
 
 const Profile = () => {
 	const token = useAppSelector(currentToken)
-	const { data, isLoading } = authApi.useGetMeQuery(token)
+	const { data, isLoading } = authApi.useGetMeQuery(token, {
+		pollingInterval: 30000,
+	})
 	const user = data?.data
 
 	if (isLoading) {
-		return <p>Loading...</p>
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-center">
+					<UseAnimations size={50} animation={activity} />
+				</div>
+			</div>
+		)
 	}
 
 	return (

@@ -125,19 +125,19 @@
 .rotate-badge {
 	translate: -90px 60px;
 }
-.rdp-weekdays {
+/* .rdp-weekdays {
 	display: flex;
 	justify-content: space-around;
-}
-.rdp-month_caption {
+} */
+/* .rdp-month_caption {
 	text-align: center;
-}
+} */
 /* .rdp-weekdays {
 	display: flex;
 	justify-content: space-around;
 	column-gap: 14px;
 } */
-element.style {
+/* element.style {
 	display: flex;
 	flex-direction: column;
-}
+} */

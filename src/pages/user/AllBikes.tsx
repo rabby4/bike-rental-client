@@ -30,6 +30,8 @@ import { TBike, TQueryParam } from "@/types/bikes.type"
 import { ChangeEvent, useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { Badge } from "@/components/ui/badge"
+import UseAnimations from "react-useanimations"
+import activity from "react-useanimations/lib/activity"
 
 const AllBikes = () => {
 	const [brand, setBrand] = useState("")
@@ -66,7 +68,15 @@ const AllBikes = () => {
 		setSearchTerm("")
 	}
 
-	if (isLoading) return <p>Loading...</p>
+	if (isLoading) {
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-center">
+					<UseAnimations size={50} animation={activity} />
+				</div>
+			</div>
+		)
+	}
 	return (
 		<div>
 			<Card>

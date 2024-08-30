@@ -16,6 +16,8 @@ import bikeApi from "@/redux/features/bike/bikeApi"
 import { TBike, TQueryParam } from "@/types/bikes.type"
 import { Search } from "lucide-react"
 import { ChangeEvent, useEffect, useState } from "react"
+import UseAnimations from "react-useanimations"
+import activity from "react-useanimations/lib/activity"
 
 const Bikes = () => {
 	const [brand, setBrand] = useState("")
@@ -54,8 +56,15 @@ const Bikes = () => {
 	}
 
 	if (isLoading) {
-		return <p>Loading...</p>
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-center">
+					<UseAnimations size={50} animation={activity} />
+				</div>
+			</div>
+		)
 	}
+
 	return (
 		<div>
 			<div className="bg-about-us bg-bottom h-64 flex justify-center items-center">

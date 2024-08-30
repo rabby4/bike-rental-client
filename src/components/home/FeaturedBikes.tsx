@@ -1,17 +1,28 @@
 import bikeApi from "@/redux/features/bike/bikeApi"
 import { TBike } from "@/types/bikes.type"
 import BikeCard from "../shared/BikeCard"
+import UseAnimations from "react-useanimations"
+import activity from "react-useanimations/lib/activity"
 
 const FeaturedBikes = () => {
-	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(undefined)
+	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(undefined, {
+		pollingInterval: 30000,
+	})
 
 	const bikes = bikeData?.data.filter(
 		(bike: TBike) => bike.isAvailable === true
 	)
 
 	if (isLoading) {
-		return <p>loading...</p>
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-center">
+					<UseAnimations size={50} animation={activity} />
+				</div>
+			</div>
+		)
 	}
+
 	return (
 		<div className="container my-28">
 			<div className="md:w-2/4 mx-auto text-center space-y-3">

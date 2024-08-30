@@ -8,5 +8,7 @@ export type TRental = {
 	returnTime: string
 	totalCost: number
 	isReturned: boolean
+	advancePay: number
+	fullPay: boolean
 	__v: number
 }
