@@ -60,9 +60,9 @@ const CreateBike = () => {
 		}
 	}
 	return (
-		<div className="w-full p-24 pt-8">
+		<div className="w-full lg:p-24 md:p-10 pt-8">
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="grid grid-cols-3 gap-10 mt-10">
+				<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-10 mt-10">
 					<div className="col-span-2">
 						<Card x-chunk="dashboard-07-chunk-0">
 							<CardHeader>
@@ -312,7 +312,7 @@ const CreateBike = () => {
 							</CardContent>
 						</Card>
 					</div>
-					<div className="col-span-1 space-y-10">
+					<div className="lg:col-span-1 md:col-span-2 grid lg:grid-cols-1 md:grid-cols-2 grid-cols-1 lg:space-y-10 justify-between gap-5">
 						<Card x-chunk="dashboard-07-chunk-3">
 							<CardHeader>
 								<CardTitle className="font-orbitron">Bike Price</CardTitle>

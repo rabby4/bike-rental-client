@@ -23,16 +23,16 @@ const Carousel = () => {
 					<CarouselItem>
 						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-1 bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
-								<div className="grid grid-cols-2">
+								<div className="grid lg:grid-cols-2">
 									<div className="md:space-y-5">
-										<h1 className="md:text-[85px] text-6xl font-orbitron font-semibold">
+										<h1 className="lg:text-[85px] md:text-6xl text-3xl font-orbitron font-semibold">
 											On-road. Off- road. Any road
 										</h1>
-										<p className="font-inter text-lg">
+										<p className="font-inter lg:text-lg md:text-base text-sm">
 											It's the most advanced, best performing alloy race bike
 											ever made. Fitting, since aluminum is the 13th element.
 										</p>
-										<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
+										<Button className="bg-accent-foreground rounded-none hover:text-white lg:px-10 md:px-7 px-5 lg:py-7 py-5 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase lg:text-base md:text-xs">
 											<NavLink to={"/bikes"}>Discover Now</NavLink>
 										</Button>
 									</div>
@@ -41,19 +41,19 @@ const Carousel = () => {
 							</div>
 						</div>
 					</CarouselItem>
-					<CarouselItem>
+					{/* <CarouselItem>
 						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-3 bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
-								<div className="grid grid-cols-2">
+								<div className="grid lg:grid-cols-2">
 									<div className="md:space-y-5">
-										<h1 className="md:text-[80px] text-6xl text-white font-orbitron font-semibold">
+										<h1 className="lg:text-7xl text- md:text-6xl text-3xl font-orbitron font-semibold text-white">
 											Better Bikes for Your Better Journey
 										</h1>
-										<p className="font-inter text-lg text-white">
+										<p className="font-inter lg:text-lg md:text-base text-sm text-white">
 											Don’t overthink it. Mellow to mad. Wild to mild. Whatever
 											your trail riding style, Habit’s got what you need.
 										</p>
-										<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
+										<Button className="bg-accent-foreground rounded-none hover:text-white lg:px-10 md:px-7 px-5 lg:py-7 py-5 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase lg:text-base md:text-xs">
 											<NavLink to={"/bikes"}>Discover Now</NavLink>
 										</Button>
 									</div>
@@ -61,20 +61,20 @@ const Carousel = () => {
 								</div>
 							</div>
 						</div>
-					</CarouselItem>
+					</CarouselItem> */}
 					<CarouselItem>
 						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-2 bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
-								<div className="grid grid-cols-2">
+								<div className="grid lg:grid-cols-2">
 									<div className="md:space-y-5">
-										<h1 className="md:text-[85px] text-6xl font-orbitron font-semibold">
+										<h1 className="lg:text-[85px] md:text-6xl text-3xl font-orbitron font-semibold">
 											Break free from the same roads
 										</h1>
-										<p className="font-inter text-lg">
+										<p className="font-inter lg:text-lg md:text-base text-sm">
 											Don’t overthink it. Mellow to mad. Wild to mild. Whatever
 											your trail riding style, Habit’s got what you need.
 										</p>
-										<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-7 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
+										<Button className="bg-accent-foreground rounded-none hover:text-white lg:px-10 md:px-7 px-5 lg:py-7 py-5 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase lg:text-base md:text-xs">
 											<NavLink to={"/bikes"}>Discover Now</NavLink>
 										</Button>
 									</div>
@@ -85,7 +85,7 @@ const Carousel = () => {
 					</CarouselItem>
 				</CarouselContent>
 			</Slider>
-			<div className="max-w-5xl mx-auto -mt-20 z-20">
+			<div className="lg:max-w-5xl mx-auto lg:-mt-20 md:-mt-10 z-20">
 				<FilterForm />
 			</div>
 		</div>

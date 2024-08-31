@@ -215,12 +215,15 @@ const Header = () => {
 																	: "https://i.ibb.co/WPy59Zn/logo.png"
 																: "https://i.ibb.co/WPy59Zn/logo.png"
 														}
-														alt="@shadcn"
+														alt="user profile"
 													/>
 													<AvatarFallback>CN</AvatarFallback>
 												</Avatar>
 											</DropdownMenuTrigger>
-											<DropdownMenuContent className="w-56 transform-none">
+											<DropdownMenuContent
+												align="end"
+												className="w-56 transform-none"
+											>
 												<DropdownMenuLabel>My Account</DropdownMenuLabel>
 												<DropdownMenuSeparator />
 												<DropdownMenuGroup>

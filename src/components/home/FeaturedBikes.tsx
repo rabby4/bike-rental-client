@@ -3,10 +3,11 @@ import { TBike } from "@/types/bikes.type"
 import BikeCard from "../shared/BikeCard"
 import UseAnimations from "react-useanimations"
 import activity from "react-useanimations/lib/activity"
+import SectionTitle from "../shared/SectionTitle"
 
 const FeaturedBikes = () => {
 	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(undefined, {
-		pollingInterval: 30000,
+		pollingInterval: 10000,
 	})
 
 	const bikes = bikeData?.data.filter(
@@ -25,17 +26,10 @@ const FeaturedBikes = () => {
 
 	return (
 		<div className="container my-28">
-			<div className="md:w-2/4 mx-auto text-center space-y-3">
-				<img
-					src="https://i.ibb.co/vq2CpQr/renroll-1106122708.webp"
-					alt=""
-					className="mx-auto w-24"
-				/>
-				<h1 className="text-5xl font-orbitron font-bold">Featured Bikes</h1>
-				<p className="font-inter italic ">
-					Visit our bike page and see our amazing bikes.
-				</p>
-			</div>
+			<SectionTitle
+				title="Featured Bikes"
+				description="Visit our bike page and see our amazing bikes."
+			/>
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 mt-10 lg:px-0 px-10">
 				{bikes.map((bike: TBike) => (
 					<BikeCard key={bike._id} bike={bike} />

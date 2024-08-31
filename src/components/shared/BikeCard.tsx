@@ -38,16 +38,16 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 						</Button>
 					</div>
 				</CardHeader>
-				<CardContent className="space-y-2 pt-2 z-10 relative bg-white">
+				<CardContent className="space-y-2 pt-2 z-10 relative bg-white ">
 					<p className=" text-gray-400 font-inter font-light text-sm italic tracking-wider">
 						{bike.category.replace(/_/g, " ")}
 					</p>
-					<CardTitle className="text-2xl font-orbitron tracking-wider font-bold">
+					<CardTitle className="lg:text-2xl md:text-xl text-xl font-orbitron tracking-wider font-bold">
 						{bike?.name}
 					</CardTitle>
 					<hr />
 					<CardDescription>
-						<div className="flex gap-7 my-7 text-base">
+						<div className="flex lg:gap-7 my-7 lg:text-base text-sm">
 							<div className="space-y-3 capitalize w-1/2">
 								<p>
 									Brand: <strong>{bike?.brand}</strong>
@@ -70,7 +70,7 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 									Frame Size: <strong>{bike?.frame} CM</strong>
 								</p>
 								<p>
-									Max Support: <strong>{bike?.support} KM/h</strong>
+									M. Support: <strong>{bike?.support} KM/h</strong>
 								</p>
 								<p>
 									Weight: <strong>{bike?.weight} KG</strong>

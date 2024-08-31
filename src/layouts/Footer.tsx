@@ -82,7 +82,7 @@ const Footer = () => {
 							</div>
 						</div>
 
-						<div className="relative">
+						<div className="relative md:col-span-1 col-span-2">
 							<h2 className="text-xl font-bold mb-2 uppercase font-orbitron text-white">
 								Stay Connected
 							</h2>

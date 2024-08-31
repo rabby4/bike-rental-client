@@ -1,36 +1,31 @@
+import SectionTitle from "../shared/SectionTitle"
+
 const ChooseUs = () => {
 	return (
 		<div className="container">
-			<div className="md:w-2/4 mx-auto text-center space-y-3">
-				<img
-					src="https://i.ibb.co/vq2CpQr/renroll-1106122708.webp"
-					alt=""
-					className="mx-auto w-24"
-				/>
-				<h1 className="text-5xl font-orbitron font-bold">Why Choose ProBike</h1>
-				<p className="font-inter italic ">
-					Visit our bike page and see our amazing bikes.
-				</p>
-			</div>
-			<div className="grid grid-cols-3 gap-5 mt-10 lg:px-0 px-10">
+			<SectionTitle
+				title="Why Choose ProBike"
+				description="Visit our bike page and see our amazing bikes."
+			/>
+			<div className="grid lg:grid-cols-3 gap-5 mt-10 lg:px-0 px-10">
 				<div
-					className="flex flex-col justify-around w-3/4 justify-self-end"
+					className="flex flex-col lg:justify-around md:items-center md:gap-5 gap-3 lg:w-3/4 w-full lg:justify-self-end"
 					data-aos="fade-right"
 					data-aos-duration="1500"
 				>
 					<div className="space-y-5">
-						<h2 className="font-orbitron text-3xl font-bold text-right">
+						<h2 className="font-orbitron text-3xl font-bold lg:text-right text-center">
 							Fully Insured Rental Service
 						</h2>
-						<p className="font-inter text-right">
+						<p className="font-inter lg:text-right text-center">
 							Tempore usmod incididunt labore lorem ipsum enim sed veniam
 						</p>
 					</div>
 					<div className="space-y-5">
-						<h2 className="font-orbitron text-3xl font-bold text-right">
+						<h2 className="font-orbitron text-3xl font-bold lg:text-right text-center">
 							Different Types of Bikes
 						</h2>
-						<p className="font-inter text-right">
+						<p className="font-inter lg:text-right text-center">
 							Labore tempore usmod incididunt lorem ipsum enim sed veniam
 						</p>
 					</div>
@@ -43,23 +38,23 @@ const ChooseUs = () => {
 					/>
 				</div>
 				<div
-					className="flex flex-col justify-around w-3/4"
+					className="flex flex-col lg:justify-around md:items-center md:gap-5 gap-3 lg:w-3/4 w-full"
 					data-aos="fade-left"
 					data-aos-duration="1500"
 				>
 					<div className="space-y-5">
-						<h2 className="font-orbitron text-3xl font-bold ">
+						<h2 className="font-orbitron text-3xl font-bold lg:text-left text-center">
 							Fully Insured Rental Service
 						</h2>
-						<p className="font-inter ">
+						<p className="font-inter lg:text-left text-center">
 							Tempore usmod incididunt labore lorem ipsum enim sed veniam
 						</p>
 					</div>
 					<div className="space-y-5">
-						<h2 className="font-orbitron text-3xl font-bold ">
+						<h2 className="font-orbitron text-3xl font-bold lg:text-left text-center">
 							Different Types of Bikes
 						</h2>
-						<p className="font-inter ">
+						<p className="font-inter lg:text-left text-center">
 							Labore tempore usmod incididunt lorem ipsum enim sed veniam
 						</p>
 					</div>

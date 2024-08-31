@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff } from "lucide-react"
-import { useState } from "react"
+import { ReactNode, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import {
 	useForm,
@@ -22,6 +22,7 @@ import { toast } from "sonner"
 import { verifyToken } from "@/utils/verifyToken"
 import { useAppDispatch } from "@/redux/hook"
 import { setUser } from "@/redux/features/auth/userSlice"
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query" // Import types
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false)
@@ -30,13 +31,45 @@ const Login = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
+	// 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+	// 		const toastId = toast.loading("Logging in...")
+	// 		try {
+	// 			const res = await login(data)
+	// 			if (res?.error) {
+	// 				return toast.error(res.error?.data?.message)
+	// 			}
+	// 			toast.success(res.data.message, { id: toastId })
+	//
+	// 			const user = verifyToken(res.data.token)
+	// 			dispatch(setUser({ user: user, token: res.data.token }))
+	//
+	// 			navigate("/dashboard")
+	// 		} catch (error) {
+	// 			toast.error("Login Failed...", { id: toastId })
+	// 		}
+	// 	}
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Logging in...")
 		try {
 			const res = await login(data)
+
 			if (res?.error) {
-				return toast.error(res.error?.data?.message)
+				// Handle FetchBaseQueryError
+				if (res.error && "data" in res.error) {
+					const error = res.error as FetchBaseQueryError
+					if (
+						error.data &&
+						typeof error.data === "object" &&
+						"message" in error.data
+					) {
+						return toast.error(error.data.message as ReactNode)
+					}
+				}
+
+				// Handle other errors or fallback
+				return toast.error("An unknown error occurred.")
 			}
+
 			toast.success(res.data.message, { id: toastId })
 
 			const user = verifyToken(res.data.token)
@@ -44,7 +77,8 @@ const Login = () => {
 
 			navigate("/dashboard")
 		} catch (error) {
-			toast.error("Login Failed...", { id: toastId })
+			// Provide a generic error message for unknown errors
+			toast.error("An unexpected error occurred...", { id: toastId })
 		}
 	}
 

@@ -11,7 +11,7 @@ const Contact = () => {
 			<div className="container py-36 z-20 relative">
 				<div className="grid lg:grid-cols-2 grid-cols-1 gap-20 mt-10 lg:px-0 md:px-10 px-5">
 					<div
-						className="space-y-10 order-2"
+						className="space-y-10 lg:order-2"
 						data-aos="fade-left"
 						data-aos-duration="1000"
 					>
@@ -36,7 +36,7 @@ const Contact = () => {
 					</div>
 
 					<div
-						className="space-y-10 order-1"
+						className="space-y-10 lg:order-1"
 						data-aos="fade-right"
 						data-aos-duration="1000"
 					>

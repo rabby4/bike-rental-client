@@ -8,6 +8,8 @@ import {
 	CarouselPrevious,
 } from "../ui/carousel"
 import testimonials from "./../../data/testimonials.json"
+import Autoplay from "embla-carousel-autoplay"
+import SectionTitle from "../shared/SectionTitle"
 
 const Testimonials = () => {
 	const rating = (rating: number) => {
@@ -26,21 +28,23 @@ const Testimonials = () => {
 	return (
 		<div className="bg-testimonials bg-no-repeat bg-cover bg-center py-36 my-28">
 			<div className="container">
-				<div className="md:w-2/4 mx-auto text-center space-y-3 text-white">
-					<img
-						src="https://i.ibb.co/vq2CpQr/renroll-1106122708.webp"
-						alt=""
-						className="mx-auto w-24"
-					/>
-					<h1 className="text-5xl font-orbitron font-bold ">Testimonials</h1>
-					<p className="font-inter italic ">
-						The Probike strives to give the best customer service possible. We
+				<div className="text-white">
+					<SectionTitle
+						title="Testimonials"
+						description="The Probike strives to give the best customer service possible. We
 						believe every customer should feel welcome and comfortable in our
-						shops.
-					</p>
+						shops."
+					/>
 				</div>
 				<div className="max-w-3xl mx-auto mt-10">
-					<Carousel className="w-full">
+					<Carousel
+						plugins={[
+							Autoplay({
+								delay: 2000,
+							}),
+						]}
+						className="w-full"
+					>
 						<CarouselContent>
 							{testimonials.map((item) => (
 								<CarouselItem key={item.id}>

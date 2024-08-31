@@ -1,9 +1,3 @@
-import {
-	Controller,
-	FieldValues,
-	SubmitHandler,
-	useForm,
-} from "react-hook-form"
 import { Button } from "../ui/button"
 import { Card, CardContent } from "../ui/card"
 import {
@@ -15,61 +9,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select"
-import { useEffect, useState } from "react"
-import { TQueryParam } from "@/types/bikes.type"
 
 const FilterForm = () => {
-	const [brand, setBrand] = useState("")
-	const [category, setCategory] = useState("")
-	const [params, setParams] = useState<TQueryParam[]>([])
-	// const { control, handleSubmit } = useForm({})
-
-	useEffect(() => {
-		const params = []
-
-		if (brand) {
-			params.push({ name: "brand", value: brand })
-		}
-		if (category) {
-			params.push({ name: "category", value: category })
-		}
-
-		setParams(params)
-	}, [brand, category])
-
-	// const onSubmit: SubmitHandler<FieldValues> = (data) => {
-	// 	console.log(data)
-	// }
 	return (
 		<>
 			<Card className="rounded-none shadow-xl">
-				<CardContent className="items-center p-12">
+				<CardContent className="items-center md:p-12 py-8">
 					<form>
-						<div className="grid grid-cols-3 justify-between items-center gap-4">
-							{/* <Controller
-								name="category"
-								control={control}
-								render={({ field }) => (
-									<Select
-										{...field}
-										onValueChange={(value) => field.onChange(value)}
-										// value={field.value}
-									>
-										<SelectTrigger>
-											<SelectValue placeholder="Select A Category" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectGroup>
-												<SelectLabel>Fruits</SelectLabel>
-												<SelectItem value="eBike">E-Bike</SelectItem>
-												<SelectItem value="roadBike">Road Bike</SelectItem>
-												<SelectItem value="kidsBike">Kids Bike</SelectItem>
-											</SelectGroup>
-										</SelectContent>
-									</Select>
-								)}
-							/> */}
-							<Select onValueChange={(value) => setCategory(value)}>
+						<div className="grid grid-cols-3 justify-between items-center md:gap-4 gap-1">
+							<Select>
 								<SelectTrigger>
 									<SelectValue placeholder="Select A Category" />
 								</SelectTrigger>
@@ -86,30 +34,8 @@ const FilterForm = () => {
 									</SelectGroup>
 								</SelectContent>
 							</Select>
-							{/* <Controller
-								name="brand"
-								control={control}
-								render={({ field }) => (
-									<Select
-										{...field}
-										onValueChange={(value) => field.onChange(value)}
-										// value={field.value}
-									>
-										<SelectTrigger>
-											<SelectValue placeholder="Select A Category" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectGroup>
-												<SelectLabel>Fruits</SelectLabel>
-												<SelectItem value="fuji">Fuji</SelectItem>
-												<SelectItem value="giant">Giant</SelectItem>
-												<SelectItem value="radon">Radon</SelectItem>
-											</SelectGroup>
-										</SelectContent>
-									</Select>
-								)}
-							/> */}
-							<Select onValueChange={(value) => setBrand(value)}>
+
+							<Select>
 								<SelectTrigger>
 									<SelectValue placeholder="Select A Brand" />
 								</SelectTrigger>
@@ -130,7 +56,7 @@ const FilterForm = () => {
 								type="submit"
 								className="bg-accent-foreground font-orbitron tracking-wider"
 							>
-								Search
+								Filter
 							</Button>
 						</div>
 					</form>

@@ -4,7 +4,7 @@ const Journey = () => {
 	return (
 		<div className="container mx-auto">
 			<Tabs defaultValue="beginning" className="flex flex-col items-center">
-				<TabsList className="w-full">
+				<TabsList className="w-full" aria-orientation="vertical">
 					<TabsTrigger
 						value="beginning"
 						className="h-full flex-1 text-sm font-orbitron tracking-wider"

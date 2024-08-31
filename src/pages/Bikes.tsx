@@ -73,9 +73,9 @@ const Bikes = () => {
 			<div className="max-w-6xl mx-auto -mt-16 z-20">
 				<Card className="rounded-none shadow-xl">
 					<CardContent className="items-center p-12">
-						<div className="grid grid-cols-4 gap-5 items-end">
+						<div className="grid lg:grid-cols-4 grid-cols-2 md:gap-5 gap-2">
 							<div className="flex flex-col gap-3">
-								<h2 className="self-start font-medium font-orbitron">
+								<h2 className="self-start font-medium font-orbitron md:text-base text-sm">
 									Search Bikes
 								</h2>
 								<div className="relative ml-auto flex-1 md:grow-0 w-full text-inter">
@@ -91,7 +91,7 @@ const Bikes = () => {
 							</div>
 
 							<div className="flex flex-col gap-3">
-								<h2 className="self-start font-medium font-orbitron">
+								<h2 className="self-start font-medium font-orbitron md:text-base text-sm">
 									Filter by Category
 								</h2>
 								<div className="w-full md:w-auto mb-2 md:mb-0 rounded-full font-inter">
@@ -122,7 +122,7 @@ const Bikes = () => {
 							</div>
 
 							<div className="flex flex-col gap-3">
-								<h2 className="self-start font-medium font-orbitron">
+								<h2 className="self-start font-medium font-orbitron md:text-base text-sm">
 									Filter by Brand
 								</h2>
 								<div className="w-full rounded-full md:w-auto mb-2 md:mb-0 font-inter">
@@ -148,7 +148,8 @@ const Bikes = () => {
 
 							<Button
 								onClick={handleResetFilter}
-								className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full font-orbitron tracking-wider"
+								className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full font-orbitron tracking-wider self-end
+								"
 							>
 								Reset Filter
 							</Button>
