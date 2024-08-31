@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import {
@@ -116,109 +117,125 @@ const Rentals = () => {
 				<TabsContent value="unpaid" className="w-full">
 					<Card className="w-full">
 						<CardContent className="font-inter">
-							<Table>
-								<TableHeader>
-									<TableRow>
-										<TableHead className="hidden w-[100px] sm:table-cell">
-											<span className="sr-only">img</span>
-										</TableHead>
-										<TableHead>Name</TableHead>
-										<TableHead>Start Time</TableHead>
-										<TableHead className="hidden md:table-cell">
-											Return Time
-										</TableHead>
-										<TableHead className="hidden md:table-cell">
-											Coupon
-										</TableHead>
-										<TableHead>Total Cost</TableHead>
-										<TableHead>Action</TableHead>
-									</TableRow>
-								</TableHeader>
-								<TableBody>
-									{unpaidRentals?.map((bike: TRental) => (
-										<TableRow key={bike._id}>
-											<TableCell className="hidden sm:table-cell">
-												<img
-													alt="Product img"
-													className="aspect-square rounded-md object-cover"
-													height="64"
-													src={bike?.bikeId?.image}
-													width="64"
-												/>
-											</TableCell>
-											<TableCell className="font-medium">
-												{bike.bikeId.name}
-											</TableCell>
-											<TableCell className="capitalize">
-												{moment(bike.startTime).format("DD-MM-YYYY, h:mm a")}
-											</TableCell>
-											<TableCell className="hidden md:table-cell">
-												{bike.returnTime ? (
-													moment(bike.returnTime).format("DD-MM-YYYY, h:mm a")
-												) : (
-													<div className="flex gap-3">
-														<CurrentTime />
-														<TooltipProvider>
-															<Tooltip>
-																<TooltipTrigger
-																	asChild
-																	className="cursor-pointer"
-																>
-																	<CircleAlert />
-																</TooltipTrigger>
-																<TooltipContent>
-																	<p>This bike is currently on rent!</p>
-																</TooltipContent>
-															</Tooltip>
-														</TooltipProvider>
-													</div>
-												)}
-											</TableCell>
-
-											<TableCell className="hidden md:table-cell w-16">
-												<form
-													onSubmit={handleSubmit(onSubmit)}
-													className="flex flex-col gap-3"
-												>
-													<input
-														type="text"
-														{...register("coupon")}
-														className="flex h-10 w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-													/>
-													<input
-														type="hidden"
-														value={bike._id}
-														{...register("bikeId")}
-													/>
-
-													<Button type="submit">Submit Coupon</Button>
-												</form>
-											</TableCell>
-											<TableCell className="hidden md:table-cell">
-												<p>
-													Total Amount: $
-													{totalAmount ? totalAmount : bike?.totalCost}
-												</p>
-												<p>Advance Pay: ${bike.advancePay}</p>
-												<p>
-													Due Amount: $
-													{totalAmount
-														? totalAmount - bike.advancePay
-														: bike.totalCost - bike.advancePay}
-												</p>
-											</TableCell>
-											<TableCell className="hidden md:table-cell">
-												<Button
-													onClick={() => handleFullPay(bike?._id)}
-													className="bg-accent-foreground font-orbitron tracking-wider px-10 py-5 rounded-none duration-500"
-												>
-													Payment
-												</Button>
-											</TableCell>
+							{unpaidRentals && unpaidRentals.length > 0 ? (
+								<Table>
+									<TableHeader>
+										<TableRow>
+											<TableHead className="hidden w-[100px] sm:table-cell">
+												<span className="sr-only">img</span>
+											</TableHead>
+											<TableHead>Name</TableHead>
+											<TableHead>Start Time</TableHead>
+											<TableHead className="hidden md:table-cell">
+												Return Time
+											</TableHead>
+											<TableHead className="hidden md:table-cell">
+												Coupon
+											</TableHead>
+											<TableHead>Total Cost</TableHead>
+											<TableHead>Action</TableHead>
 										</TableRow>
-									))}
-								</TableBody>
-							</Table>
+									</TableHeader>
+									<TableBody>
+										{unpaidRentals?.map((bike: TRental) => (
+											<TableRow key={bike._id}>
+												<TableCell className="hidden sm:table-cell">
+													<img
+														alt="Product img"
+														className="aspect-square rounded-md object-cover"
+														height="64"
+														src={bike?.bikeId?.image}
+														width="64"
+													/>
+												</TableCell>
+												<TableCell className="font-medium">
+													{bike.bikeId.name}
+												</TableCell>
+												<TableCell className="capitalize">
+													{moment(bike.startTime).format("DD-MM-YYYY, h:mm a")}
+												</TableCell>
+												<TableCell className="hidden md:table-cell">
+													{bike.returnTime ? (
+														moment(bike.returnTime).format("DD-MM-YYYY, h:mm a")
+													) : (
+														<div className="flex gap-3">
+															<CurrentTime />
+															<TooltipProvider>
+																<Tooltip>
+																	<TooltipTrigger
+																		asChild
+																		className="cursor-pointer"
+																	>
+																		<CircleAlert />
+																	</TooltipTrigger>
+																	<TooltipContent>
+																		<p>This bike is currently on rent!</p>
+																	</TooltipContent>
+																</Tooltip>
+															</TooltipProvider>
+														</div>
+													)}
+												</TableCell>
+
+												<TableCell className="hidden md:table-cell w-16">
+													<form
+														onSubmit={handleSubmit(onSubmit)}
+														className="flex flex-col gap-3"
+													>
+														<input
+															type="text"
+															{...register("coupon")}
+															className="flex h-10 w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+														/>
+														<input
+															type="hidden"
+															value={bike._id}
+															{...register("bikeId")}
+														/>
+
+														<Button type="submit">Submit Coupon</Button>
+													</form>
+												</TableCell>
+												<TableCell className="hidden md:table-cell">
+													<p>
+														Total Amount: $
+														{totalAmount ? totalAmount : bike?.totalCost}
+													</p>
+													<p>Advance Pay: ${bike.advancePay}</p>
+													<p>
+														Due Amount: $
+														{totalAmount
+															? totalAmount - bike.advancePay
+															: bike.totalCost - bike.advancePay}
+													</p>
+												</TableCell>
+												<TableCell className="hidden md:table-cell">
+													<Button
+														onClick={() => handleFullPay(bike?._id)}
+														className="bg-accent-foreground font-orbitron tracking-wider px-10 py-5 rounded-none duration-500"
+													>
+														Payment
+													</Button>
+												</TableCell>
+											</TableRow>
+										))}
+									</TableBody>
+								</Table>
+							) : (
+								<>
+									<div className="w-1/3 py-20 mx-auto col-span-full">
+										<img
+											src="https://i.ibb.co/2hx2jQf/folder.png"
+											alt=""
+											width={"300px"}
+											className="mx-auto"
+										/>
+										<h2 className="text-center font-orbitron lg:text-5xl md:text-3xl text-xl font-bold">
+											Unpaid rentals not found
+										</h2>
+									</div>
+								</>
+							)}
 						</CardContent>
 						<CardFooter></CardFooter>
 					</Card>
@@ -226,51 +243,69 @@ const Rentals = () => {
 				<TabsContent value="paid" className="w-full">
 					<Card className="w-full">
 						<CardContent className="font-inter">
-							<Table>
-								<TableHeader>
-									<TableRow>
-										<TableHead className="hidden w-[100px] sm:table-cell">
-											<span className="sr-only">img</span>
-										</TableHead>
-										<TableHead>Name</TableHead>
-										<TableHead>Start Time</TableHead>
-										<TableHead className="hidden md:table-cell">
-											Return Time
-										</TableHead>
-										<TableHead>Total Cost</TableHead>
-									</TableRow>
-								</TableHeader>
-								<TableBody>
-									{paidRentals?.map((bike: TRental) => (
-										<TableRow key={bike._id}>
-											<TableCell className="hidden sm:table-cell">
-												<img
-													alt="Product img"
-													className="aspect-square rounded-md object-cover"
-													height="64"
-													src={bike?.bikeId?.image}
-													width="64"
-												/>
-											</TableCell>
-											<TableCell className="font-medium">
-												{bike.bikeId.name}
-											</TableCell>
-											<TableCell className="capitalize">
-												{moment(bike.startTime).format("DD-MM-YYYY, h:mm a")}
-											</TableCell>
-											<TableCell className="hidden md:table-cell">
-												{bike.returnTime
-													? moment(bike.returnTime).format("DD-MM-YYYY, h:mm a")
-													: "Did`t return yet"}
-											</TableCell>
-
-											<TableCell className="hidden md:table-cell">
-												${bike.totalCost}
-											</TableCell>
+							{paidRentals && paidRentals.length > 0 ? (
+								<Table>
+									<TableHeader>
+										<TableRow>
+											<TableHead className="hidden w-[100px] sm:table-cell">
+												<span className="sr-only">img</span>
+											</TableHead>
+											<TableHead>Name</TableHead>
+											<TableHead>Start Time</TableHead>
+											<TableHead className="hidden md:table-cell">
+												Return Time
+											</TableHead>
+											<TableHead>Total Cost</TableHead>
 										</TableRow>
-									))}
-								</TableBody>
-							</Table>
+									</TableHeader>
+									<TableBody>
+										{paidRentals?.map((bike: TRental) => (
+											<TableRow key={bike._id}>
+												<TableCell className="hidden sm:table-cell">
+													<img
+														alt="Product img"
+														className="aspect-square rounded-md object-cover"
+														height="64"
+														src={bike?.bikeId?.image}
+														width="64"
+													/>
+												</TableCell>
+												<TableCell className="font-medium">
+													{bike.bikeId.name}
+												</TableCell>
+												<TableCell className="capitalize">
+													{moment(bike.startTime).format("DD-MM-YYYY, h:mm a")}
+												</TableCell>
+												<TableCell className="hidden md:table-cell">
+													{bike.returnTime
+														? moment(bike.returnTime).format(
+																"DD-MM-YYYY, h:mm a"
+														  )
+														: "Did`t return yet"}
+												</TableCell>
+
+												<TableCell className="hidden md:table-cell">
+													${bike.totalCost}
+												</TableCell>
+											</TableRow>
+										))}
+									</TableBody>
+								</Table>
+							) : (
+								<>
+									<div className="w-1/3 py-20 mx-auto col-span-full">
+										<img
+											src="https://i.ibb.co/2hx2jQf/folder.png"
+											alt=""
+											width={"300px"}
+											className="mx-auto"
+										/>
+										<h2 className="text-center font-orbitron lg:text-5xl md:text-3xl text-xl font-bold">
+											Bike not found
+										</h2>
+									</div>
+								</>
+							)}
 						</CardContent>
 						<CardFooter></CardFooter>
 					</Card>

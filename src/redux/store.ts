@@ -16,7 +16,7 @@ import {
 } from "redux-persist"
 
 const persistConfig = {
-	key: "bike",
+	key: "user",
 	storage,
 }
 const persistConfig1 = {

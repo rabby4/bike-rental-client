@@ -106,7 +106,6 @@ const Login = () => {
 										{...field}
 										placeholder="example@gmail.com"
 										type="email"
-										defaultValue={""}
 									/>
 								)}
 							/>

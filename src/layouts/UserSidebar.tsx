@@ -38,14 +38,16 @@ const UserSidebar = () => {
 							{/* these two routes for users and admins */}
 							<NavLink
 								to="/dashboard"
-								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+								className={
+									"flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+								}
 							>
 								<LayoutDashboard size={22} />
 								Dashboard
 							</NavLink>
 							<NavLink
 								to="/dashboard/my-profile"
-								className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+								className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white`}
 							>
 								<User size={22} />
 								Profile

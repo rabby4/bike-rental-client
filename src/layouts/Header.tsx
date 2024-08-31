@@ -202,6 +202,7 @@ const Header = () => {
 										</span>
 									</NavLink>
 								</NavigationMenuItem>
+
 								{user ? (
 									<NavigationMenuItem className="relative">
 										<DropdownMenu>

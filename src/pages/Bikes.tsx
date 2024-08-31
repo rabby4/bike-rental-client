@@ -160,9 +160,25 @@ const Bikes = () => {
 			<div className="container lg:px-0 md:px-10 px-5">
 				<div className="my-20">
 					<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
-						{bikes.map((bike: TBike) => (
-							<BikeCard key={bike._id} bike={bike} />
-						))}
+						{bikes && bikes.length > 0 ? (
+							bikes.map((bike: TBike) => (
+								<BikeCard key={bike._id} bike={bike} />
+							))
+						) : (
+							<>
+								<div className="w-1/3 py-20 mx-auto col-span-full">
+									<img
+										src="https://i.ibb.co/2hx2jQf/folder.png"
+										alt=""
+										width={"300px"}
+										className="mx-auto"
+									/>
+									<h2 className="text-center font-orbitron lg:text-5xl md:text-3xl text-xl font-bold">
+										Bike not found
+									</h2>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 			</div>

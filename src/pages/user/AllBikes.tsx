@@ -182,7 +182,93 @@ const AllBikes = () => {
 					</div>
 				</CardHeader>
 				<CardContent className="font-inter">
-					<Table>
+					{bikes && bikes.length > 0 ? (
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead className="hidden w-[100px] sm:table-cell">
+										<span className="sr-only">img</span>
+									</TableHead>
+									<TableHead>Name</TableHead>
+									<TableHead>Brand</TableHead>
+									<TableHead className="hidden md:table-cell">Model</TableHead>
+									<TableHead>Bike CC</TableHead>
+									<TableHead className="hidden md:table-cell">
+										Category
+									</TableHead>
+									<TableHead>Bike Color</TableHead>
+									<TableHead className="hidden md:table-cell">Price</TableHead>
+									<TableHead className="hidden md:table-cell">
+										Availability
+									</TableHead>
+
+									<TableHead>
+										<span>Actions</span>
+									</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{bikes.map((bike: TBike) => (
+									<TableRow key={bike._id}>
+										<TableCell className="hidden sm:table-cell">
+											<img
+												alt="Product img"
+												className="aspect-square rounded-md object-cover"
+												height="64"
+												src={bike.image}
+												width="64"
+											/>
+										</TableCell>
+										<TableCell className="font-medium">{bike.name}</TableCell>
+										<TableCell className="capitalize">{bike.brand}</TableCell>
+										<TableCell className="hidden md:table-cell">
+											{bike.model}
+										</TableCell>
+										<TableCell>{bike.cc} CC</TableCell>
+										<TableCell className="hidden md:table-cell capitalize">
+											{bike.category.replace(/_/g, " ")}
+										</TableCell>
+										<TableCell className="capitalize">{bike.color}</TableCell>
+										<TableCell className="hidden md:table-cell">
+											${bike.pricePerHour}
+										</TableCell>
+										<TableCell className="hidden md:table-cell">
+											{bike.isAvailable ? (
+												<Badge className="bg-accent-foreground">
+													Available
+												</Badge>
+											) : (
+												<Badge variant={"destructive"}>Not Available</Badge>
+											)}
+										</TableCell>
+
+										<TableCell>
+											<NavLink to={`/bike-details/${bike._id}`}>
+												<Button className="w-full bg-accent-foreground text-base">
+													Details
+												</Button>
+											</NavLink>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					) : (
+						<>
+							<div className="w-1/3 py-20 mx-auto col-span-full">
+								<img
+									src="https://i.ibb.co/2hx2jQf/folder.png"
+									alt=""
+									width={"300px"}
+									className="mx-auto"
+								/>
+								<h2 className="text-center font-orbitron lg:text-5xl md:text-3xl text-xl font-bold">
+									Bike not found
+								</h2>
+							</div>
+						</>
+					)}
+					{/* <Table>
 						<TableHeader>
 							<TableRow>
 								<TableHead className="hidden w-[100px] sm:table-cell">
@@ -247,7 +333,7 @@ const AllBikes = () => {
 								</TableRow>
 							))}
 						</TableBody>
-					</Table>
+					</Table> */}
 				</CardContent>
 				<CardFooter>
 					{/* <div className="text-xs text-muted-foreground">
