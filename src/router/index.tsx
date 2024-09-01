@@ -23,6 +23,7 @@ import ProtectedRoute from "@/layouts/ProtectedRoute"
 import AllBikes from "@/pages/user/AllBikes"
 import Rentals from "@/pages/user/Rentals"
 import Success from "@/pages/Success"
+import Coupon from "@/pages/admin/Coupon"
 
 const router = createBrowserRouter([
 	{
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
 					{
 						path: "create-bike",
 						element: <CreateBike />,
+					},
+					{
+						path: "coupon",
+						element: <Coupon />,
 					},
 					{
 						path: "all-bikes",

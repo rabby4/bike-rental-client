@@ -98,7 +98,7 @@ const BikeDetails = () => {
 				const res = await createRent(rentInfo).unwrap()
 				toast.success(res.message, { id: toastId })
 
-				// redirect to payment page page
+				// redirect to payment page
 				window.location.href = res.data.paymentSession.payment_url
 			}
 		} catch (error) {

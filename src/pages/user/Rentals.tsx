@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import {
 	Table,
 	TableBody,
@@ -17,14 +18,21 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { currentToken } from "@/redux/features/auth/userSlice"
+import couponApi from "@/redux/features/coupon/couponApi"
 import rentApi from "@/redux/features/rent/rentApi"
 import { useAppSelector } from "@/redux/hook"
+import { TCoupon } from "@/types/coupon.type"
 import { TRental } from "@/types/rentals.type"
 import CurrentTime from "@/utils/CurrentTime"
 import { CircleAlert } from "lucide-react"
 import moment from "moment"
 import { useState } from "react"
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
+import {
+	Controller,
+	FieldValues,
+	SubmitHandler,
+	useForm,
+} from "react-hook-form"
 import { toast } from "sonner"
 
 const Rentals = () => {
@@ -32,9 +40,9 @@ const Rentals = () => {
 	const [fullPayment] = rentApi.useFullPaymentMutation()
 	const { data: rentalData } = rentApi.useGetRentQuery(token)
 	const rentalBikes = rentalData?.data
+	const { data: couponData } = couponApi.useGetCouponQuery(undefined)
+	const couponCode = couponData?.data
 	const [totalAmount, setTotalAmount] = useState(0)
-	console.log(rentalBikes)
-	console.log(totalAmount)
 	const unpaidRentals = rentalBikes?.filter(
 		(bike: TRental) => bike.fullPay === false
 	)
@@ -42,32 +50,25 @@ const Rentals = () => {
 		(bike: TRental) => bike.fullPay === true
 	)
 
-	const { handleSubmit, register } = useForm<FieldValues>()
+	const { handleSubmit, register, control } = useForm<FieldValues>()
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		const findBike = rentalBikes.find(
 			(bike: TRental) => String(bike?._id) === String(data?.bikeId)
 		)
 
-		if (data.coupon === "OFF5") {
-			const amount = (findBike.totalCost / 100) * 95
-			setTotalAmount(amount)
-		}
-		if (data.coupon === "OFF10") {
-			const amount = (findBike.totalCost / 100) * 90
-			setTotalAmount(amount)
-		}
-		if (data.coupon === "OFF15") {
-			const amount = (findBike.totalCost / 100) * 85
-			setTotalAmount(amount)
-		}
-		if (data.coupon === "OFF20") {
-			const amount = (findBike.totalCost / 100) * 80
-			setTotalAmount(amount)
-		}
-		if (data.coupon === "OFF25") {
-			const amount = (findBike.totalCost / 100) * 75
-			setTotalAmount(amount)
+		const findCoupon = couponCode.find(
+			(coupon: TCoupon) => coupon.coupon === data.coupon
+		)
+
+		if (data?.coupon === findCoupon?.coupon) {
+			if (findCoupon?.couponType === "percentage") {
+				const amount = (findBike?.totalCost / 100) * (100 - findCoupon?.deal)
+				setTotalAmount(amount)
+			} else if (findCoupon?.couponType === "flat") {
+				const amount = findBike?.totalCost - findCoupon?.deal
+				setTotalAmount(amount)
+			}
 		}
 	}
 
@@ -77,15 +78,17 @@ const Rentals = () => {
 			id,
 			token,
 		}
+		const unpaid = unpaidRentals.find((rent: TRental) => rent._id === id)
+
 		try {
-			if (!rentalBikes.isReturned) {
+			if (!unpaid?.isReturned) {
 				toast.error("This bike is not return yet!", { id: toastId })
-				return
-			}
-			const res = await fullPayment(paymentInfo).unwrap()
-			if (res.success) {
-				toast.success(res.message, { id: toastId })
-				window.location.href = res.data.paymentSession.payment_url
+			} else {
+				const res = await fullPayment(paymentInfo).unwrap()
+				if (res.success) {
+					toast.success(res.message, { id: toastId })
+					window.location.href = res.data.paymentSession.payment_url
+				}
 			}
 		} catch (error) {
 			toast.error("Bike rent Process Failed...", { id: toastId })
@@ -182,11 +185,24 @@ const Rentals = () => {
 														onSubmit={handleSubmit(onSubmit)}
 														className="flex flex-col gap-3"
 													>
-														<input
+														<Controller
+															name="coupon"
+															control={control}
+															rules={{ required: true }}
+															render={({ field }) => (
+																<Input
+																	{...field}
+																	type="text"
+																	className="w-full"
+																	placeholder="Write you coupon deal"
+																/>
+															)}
+														/>
+														{/* <input
 															type="text"
 															{...register("coupon")}
 															className="flex h-10 w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-														/>
+														/> */}
 														<input
 															type="hidden"
 															value={bike._id}
@@ -199,14 +215,16 @@ const Rentals = () => {
 												<TableCell className="hidden md:table-cell">
 													<p>
 														Total Amount: $
-														{totalAmount ? totalAmount : bike?.totalCost}
+														{totalAmount
+															? totalAmount.toFixed(2)
+															: bike?.totalCost?.toFixed(2)}
 													</p>
-													<p>Advance Pay: ${bike.advancePay}</p>
+													<p>Advance Pay: ${bike.advancePay.toFixed(2)}</p>
 													<p>
 														Due Amount: $
 														{totalAmount
-															? totalAmount - bike.advancePay
-															: bike.totalCost - bike.advancePay}
+															? (totalAmount - bike.advancePay).toFixed(2)
+															: (bike.totalCost - bike.advancePay).toFixed(2)}
 													</p>
 												</TableCell>
 												<TableCell className="hidden md:table-cell">

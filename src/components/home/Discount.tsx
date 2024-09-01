@@ -14,31 +14,37 @@ import {
 } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
+import couponApi from "@/redux/features/coupon/couponApi"
+import { TCoupon, TSegment } from "@/types/coupon.type"
 
-const segments = [
-	{ segmentText: "5%", segColor: "#e23a2e" },
-	{ segmentText: "10%", segColor: "#1a73e8" },
-	{ segmentText: "15%", segColor: "#fbbf12" },
-	{ segmentText: "20%", segColor: "#279847" },
-	{ segmentText: "25%", segColor: "#C51605 " },
+const segmentsColor = [
+	"#e23a2e",
+	"#1a73e8",
+	"#fbbf12",
+	"#279847",
+	"#C51605",
+	"#16325B",
 ]
 
 const Discount = () => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [couponCode, setCouponCode] = useState("")
+	const { data: couponData } = couponApi.useGetCouponQuery(undefined)
+
+	const segments = couponData?.data!.map((item: TCoupon) => ({
+		segmentText: `${item.deal}${item.couponType === "percentage" ? "%" : "Tk"}`,
+		segColor: segmentsColor[Math.floor(Math.random() * 5)],
+		couponCode: item.coupon,
+	}))
 
 	const handleSpinFinish = (result: string) => {
-		if (result === "5%") {
-			setCouponCode("OFF5")
-		} else if (result === "10%") {
-			setCouponCode("OFF10")
-		} else if (result === "15%") {
-			setCouponCode("OFF15")
-		} else if (result === "20%") {
-			setCouponCode("OFF20")
-		} else if (result === "25%") {
-			setCouponCode("OFF25")
+		const selectedSegment = segments.find(
+			(segment: TSegment) => segment.segmentText === result
+		)
+		if (selectedSegment) {
+			setCouponCode(selectedSegment.couponCode)
 		}
+
 		setIsDialogOpen(true)
 	}
 	const handleCopyClick = () => {
@@ -60,8 +66,8 @@ const Discount = () => {
 		buttonText: "",
 		isOnlyOnce: true,
 		size: 290,
-		upDuration: 100,
-		downDuration: 600,
+		upDuration: Math.random() * 100,
+		downDuration: Math.random() * 600,
 		fontFamily: "Orbitron",
 		arrowLocation: "top",
 		showTextOnSpin: false,
@@ -92,9 +98,10 @@ const Discount = () => {
 								<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 									<DialogContent className="sm:max-w-md">
 										<DialogHeader>
-											<DialogTitle>Share link</DialogTitle>
+											<DialogTitle>Copy this coupon</DialogTitle>
 											<DialogDescription>
-												Anyone who has this link will be able to view this.
+												Copy this coupon. and you can use it when you will
+												payment for your rentals.
 											</DialogDescription>
 										</DialogHeader>
 										<div className="flex items-center space-x-2">

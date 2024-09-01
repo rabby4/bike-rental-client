@@ -38,10 +38,17 @@ const ReturnBike = () => {
 			token,
 			id,
 		}
+
+		const rentals = rentalBikes.find((rent: TRental) => rent._id === id)
+
 		try {
-			const res = await returnBike(returnInfo).unwrap()
-			console.log(res)
-			toast.success(res.message, { id: toastId })
+			if (rentals.isReturned) {
+				toast.error("This bike is already returned!", { id: toastId })
+				return
+			} else {
+				const res = await returnBike(returnInfo).unwrap()
+				toast.success(res.message, { id: toastId })
+			}
 		} catch (error) {
 			toast.error("Bike return Process Failed...", { id: toastId })
 		}

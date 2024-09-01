@@ -1,3 +1,5 @@
+import { ModeToggle } from "@/components/theme/mode-toggle"
+import { useTheme } from "@/components/theme/theme-provider"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
@@ -35,6 +37,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const Header = () => {
+	const { theme } = useTheme()
 	const dispatch = useAppDispatch()
 	const token = useAppSelector(currentToken)
 	const bikes = useAppSelector(currentCompareData)
@@ -177,7 +180,11 @@ const Header = () => {
 					<div className=" flex-1 flex lg:justify-start md:justify-start justify-center col-span-2 md:col-span-1 lg:order-1 order-1 lg:mb-0 mb-3">
 						<NavLink to={"/"}>
 							<img
-								src="https://i.ibb.co/WPy59Zn/logo.png"
+								src={
+									theme === "light"
+										? "https://i.ibb.co/WPy59Zn/logo.png"
+										: "https://i.ibb.co/w7N05NV/White-Logo.png"
+								}
 								alt="logo"
 								className="w-32"
 							/>
@@ -201,6 +208,9 @@ const Header = () => {
 											{bikes.length}
 										</span>
 									</NavLink>
+								</NavigationMenuItem>
+								<NavigationMenuItem className="relative">
+									<ModeToggle />
 								</NavigationMenuItem>
 
 								{user ? (
@@ -259,7 +269,7 @@ const Header = () => {
 													<LogOut className="mr-2 h-4 w-4" />
 													<Button
 														onClick={handleLogout}
-														className="bg-transparent p-0 hover:bg-transparent text-black hover:text-accent-foreground"
+														className="bg-transparent p-0 hover:bg-transparent text-black hover:text-accent-foreground dark:text-white"
 													>
 														Log out
 													</Button>

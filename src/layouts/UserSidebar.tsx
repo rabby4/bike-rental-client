@@ -11,6 +11,7 @@ import {
 	ListCheck,
 	LogOut,
 	PencilRuler,
+	Receipt,
 	User,
 	Users,
 } from "lucide-react"
@@ -83,6 +84,13 @@ const UserSidebar = () => {
 									>
 										<Handshake size={22} />
 										Return Bikes
+									</NavLink>
+									<NavLink
+										to="/dashboard/coupon"
+										className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-green hover:bg-accent-foreground hover:text-white"
+									>
+										<Receipt size={22} />
+										Create Coupon
 									</NavLink>
 									<Separator />
 								</>

@@ -24,7 +24,7 @@ const Carousel = () => {
 						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-1 bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
 								<div className="grid lg:grid-cols-2">
-									<div className="md:space-y-5">
+									<div className="md:space-y-5 dark:text-black">
 										<h1 className="lg:text-[85px] md:text-6xl text-3xl font-orbitron font-semibold">
 											On-road. Off- road. Any road
 										</h1>
@@ -41,7 +41,7 @@ const Carousel = () => {
 							</div>
 						</div>
 					</CarouselItem>
-					{/* <CarouselItem>
+					<CarouselItem>
 						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-3 bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
 								<div className="grid lg:grid-cols-2">
@@ -61,12 +61,12 @@ const Carousel = () => {
 								</div>
 							</div>
 						</div>
-					</CarouselItem> */}
+					</CarouselItem>
 					<CarouselItem>
 						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-2 bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
 								<div className="grid lg:grid-cols-2">
-									<div className="md:space-y-5">
+									<div className="md:space-y-5 dark:text-black">
 										<h1 className="lg:text-[85px] md:text-6xl text-3xl font-orbitron font-semibold">
 											Break free from the same roads
 										</h1>

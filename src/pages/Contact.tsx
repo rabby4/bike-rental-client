@@ -8,7 +8,9 @@ const Contact = () => {
 	return (
 		<div>
 			<div className="bg-about-us bg-bottom h-64 flex justify-center items-center">
-				<h1 className="text-5xl font-orbitron font-bold">Our Bikes</h1>
+				<h1 className="text-5xl font-orbitron font-bold dark:text-black">
+					Our Bikes
+				</h1>
 			</div>
 			<div>
 				<iframe

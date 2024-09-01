@@ -26,7 +26,7 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 
 	return (
 		<div>
-			<Card className="action-hover overflow-hidden rounded-none">
+			<Card className="action-hover overflow-hidden rounded-none ">
 				<CardHeader className="p-0 relative ">
 					<img src={bike?.image} alt="" />
 					<div className="action-buttons flex justify-center px-5 z-0 absolute bottom-0 w-full">
@@ -38,7 +38,7 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 						</Button>
 					</div>
 				</CardHeader>
-				<CardContent className="space-y-2 pt-2 z-10 relative bg-white ">
+				<CardContent className="space-y-2 pt-2 z-10 relative bg-white dark:bg-[#020817]">
 					<p className=" text-gray-400 font-inter font-light text-sm italic tracking-wider">
 						{bike.category.replace(/_/g, " ")}
 					</p>
@@ -81,7 +81,7 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 					<CardFooter className="p-0">
 						<Button
 							// onClick={handleSendDetails}
-							className="w-full bg-accent-foreground hover:text-white md:px-10 md:py-6 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase"
+							className="w-full bg-accent-foreground hover:text-white md:px-10 md:py-6 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase dark:hover:text-black"
 						>
 							<NavLink to={`/bike-details/${bike._id}`}>
 								View Details - (${bike.pricePerHour} / hr)
