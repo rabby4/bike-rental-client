@@ -35,7 +35,9 @@ const UserManagement = () => {
 	const [updateUserToAdmin] = authApi.useUpdateUserToAdminMutation()
 	const [deleteUser] = authApi.useDeleteUserMutation()
 
-	const { data: userData, isLoading } = authApi.useGetAllUsersQuery(undefined)
+	const { data: userData, isLoading } = authApi.useGetAllUsersQuery(undefined, {
+		pollingInterval: 10000,
+	})
 	const token = useAppSelector(currentToken)
 	const users = userData?.data
 
@@ -107,7 +109,7 @@ const UserManagement = () => {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{users.map((user: TUser) => (
+								{users?.map((user: TUser) => (
 									<TableRow key={user._id}>
 										<TableCell className="hidden sm:table-cell">
 											<img

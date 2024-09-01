@@ -5,7 +5,7 @@ import authApi from "@/redux/features/auth/authApi"
 
 const Welcome = () => {
 	const token = useAppSelector(currentToken)
-	const { data } = authApi.useGetMeQuery(token)
+	const { data } = authApi.useGetMeQuery(token, { pollingInterval: 10000 })
 
 	const user = data?.data
 

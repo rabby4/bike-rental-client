@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button"
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
 	Table,
 	TableBody,
@@ -38,7 +32,9 @@ const AllBikes = () => {
 	const [category, setCategory] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
 	const [params, setParams] = useState<TQueryParam[]>([])
-	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params)
+	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params, {
+		pollingInterval: 10000,
+	})
 	const bikes = bikeData?.data.filter(
 		(bike: TBike) => bike.isAvailable === true
 	)
@@ -208,7 +204,7 @@ const AllBikes = () => {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{bikes.map((bike: TBike) => (
+								{bikes?.map((bike: TBike) => (
 									<TableRow key={bike._id}>
 										<TableCell className="hidden sm:table-cell">
 											<img
@@ -268,78 +264,7 @@ const AllBikes = () => {
 							</div>
 						</>
 					)}
-					{/* <Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead className="hidden w-[100px] sm:table-cell">
-									<span className="sr-only">img</span>
-								</TableHead>
-								<TableHead>Name</TableHead>
-								<TableHead>Brand</TableHead>
-								<TableHead className="hidden md:table-cell">Model</TableHead>
-								<TableHead>Bike CC</TableHead>
-								<TableHead className="hidden md:table-cell">Category</TableHead>
-								<TableHead>Bike Color</TableHead>
-								<TableHead className="hidden md:table-cell">Price</TableHead>
-								<TableHead className="hidden md:table-cell">
-									Availability
-								</TableHead>
-
-								<TableHead>
-									<span>Actions</span>
-								</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{bikes.map((bike: TBike) => (
-								<TableRow key={bike._id}>
-									<TableCell className="hidden sm:table-cell">
-										<img
-											alt="Product img"
-											className="aspect-square rounded-md object-cover"
-											height="64"
-											src={bike.image}
-											width="64"
-										/>
-									</TableCell>
-									<TableCell className="font-medium">{bike.name}</TableCell>
-									<TableCell className="capitalize">{bike.brand}</TableCell>
-									<TableCell className="hidden md:table-cell">
-										{bike.model}
-									</TableCell>
-									<TableCell>{bike.cc} CC</TableCell>
-									<TableCell className="hidden md:table-cell capitalize">
-										{bike.category.replace(/_/g, " ")}
-									</TableCell>
-									<TableCell className="capitalize">{bike.color}</TableCell>
-									<TableCell className="hidden md:table-cell">
-										${bike.pricePerHour}
-									</TableCell>
-									<TableCell className="hidden md:table-cell">
-										{bike.isAvailable ? (
-											<Badge className="bg-accent-foreground">Available</Badge>
-										) : (
-											<Badge variant={"destructive"}>Not Available</Badge>
-										)}
-									</TableCell>
-
-									<TableCell>
-										<NavLink to={`/bike-details/${bike._id}`}>
-											<Button className="w-full bg-accent-foreground text-base">
-												Details
-											</Button>
-										</NavLink>
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table> */}
 				</CardContent>
-				<CardFooter>
-					{/* <div className="text-xs text-muted-foreground">
-						Showing <strong>1-10</strong> of <strong>32</strong> products
-					</div> */}
-				</CardFooter>
 			</Card>
 		</div>
 	)

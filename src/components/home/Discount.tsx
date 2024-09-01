@@ -29,9 +29,11 @@ const segmentsColor = [
 const Discount = () => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [couponCode, setCouponCode] = useState("")
-	const { data: couponData } = couponApi.useGetCouponQuery(undefined)
+	const { data: couponData } = couponApi.useGetCouponQuery(undefined, {
+		pollingInterval: 10000,
+	})
 
-	const segments = couponData?.data!.map((item: TCoupon) => ({
+	const segments = couponData?.data?.map((item: TCoupon) => ({
 		segmentText: `${item.deal}${item.couponType === "percentage" ? "%" : "Tk"}`,
 		segColor: segmentsColor[Math.floor(Math.random() * 5)],
 		couponCode: item.coupon,

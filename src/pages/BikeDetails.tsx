@@ -40,7 +40,7 @@ const BikeDetails = () => {
 	const [createRent] = rentApi.useRentBikeMutation()
 	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(
 		id,
-		{ pollingInterval: 30000 }
+		{ pollingInterval: 10000 }
 	)
 
 	const bike = singleBikeData?.data

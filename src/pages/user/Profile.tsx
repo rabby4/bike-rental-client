@@ -23,7 +23,7 @@ import activity from "react-useanimations/lib/activity"
 const Profile = () => {
 	const token = useAppSelector(currentToken)
 	const { data, isLoading } = authApi.useGetMeQuery(token, {
-		pollingInterval: 30000,
+		pollingInterval: 10000,
 	})
 	const user = data?.data
 

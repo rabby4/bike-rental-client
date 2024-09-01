@@ -46,7 +46,7 @@ const Testimonials = () => {
 						className="w-full"
 					>
 						<CarouselContent>
-							{testimonials.map((item) => (
+							{testimonials?.map((item) => (
 								<CarouselItem key={item.id}>
 									<div className="p-1">
 										<Card className="bg-white bg-opacity-50 border-0 text-center">

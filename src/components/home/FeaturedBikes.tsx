@@ -31,7 +31,7 @@ const FeaturedBikes = () => {
 				description="Visit our bike page and see our amazing bikes."
 			/>
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 mt-10 lg:px-0 px-10">
-				{bikes.map((bike: TBike) => (
+				{bikes?.map((bike: TBike) => (
 					<BikeCard key={bike._id} bike={bike} />
 				))}
 			</div>

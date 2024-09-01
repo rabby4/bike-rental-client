@@ -33,7 +33,10 @@ import activity from "react-useanimations/lib/activity"
 const UpdateBike = () => {
 	const { id } = useParams()
 	const token = useAppSelector(currentToken)
-	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(id)
+	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(
+		id,
+		{ pollingInterval: 10000 }
+	)
 	const [updateBike] = bikeApi.useUpdateBikeMutation()
 	const navigate = useNavigate()
 

@@ -24,7 +24,9 @@ const Bikes = () => {
 	const [category, setCategory] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
 	const [params, setParams] = useState<TQueryParam[]>([])
-	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params)
+	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params, {
+		pollingInterval: 10000,
+	})
 
 	const bikes = bikeData?.data.filter(
 		(bike: TBike) => bike.isAvailable === true
@@ -163,7 +165,7 @@ const Bikes = () => {
 				<div className="my-20">
 					<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
 						{bikes && bikes.length > 0 ? (
-							bikes.map((bike: TBike) => (
+							bikes?.map((bike: TBike) => (
 								<BikeCard key={bike._id} bike={bike} />
 							))
 						) : (

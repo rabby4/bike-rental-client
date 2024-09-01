@@ -19,7 +19,12 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import authApi from "@/redux/features/auth/authApi"
-import { currentToken, logout } from "@/redux/features/auth/userSlice"
+// import authApi from "@/redux/features/auth/authApi"
+import {
+	currentToken,
+	currentUser,
+	logout,
+} from "@/redux/features/auth/userSlice"
 import { currentCompareData } from "@/redux/features/bike/bikeSlice"
 import { useAppDispatch, useAppSelector } from "@/redux/hook"
 import {
@@ -41,10 +46,11 @@ const Header = () => {
 	const dispatch = useAppDispatch()
 	const token = useAppSelector(currentToken)
 	const bikes = useAppSelector(currentCompareData)
+	const user = useAppSelector(currentUser)
 	const { data } = authApi.useGetMeQuery(token)
 	const navigate = useNavigate()
 
-	const user = data?.data
+	const userImage = data?.data?.image
 
 	const handleLogout = async () => {
 		try {
@@ -221,10 +227,8 @@ const Header = () => {
 													<AvatarImage
 														src={
 															user
-																? user.image
-																	? user.image
-																	: "https://i.ibb.co/WPy59Zn/logo.png"
-																: "https://i.ibb.co/WPy59Zn/logo.png"
+																? userImage
+																: "https://i.ibb.co/H7zTvh7/user.png"
 														}
 														alt="user profile"
 													/>

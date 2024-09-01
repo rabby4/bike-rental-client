@@ -62,6 +62,7 @@ const Register = () => {
 								<Controller
 									name="firstName"
 									control={control}
+									rules={{ required: true }}
 									render={({ field }) => (
 										<>
 											<Input
@@ -98,6 +99,7 @@ const Register = () => {
 								<Controller
 									name="phone"
 									control={control}
+									rules={{ required: true }}
 									render={({ field }) => (
 										<>
 											<Input
@@ -115,6 +117,7 @@ const Register = () => {
 								<Controller
 									name="address"
 									control={control}
+									rules={{ required: true }}
 									render={({ field }) => (
 										<>
 											<Input
@@ -149,6 +152,7 @@ const Register = () => {
 							<Controller
 								name="email"
 								control={control}
+								rules={{ required: true }}
 								render={({ field }) => (
 									<>
 										<Input
@@ -166,6 +170,7 @@ const Register = () => {
 							<Controller
 								name="password"
 								control={control}
+								rules={{ required: true }}
 								render={({ field }) => (
 									<>
 										<Input

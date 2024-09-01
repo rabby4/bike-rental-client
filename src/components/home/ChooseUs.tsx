@@ -34,7 +34,7 @@ const ChooseUs = () => {
 					<img
 						src="https://i.ibb.co/phJ2Wpg/renroll-1104289928.webp"
 						alt=""
-						className="mx-auto"
+						className="mx-auto rounded-full"
 					/>
 				</div>
 				<div

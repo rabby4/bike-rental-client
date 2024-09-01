@@ -1,30 +1,54 @@
-# React + TypeScript + Vite
+# ProBike | A Bike rentals service web app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
 
-Currently, two official plugins are available:
+Welcome to ProBike Rentals, your go-to solution for easy and convenient bike rentals. Whether you're a local resident looking to explore the city or a tourist eager to discover hidden gems, ProBike Rentals offers a wide selection of high-quality bicycles to meet your needs. Our service is designed to provide you with a seamless rental experience, from booking your bike online to enjoying your ride around town.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Introduction
 
-## Expanding the ESLint configuration
+- Wide Selection of Bikes: Choose from a range of bicycles, including city bikes, mountain bikes, electric bikes, and more.
+- Flexible Rental Plans: Whether you need a bike for a few hours or a few days, we offer flexible rental options to suit your schedule.
+- Easy Online Booking: Reserve your bike in advance through our user-friendly website, ensuring a hassle-free pickup when you arrive.
+- Affordable Pricing: Enjoy competitive pricing with no hidden fees, making it easy to budget for your biking adventure.
+- Customer Support: Our friendly staff is always ready to assist you, ensuring a smooth and enjoyable experience from start to finish.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technology Stack
 
-- Configure the top-level `parserOptions` property like this:
+ProBike Rentals is built using modern web technologies to ensure a fast, responsive, and scalable user experience. Below is an overview of the primary technologies used:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- React: A powerful JavaScript library for building user interfaces, allowing for the creation of reusable components and efficient UI updates.
+- Vite: A fast development build tool that offers instant server start and quick hot module replacement (HMR) for a smooth development experience.
+- Redux Toolkit: A robust state management tool that simplifies complex state logic and provides a standardized way to manage application state.
+- TypeScript: A superset of JavaScript that adds static typing, enabling better code quality, maintainability, and development experience.
+- Tailwind CSS: A utility-first CSS framework that allows for rapid UI development with a focus on responsiveness and consistency.
+
+## Installation Guidelines
+
+Follow the steps below to set up and run the ProBike Rentals project on your local machine:
+
+### Setup Instructions
+
+- Clone the Repository
+
+```bash
+git clone https://github.com/rabby4/bike-rental-client.git
+cd bike-rental-client
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Set Up Environment Variables Create a `.env` file in the root directory of the project and add the necessary environment variables. Here’s an example:
+
+```bash
+VITE_BASE_API=http://localhost:5000/api
+```
+
+- Install Dependencies Navigate to the project directory and install the required dependencies.
+
+```bash
+npm install
+```
+
+- Run the Development Server Start the Vite development server to run the frontend application
+
+```bash
+npm run dev
+```

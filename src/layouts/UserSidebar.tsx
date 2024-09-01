@@ -22,7 +22,6 @@ const UserSidebar = () => {
 	const token = useAppSelector(currentToken)
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
-
 	const { role } = verifyToken(token as string) as JwtPayload
 
 	const handleLogout = () => {

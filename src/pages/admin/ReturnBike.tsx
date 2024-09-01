@@ -29,7 +29,9 @@ import activity from "react-useanimations/lib/activity"
 const ReturnBike = () => {
 	const token = useAppSelector(currentToken)
 	const [returnBike] = rentApi.useReturnBikeMutation()
-	const { data: rentalData, isLoading } = rentApi.useGetRentQuery(token)
+	const { data: rentalData, isLoading } = rentApi.useGetRentQuery(token, {
+		pollingInterval: 10000,
+	})
 	const rentalBikes = rentalData?.data
 
 	const handleReturn = async (id: string) => {

@@ -48,7 +48,9 @@ const BikeManagement = () => {
 	const [category, setCategory] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
 	const [params, setParams] = useState<TQueryParam[]>([])
-	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params)
+	const { data: bikeData, isLoading } = bikeApi.useGetBikeQuery(params, {
+		pollingInterval: 10000,
+	})
 	const [deleteBike] = bikeApi.useDeleteBikeMutation()
 	const bikes = bikeData?.data.filter(
 		(bike: TBike) => bike.isAvailable === true
@@ -242,7 +244,7 @@ const BikeManagement = () => {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{bikes.map((bike: TBike) => (
+								{bikes?.map((bike: TBike) => (
 									<TableRow key={bike._id}>
 										<TableCell className="hidden sm:table-cell">
 											<img

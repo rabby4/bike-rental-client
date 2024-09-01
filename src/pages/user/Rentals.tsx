@@ -40,7 +40,9 @@ const Rentals = () => {
 	const [fullPayment] = rentApi.useFullPaymentMutation()
 	const { data: rentalData } = rentApi.useGetRentQuery(token)
 	const rentalBikes = rentalData?.data
-	const { data: couponData } = couponApi.useGetCouponQuery(undefined)
+	const { data: couponData } = couponApi.useGetCouponQuery(undefined, {
+		pollingInterval: 10000,
+	})
 	const couponCode = couponData?.data
 	const [totalAmount, setTotalAmount] = useState(0)
 	const unpaidRentals = rentalBikes?.filter(
