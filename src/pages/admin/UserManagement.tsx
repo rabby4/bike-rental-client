@@ -30,6 +30,7 @@ import { MoreHorizontal } from "lucide-react"
 import { toast } from "sonner"
 import UseAnimations from "react-useanimations"
 import activity from "react-useanimations/lib/activity"
+import Swal from "sweetalert2"
 
 const UserManagement = () => {
 	const [updateUserToAdmin] = authApi.useUpdateUserToAdminMutation()
@@ -58,18 +59,32 @@ const UserManagement = () => {
 	}
 
 	const handleDeleteUser = async (id: string) => {
-		const toastId = toast.loading("Deleting user...")
-
 		const userInfo = {
 			id,
 			token,
 		}
 
 		try {
-			const res = await deleteUser(userInfo).unwrap()
-			toast.success(res.message, { id: toastId })
+			Swal.fire({
+				title: "Are you sure?",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, delete it!",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					deleteUser(userInfo).unwrap()
+					Swal.fire({
+						title: "Deleted!",
+						text: "User data has been deleted.",
+						icon: "success",
+					})
+				}
+			})
 		} catch (error) {
-			toast.error("User Delete Process Failed...", { id: toastId })
+			toast.error("User Delete Process Failed...")
 		}
 	}
 
@@ -91,7 +106,7 @@ const UserManagement = () => {
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="font-inter">
-					{users && users.length > 2 ? (
+					{users && users.length > 0 ? (
 						<Table>
 							<TableHeader>
 								<TableRow>
@@ -123,7 +138,7 @@ const UserManagement = () => {
 										<TableCell className="font-medium">
 											{user.firstName} {user.lastName}
 										</TableCell>
-										<TableCell className="capitalize">{user.email}</TableCell>
+										<TableCell>{user.email}</TableCell>
 										<TableCell>{user.phone}</TableCell>
 										<TableCell className="capitalize">{user.address}</TableCell>
 										<TableCell className="hidden md:table-cell capitalize">

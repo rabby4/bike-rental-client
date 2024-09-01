@@ -178,7 +178,7 @@ const AllBikes = () => {
 					</div>
 				</CardHeader>
 				<CardContent className="font-inter">
-					{bikes && bikes.length > 0 ? (
+					{bikes && bikes?.length > 0 ? (
 						<Table>
 							<TableHeader>
 								<TableRow>
@@ -205,31 +205,31 @@ const AllBikes = () => {
 							</TableHeader>
 							<TableBody>
 								{bikes?.map((bike: TBike) => (
-									<TableRow key={bike._id}>
+									<TableRow key={bike?._id}>
 										<TableCell className="hidden sm:table-cell">
 											<img
 												alt="Product img"
 												className="aspect-square rounded-md object-cover"
 												height="64"
-												src={bike.image}
+												src={bike?.image}
 												width="64"
 											/>
 										</TableCell>
-										<TableCell className="font-medium">{bike.name}</TableCell>
-										<TableCell className="capitalize">{bike.brand}</TableCell>
+										<TableCell className="font-medium">{bike?.name}</TableCell>
+										<TableCell className="capitalize">{bike?.brand}</TableCell>
 										<TableCell className="hidden md:table-cell">
-											{bike.model}
+											{bike?.model}
 										</TableCell>
 										<TableCell>{bike.cc} CC</TableCell>
 										<TableCell className="hidden md:table-cell capitalize">
-											{bike.category.replace(/_/g, " ")}
+											{bike?.category?.replace(/_/g, " ")}
 										</TableCell>
-										<TableCell className="capitalize">{bike.color}</TableCell>
+										<TableCell className="capitalize">{bike?.color}</TableCell>
 										<TableCell className="hidden md:table-cell">
-											${bike.pricePerHour}
+											${bike?.pricePerHour}
 										</TableCell>
 										<TableCell className="hidden md:table-cell">
-											{bike.isAvailable ? (
+											{bike?.isAvailable ? (
 												<Badge className="bg-accent-foreground">
 													Available
 												</Badge>
@@ -239,7 +239,7 @@ const AllBikes = () => {
 										</TableCell>
 
 										<TableCell>
-											<NavLink to={`/bike-details/${bike._id}`}>
+											<NavLink to={`/bike-details/${bike?._id}`}>
 												<Button className="w-full bg-accent-foreground text-base">
 													Details
 												</Button>

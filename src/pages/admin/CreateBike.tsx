@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import bikeApi from "@/redux/features/bike/bikeApi"
+import { createBikeSchema } from "@/schemas/bikeSchema"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
 	Controller,
 	FieldValues,
@@ -28,7 +30,13 @@ import { toast } from "sonner"
 
 const CreateBike = () => {
 	const [createBike] = bikeApi.useCreateBikeMutation()
-	const { control, handleSubmit } = useForm({})
+	const {
+		control,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: zodResolver(createBikeSchema),
+	})
 	const navigate = useNavigate()
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -80,12 +88,19 @@ const CreateBike = () => {
 											control={control}
 											rules={{ required: true }}
 											render={({ field }) => (
-												<Input
-													{...field}
-													type="text"
-													className="w-full"
-													placeholder="Write you bike title"
-												/>
+												<>
+													<Input
+														{...field}
+														type="text"
+														className="w-full"
+														placeholder="Write you bike title"
+													/>
+													{errors.name?.message && (
+														<p className="text-red-500 text-xs">
+															{errors.name?.message as string}
+														</p>
+													)}
+												</>
 											)}
 										/>
 									</div>
@@ -98,29 +113,36 @@ const CreateBike = () => {
 												control={control}
 												rules={{ required: true }}
 												render={({ field }) => (
-													<Select
-														{...field}
-														onValueChange={(value) => field.onChange(value)}
-													>
-														<SelectTrigger>
-															<SelectValue placeholder="Select Brand" />
-														</SelectTrigger>
-														<SelectContent>
-															<SelectItem value="trek">Trek</SelectItem>
-															<SelectItem value="specialized">
-																Specialized
-															</SelectItem>
-															<SelectItem value="giant">Giant</SelectItem>
-															<SelectItem value="cannondale">
-																Cannondale
-															</SelectItem>
-															<SelectItem value="scott">Scott</SelectItem>
-															<SelectItem value="santa_cruz">
-																Santa Cruz
-															</SelectItem>
-															<SelectItem value="bianchi">Bianchi</SelectItem>
-														</SelectContent>
-													</Select>
+													<>
+														<Select
+															{...field}
+															onValueChange={(value) => field.onChange(value)}
+														>
+															<SelectTrigger>
+																<SelectValue placeholder="Select Brand" />
+															</SelectTrigger>
+															<SelectContent>
+																<SelectItem value="trek">Trek</SelectItem>
+																<SelectItem value="specialized">
+																	Specialized
+																</SelectItem>
+																<SelectItem value="giant">Giant</SelectItem>
+																<SelectItem value="cannondale">
+																	Cannondale
+																</SelectItem>
+																<SelectItem value="scott">Scott</SelectItem>
+																<SelectItem value="santa_cruz">
+																	Santa Cruz
+																</SelectItem>
+																<SelectItem value="bianchi">Bianchi</SelectItem>
+															</SelectContent>
+														</Select>
+														{errors.brand?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.brand?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -131,12 +153,19 @@ const CreateBike = () => {
 												control={control}
 												rules={{ required: true }}
 												render={({ field }) => (
-													<Input
-														{...field}
-														type="text"
-														className="w-full"
-														placeholder="Write you bike Model"
-													/>
+													<>
+														<Input
+															{...field}
+															type="text"
+															className="w-full"
+															placeholder="Write you bike Model"
+														/>
+														{errors.model?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.model?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -150,12 +179,19 @@ const CreateBike = () => {
 												control={control}
 												rules={{ required: true }}
 												render={({ field }) => (
-													<Input
-														{...field}
-														type="text"
-														className="w-full"
-														placeholder="Write you bike CC"
-													/>
+													<>
+														<Input
+															{...field}
+															type="text"
+															className="w-full"
+															placeholder="Write you bike CC"
+														/>
+														{errors.cc?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.cc?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -166,12 +202,19 @@ const CreateBike = () => {
 												control={control}
 												rules={{ required: true }}
 												render={({ field }) => (
-													<Input
-														{...field}
-														type="text"
-														className="w-full"
-														placeholder="Write you bike release year"
-													/>
+													<>
+														<Input
+															{...field}
+															type="text"
+															className="w-full"
+															placeholder="Write you bike release year"
+														/>
+														{errors.year?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.year?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -182,12 +225,19 @@ const CreateBike = () => {
 												control={control}
 												rules={{ required: true }}
 												render={({ field }) => (
-													<Input
-														{...field}
-														type="text"
-														className="w-full"
-														placeholder="Write you bike frame size"
-													/>
+													<>
+														<Input
+															{...field}
+															type="text"
+															className="w-full"
+															placeholder="Write you bike frame size"
+														/>
+														{errors.frame?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.frame?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -201,12 +251,19 @@ const CreateBike = () => {
 												control={control}
 												rules={{ required: true }}
 												render={({ field }) => (
-													<Input
-														{...field}
-														type="text"
-														className="w-full"
-														placeholder="Write you bike Maximum support hr..."
-													/>
+													<>
+														<Input
+															{...field}
+															type="text"
+															className="w-full"
+															placeholder="Write you bike Maximum support hr..."
+														/>
+														{errors.support?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.support?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -216,20 +273,27 @@ const CreateBike = () => {
 												name="color"
 												control={control}
 												render={({ field }) => (
-													<Select
-														{...field}
-														onValueChange={(value) => field.onChange(value)}
-													>
-														<SelectTrigger>
-															<SelectValue placeholder="Select Color" />
-														</SelectTrigger>
-														<SelectContent>
-															<SelectItem value="black">Black</SelectItem>
-															<SelectItem value="red">Red</SelectItem>
-															<SelectItem value="gray">Gray</SelectItem>
-															<SelectItem value="blue">Blue</SelectItem>
-														</SelectContent>
-													</Select>
+													<>
+														<Select
+															{...field}
+															onValueChange={(value) => field.onChange(value)}
+														>
+															<SelectTrigger>
+																<SelectValue placeholder="Select Color" />
+															</SelectTrigger>
+															<SelectContent>
+																<SelectItem value="black">Black</SelectItem>
+																<SelectItem value="red">Red</SelectItem>
+																<SelectItem value="gray">Gray</SelectItem>
+																<SelectItem value="blue">Blue</SelectItem>
+															</SelectContent>
+														</Select>
+														{errors.color?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.color?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -242,35 +306,44 @@ const CreateBike = () => {
 												name="category"
 												control={control}
 												render={({ field }) => (
-													<Select
-														{...field}
-														onValueChange={(value) => field.onChange(value)}
-													>
-														<SelectTrigger>
-															<SelectValue placeholder="Select Category" />
-														</SelectTrigger>
-														<SelectContent>
-															<SelectItem value="road_bike">
-																Road Bike
-															</SelectItem>
-															<SelectItem value="mountain_bike">
-																Mountain Bike
-															</SelectItem>
-															<SelectItem value="hybrid_bike">
-																Hybrid Bike
-															</SelectItem>
-															<SelectItem value="cruiser_bike">
-																Cruiser Bike
-															</SelectItem>
-															<SelectItem value="electric_bike">
-																Electric Bike
-															</SelectItem>
-															<SelectItem value="bmx_bike">BMX Bike</SelectItem>
-															<SelectItem value="gravel_bike">
-																Gravel Bike
-															</SelectItem>
-														</SelectContent>
-													</Select>
+													<>
+														<Select
+															{...field}
+															onValueChange={(value) => field.onChange(value)}
+														>
+															<SelectTrigger>
+																<SelectValue placeholder="Select Category" />
+															</SelectTrigger>
+															<SelectContent>
+																<SelectItem value="road_bike">
+																	Road Bike
+																</SelectItem>
+																<SelectItem value="mountain_bike">
+																	Mountain Bike
+																</SelectItem>
+																<SelectItem value="hybrid_bike">
+																	Hybrid Bike
+																</SelectItem>
+																<SelectItem value="cruiser_bike">
+																	Cruiser Bike
+																</SelectItem>
+																<SelectItem value="electric_bike">
+																	Electric Bike
+																</SelectItem>
+																<SelectItem value="bmx_bike">
+																	BMX Bike
+																</SelectItem>
+																<SelectItem value="gravel_bike">
+																	Gravel Bike
+																</SelectItem>
+															</SelectContent>
+														</Select>
+														{errors.category?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.category?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -281,12 +354,19 @@ const CreateBike = () => {
 												control={control}
 												rules={{ required: true }}
 												render={({ field }) => (
-													<Input
-														{...field}
-														type="text"
-														className="w-full"
-														placeholder="Write you bike Weight"
-													/>
+													<>
+														<Input
+															{...field}
+															type="text"
+															className="w-full"
+															placeholder="Write you bike Weight"
+														/>
+														{errors.weight?.message && (
+															<p className="text-red-500 text-xs">
+																{errors.weight?.message as string}
+															</p>
+														)}
+													</>
 												)}
 											/>
 										</div>
@@ -298,13 +378,20 @@ const CreateBike = () => {
 											control={control}
 											rules={{ required: true }}
 											render={({ field }) => (
-												<Textarea
-													{...field}
-													id="description"
-													defaultValue=""
-													className="min-h-32"
-													placeholder="What about your bike..."
-												/>
+												<>
+													<Textarea
+														{...field}
+														id="description"
+														defaultValue=""
+														className="min-h-32"
+														placeholder="What about your bike..."
+													/>
+													{errors.description?.message && (
+														<p className="text-red-500 text-xs">
+															{errors.description?.message as string}
+														</p>
+													)}
+												</>
 											)}
 										/>
 									</div>
@@ -326,12 +413,19 @@ const CreateBike = () => {
 											control={control}
 											rules={{ required: true }}
 											render={({ field }) => (
-												<Input
-													{...field}
-													type="text"
-													className="w-full"
-													placeholder="Write you bike Weight"
-												/>
+												<>
+													<Input
+														{...field}
+														type="text"
+														className="w-full"
+														placeholder="Write you bike Weight"
+													/>
+													{errors.pricePerHour?.message && (
+														<p className="text-red-500 text-xs">
+															{errors.pricePerHour?.message as string}
+														</p>
+													)}
+												</>
 											)}
 										/>
 									</div>
@@ -351,9 +445,16 @@ const CreateBike = () => {
 									<Controller
 										name="image"
 										control={control}
-										// rules={{ required: true }}
+										rules={{ required: true }}
 										render={({ field }) => (
-											<Input {...field} type="text" className="w-full " />
+											<>
+												<Input {...field} type="text" className="w-full " />
+												{errors.image?.message && (
+													<p className="text-red-500 text-xs">
+														{errors.image?.message as string}
+													</p>
+												)}
+											</>
 										)}
 									/>
 								</div>

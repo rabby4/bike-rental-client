@@ -19,13 +19,21 @@ import {
 } from "react-hook-form"
 import authApi from "@/redux/features/auth/authApi"
 import { toast } from "sonner"
+import { userSchema } from "@/schemas/userSchema"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false)
 	const [registration] = authApi.useRegistrationMutation()
 	const navigate = useNavigate()
 
-	const { control, handleSubmit } = useForm({})
+	const {
+		control,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: zodResolver(userSchema),
+	})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Singing in...")
@@ -71,6 +79,11 @@ const Register = () => {
 												type="text"
 												placeholder="First Name"
 											/>
+											{errors.firstName?.message && (
+												<p className="text-red-500 text-xs">
+													{errors.firstName?.message as string}
+												</p>
+											)}
 										</>
 									)}
 								/>
@@ -80,6 +93,7 @@ const Register = () => {
 								<Controller
 									name="lastName"
 									control={control}
+									rules={{ required: true }}
 									render={({ field }) => (
 										<>
 											<Input
@@ -88,6 +102,11 @@ const Register = () => {
 												type="text"
 												placeholder="Last Name"
 											/>
+											{errors.lastName?.message && (
+												<p className="text-red-500 text-xs">
+													{errors.lastName?.message as string}
+												</p>
+											)}
 										</>
 									)}
 								/>
@@ -108,6 +127,11 @@ const Register = () => {
 												type="text"
 												placeholder="Phone Number"
 											/>
+											{errors.phone?.message && (
+												<p className="text-red-500 text-xs">
+													{errors.phone?.message as string}
+												</p>
+											)}
 										</>
 									)}
 								/>
@@ -126,6 +150,11 @@ const Register = () => {
 												type="text"
 												placeholder="Address"
 											/>
+											{errors.address?.message && (
+												<p className="text-red-500 text-xs">
+													{errors.address?.message as string}
+												</p>
+											)}
 										</>
 									)}
 								/>
@@ -161,6 +190,11 @@ const Register = () => {
 											type="email"
 											placeholder="example@gmail.com"
 										/>
+										{errors.email?.message && (
+											<p className="text-red-500 text-xs">
+												{errors.email?.message as string}
+											</p>
+										)}
 									</>
 								)}
 							/>
@@ -178,6 +212,11 @@ const Register = () => {
 											id="password"
 											type={showPassword ? "text" : "password"}
 										/>
+										{errors.password?.message && (
+											<p className="text-red-500 text-xs">
+												{errors.password?.message as string}
+											</p>
+										)}
 									</>
 								)}
 							/>

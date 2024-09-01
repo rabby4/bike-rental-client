@@ -109,7 +109,7 @@ const UpdateBike = () => {
 										<Controller
 											name="name"
 											control={control}
-											rules={{ required: true }}
+											defaultValue={bike?.name}
 											render={({ field }) => (
 												<Input
 													{...field}
@@ -127,7 +127,7 @@ const UpdateBike = () => {
 											<Controller
 												name="brand"
 												control={control}
-												rules={{ required: true }}
+												defaultValue={bike?.brand}
 												render={({ field }) => (
 													<Select
 														{...field}
@@ -160,7 +160,7 @@ const UpdateBike = () => {
 											<Controller
 												name="model"
 												control={control}
-												rules={{ required: true }}
+												defaultValue={bike?.model}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -179,7 +179,7 @@ const UpdateBike = () => {
 											<Controller
 												name="cc"
 												control={control}
-												rules={{ required: true }}
+												defaultValue={bike?.cc}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -195,7 +195,7 @@ const UpdateBike = () => {
 											<Controller
 												name="year"
 												control={control}
-												rules={{ required: true }}
+												defaultValue={bike?.year}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -211,7 +211,7 @@ const UpdateBike = () => {
 											<Controller
 												name="frame"
 												control={control}
-												rules={{ required: true }}
+												defaultValue={bike?.frame}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -230,7 +230,7 @@ const UpdateBike = () => {
 											<Controller
 												name="support"
 												control={control}
-												rules={{ required: true }}
+												defaultValue={bike?.support}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -246,6 +246,7 @@ const UpdateBike = () => {
 											<Controller
 												name="color"
 												control={control}
+												defaultValue={bike?.color}
 												render={({ field }) => (
 													<Select
 														{...field}
@@ -272,6 +273,7 @@ const UpdateBike = () => {
 											<Controller
 												name="category"
 												control={control}
+												defaultValue={bike?.category}
 												render={({ field }) => (
 													<Select
 														{...field}
@@ -310,7 +312,7 @@ const UpdateBike = () => {
 											<Controller
 												name="weight"
 												control={control}
-												rules={{ required: true }}
+												defaultValue={bike?.weight}
 												render={({ field }) => (
 													<Input
 														{...field}
@@ -327,7 +329,7 @@ const UpdateBike = () => {
 										<Controller
 											name="description"
 											control={control}
-											rules={{ required: true }}
+											defaultValue={bike?.description}
 											render={({ field }) => (
 												<Textarea
 													{...field}
@@ -355,7 +357,7 @@ const UpdateBike = () => {
 										<Controller
 											name="pricePerHour"
 											control={control}
-											rules={{ required: true }}
+											defaultValue={bike?.pricePerHour}
 											render={({ field }) => (
 												<Input
 													{...field}
@@ -382,7 +384,7 @@ const UpdateBike = () => {
 									<Controller
 										name="image"
 										control={control}
-										// rules={{ required: true }}
+										defaultValue={bike?.image}
 										render={({ field }) => (
 											<Input {...field} type="text" className="w-full " />
 										)}

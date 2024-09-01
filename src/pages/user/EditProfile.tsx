@@ -19,8 +19,18 @@ const EditProfile = () => {
 	const { data: userData } = authApi.useGetMeQuery(token)
 	const [updateMe] = authApi.useUpdateMeMutation()
 	const user = userData?.data
+	console.log(user)
 	const navigate = useNavigate()
-	const { control, handleSubmit } = useForm({})
+	const { control, handleSubmit } = useForm({
+		defaultValues: {
+			firstName: user?.firstName,
+			lastName: user?.lastName,
+			email: user?.email,
+			phone: user?.phone,
+			address: user?.address,
+			image: user?.image,
+		},
+	})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Singing in...")
@@ -103,6 +113,7 @@ const EditProfile = () => {
 								<Controller
 									name="firstName"
 									control={control}
+									defaultValue={user?.firstName}
 									render={({ field }) => (
 										<>
 											<Input
@@ -120,6 +131,7 @@ const EditProfile = () => {
 								<Controller
 									name="lastName"
 									control={control}
+									defaultValue={user?.lastName}
 									render={({ field }) => (
 										<>
 											<Input
@@ -139,6 +151,7 @@ const EditProfile = () => {
 								<Controller
 									name="phone"
 									control={control}
+									defaultValue={user?.phone}
 									render={({ field }) => (
 										<>
 											<Input
@@ -156,6 +169,7 @@ const EditProfile = () => {
 								<Controller
 									name="address"
 									control={control}
+									defaultValue={user?.address}
 									render={({ field }) => (
 										<>
 											<Input
@@ -174,6 +188,7 @@ const EditProfile = () => {
 							<Controller
 								name="image"
 								control={control}
+								defaultValue={user?.image}
 								render={({ field }) => (
 									<>
 										<Input {...field} type="text" placeholder={user?.image} />

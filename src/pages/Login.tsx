@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff } from "lucide-react"
-import { useState } from "react"
+import { ReactNode, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import {
 	useForm,
@@ -22,63 +22,71 @@ import { toast } from "sonner"
 import { verifyToken } from "@/utils/verifyToken"
 import { useAppDispatch } from "@/redux/hook"
 import { setUser } from "@/redux/features/auth/userSlice"
-// import { FetchBaseQueryError } from "@reduxjs/toolkit/query" // Import types
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query" // Import types
+import { zodResolver } from "@hookform/resolvers/zod"
+import { loginSchema } from "@/schemas/userSchema"
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false)
 	const [login] = authApi.useLoginUserMutation()
-	const { control, handleSubmit } = useForm({})
+	const {
+		control,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: zodResolver(loginSchema),
+	})
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
-	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		const toastId = toast.loading("Logging in...")
-		try {
-			const res = await login(data)
-			console.log(res)
-			// if (res?.data) {
-			toast.success(res.data.message, { id: toastId })
-			// } else {
-			// 	return toast.error("Credentials no match", { id: toastId })
-			// }
-
-			const user = verifyToken(res.data.token)
-			dispatch(setUser({ user: user, token: res.data.token }))
-
-			navigate("/dashboard")
-		} catch (error) {
-			toast.error("Login Failed...", { id: toastId })
-		}
-	}
 	// 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 	// 		const toastId = toast.loading("Logging in...")
 	// 		try {
 	// 			const res = await login(data)
-	//
-	// 			if (res?.error) {
-	// 				if (res.error && "data" in res.error) {
-	// 					const error = res.error as FetchBaseQueryError
-	// 					if (
-	// 						error.data &&
-	// 						typeof error.data === "object" &&
-	// 						"message" in error.data
-	// 					) {
-	// 						return toast.error(error.data.message as ReactNode, { id: toastId })
-	// 					}
-	// 				}
-	// 				return toast.error("An unknown error occurred.", { id: toastId })
+	// 			console.log(res)
+	// 			if (res?.data) {
+	// 				toast.success(res.data.message, { id: toastId })
+	// 			} else {
+	// 				return toast.error("Credentials no match", { id: toastId })
 	// 			}
-	//
-	// 			toast.success(res.data.message, { id: toastId })
 	//
 	// 			const user = verifyToken(res.data.token)
 	// 			dispatch(setUser({ user: user, token: res.data.token }))
 	//
 	// 			navigate("/dashboard")
 	// 		} catch (error) {
-	// 			toast.error("An unexpected error occurred...", { id: toastId })
+	// 			toast.error("Login Failed...", { id: toastId })
 	// 		}
 	// 	}
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		const toastId = toast.loading("Logging in...")
+		try {
+			const res = await login(data)
+
+			if (res?.error) {
+				if (res.error && "data" in res.error) {
+					const error = res.error as FetchBaseQueryError
+					if (
+						error.data &&
+						typeof error.data === "object" &&
+						"message" in error.data
+					) {
+						return toast.error(error.data.message as ReactNode, { id: toastId })
+					}
+				}
+				return toast.error("An unknown error occurred.", { id: toastId })
+			}
+
+			toast.success(res.data.message, { id: toastId })
+
+			const user = verifyToken(res.data.token)
+			dispatch(setUser({ user: user, token: res.data.token }))
+
+			navigate("/dashboard")
+		} catch (error) {
+			toast.error("An unexpected error occurred...", { id: toastId })
+		}
+	}
 
 	return (
 		<div className="min-h-[calc(100vh-90px)] grid grid-cols-1 items-center">
@@ -100,11 +108,18 @@ const Login = () => {
 								control={control}
 								rules={{ required: true }}
 								render={({ field }) => (
-									<Input
-										{...field}
-										placeholder="example@gmail.com"
-										type="email"
-									/>
+									<>
+										<Input
+											{...field}
+											placeholder="example@gmail.com"
+											type="email"
+										/>
+										{errors.email?.message && (
+											<p className="text-red-500 text-xs">
+												{errors.email?.message as string}
+											</p>
+										)}
+									</>
 								)}
 							/>
 						</div>
@@ -123,7 +138,17 @@ const Login = () => {
 								control={control}
 								rules={{ required: true }}
 								render={({ field }) => (
-									<Input {...field} type={showPassword ? "text" : "password"} />
+									<>
+										<Input
+											{...field}
+											type={showPassword ? "text" : "password"}
+										/>
+										{errors.password?.message && (
+											<p className="text-red-500 text-xs">
+												{errors.password?.message as string}
+											</p>
+										)}
+									</>
 								)}
 							/>
 

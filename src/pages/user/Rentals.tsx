@@ -38,7 +38,9 @@ import { toast } from "sonner"
 const Rentals = () => {
 	const token = useAppSelector(currentToken)
 	const [fullPayment] = rentApi.useFullPaymentMutation()
-	const { data: rentalData } = rentApi.useGetRentQuery(token)
+	const { data: rentalData } = rentApi.useGetRentQuery(token, {
+		pollingInterval: 10000,
+	})
 	const rentalBikes = rentalData?.data
 	const { data: couponData } = couponApi.useGetCouponQuery(undefined, {
 		pollingInterval: 10000,
@@ -122,7 +124,7 @@ const Rentals = () => {
 				<TabsContent value="unpaid" className="w-full">
 					<Card className="w-full">
 						<CardContent className="font-inter">
-							{unpaidRentals && unpaidRentals.length > 0 ? (
+							{unpaidRentals && unpaidRentals?.length > 0 ? (
 								<Table>
 									<TableHeader>
 										<TableRow>
@@ -143,7 +145,7 @@ const Rentals = () => {
 									</TableHeader>
 									<TableBody>
 										{unpaidRentals?.map((bike: TRental) => (
-											<TableRow key={bike._id}>
+											<TableRow key={bike?._id}>
 												<TableCell className="hidden sm:table-cell">
 													<img
 														alt="Product img"
@@ -154,14 +156,16 @@ const Rentals = () => {
 													/>
 												</TableCell>
 												<TableCell className="font-medium">
-													{bike.bikeId.name}
+													{bike?.bikeId?.name}
 												</TableCell>
 												<TableCell className="capitalize">
-													{moment(bike.startTime).format("DD-MM-YYYY, h:mm a")}
+													{moment(bike?.startTime).format("DD-MM-YYYY, h:mm a")}
 												</TableCell>
 												<TableCell className="hidden md:table-cell">
-													{bike.returnTime ? (
-														moment(bike.returnTime).format("DD-MM-YYYY, h:mm a")
+													{bike?.returnTime ? (
+														moment(bike?.returnTime).format(
+															"DD-MM-YYYY, h:mm a"
+														)
 													) : (
 														<div className="flex gap-3">
 															<CurrentTime />
@@ -207,7 +211,7 @@ const Rentals = () => {
 														/> */}
 														<input
 															type="hidden"
-															value={bike._id}
+															value={bike?._id}
 															{...register("bikeId")}
 														/>
 
@@ -218,15 +222,15 @@ const Rentals = () => {
 													<p>
 														Total Amount: $
 														{totalAmount
-															? totalAmount.toFixed(2)
+															? totalAmount?.toFixed(2)
 															: bike?.totalCost?.toFixed(2)}
 													</p>
-													<p>Advance Pay: ${bike.advancePay.toFixed(2)}</p>
+													<p>Advance Pay: ${bike?.advancePay?.toFixed(2)}</p>
 													<p>
 														Due Amount: $
 														{totalAmount
-															? (totalAmount - bike.advancePay).toFixed(2)
-															: (bike.totalCost - bike.advancePay).toFixed(2)}
+															? (totalAmount - bike?.advancePay).toFixed(2)
+															: (bike?.totalCost - bike?.advancePay).toFixed(2)}
 													</p>
 												</TableCell>
 												<TableCell className="hidden md:table-cell">
@@ -263,7 +267,7 @@ const Rentals = () => {
 				<TabsContent value="paid" className="w-full">
 					<Card className="w-full">
 						<CardContent className="font-inter">
-							{paidRentals && paidRentals.length > 0 ? (
+							{paidRentals && paidRentals?.length > 0 ? (
 								<Table>
 									<TableHeader>
 										<TableRow>
@@ -291,21 +295,21 @@ const Rentals = () => {
 													/>
 												</TableCell>
 												<TableCell className="font-medium">
-													{bike.bikeId.name}
+													{bike?.bikeId?.name}
 												</TableCell>
 												<TableCell className="capitalize">
-													{moment(bike.startTime).format("DD-MM-YYYY, h:mm a")}
+													{moment(bike?.startTime).format("DD-MM-YYYY, h:mm a")}
 												</TableCell>
 												<TableCell className="hidden md:table-cell">
 													{bike.returnTime
-														? moment(bike.returnTime).format(
+														? moment(bike?.returnTime).format(
 																"DD-MM-YYYY, h:mm a"
 														  )
 														: "Did`t return yet"}
 												</TableCell>
 
 												<TableCell className="hidden md:table-cell">
-													${bike.totalCost}
+													${bike?.totalCost}
 												</TableCell>
 											</TableRow>
 										))}

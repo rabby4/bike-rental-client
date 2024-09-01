@@ -24,6 +24,10 @@ const segmentsColor = [
 	"#279847",
 	"#C51605",
 	"#16325B",
+	"#674636",
+	"#821131",
+	"#FF8225",
+	"#EF5A6F",
 ]
 
 const Discount = () => {
@@ -35,7 +39,7 @@ const Discount = () => {
 
 	const segments = couponData?.data?.map((item: TCoupon) => ({
 		segmentText: `${item.deal}${item.couponType === "percentage" ? "%" : "Tk"}`,
-		segColor: segmentsColor[Math.floor(Math.random() * 5)],
+		segColor: segmentsColor[Math.ceil(Math.random() * 10)],
 		couponCode: item.coupon,
 	}))
 
