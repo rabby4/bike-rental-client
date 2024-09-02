@@ -266,7 +266,7 @@ const BikeManagement = () => {
 											{bike.category.replace(/_/g, " ")}
 										</TableCell>
 										<TableCell className="hidden md:table-cell">
-											{moment(bike.createdAt).format("DD-MM-YYY")}
+											{moment(bike.createdAt).format("DD-MM-YYYY")}
 										</TableCell>
 										<TableCell>
 											<DropdownMenu>

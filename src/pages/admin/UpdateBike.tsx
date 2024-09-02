@@ -61,7 +61,6 @@ const UpdateBike = () => {
 	})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		console.log(data)
 		const toastId = toast.loading("Updating bike info...")
 		const bikeInfo = {
 			id,

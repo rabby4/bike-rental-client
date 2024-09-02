@@ -228,14 +228,13 @@ const BikeDetails = () => {
 							>
 								<CardContent className="p-6 text-sm">
 									<div className="grid gap-3">
-										<div className="font-semibold"></div>
 										<ul className="grid gap-3">
 											<li className="flex items-center justify-between">
 												<span className="text-muted-foreground uppercase text-base font-inter">
 													Price
 												</span>
 												<span className="text-3xl font-orbitron font-bold">
-													${bike.pricePerHour}
+													${bike.pricePerHour} / (hr)
 												</span>
 											</li>
 										</ul>

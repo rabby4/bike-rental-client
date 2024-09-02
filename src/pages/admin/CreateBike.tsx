@@ -42,7 +42,6 @@ const CreateBike = () => {
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Upload processing...")
 
-		console.log(data)
 		const bikeData = {
 			...data,
 			cc: Number(data.cc),
@@ -53,7 +52,6 @@ const CreateBike = () => {
 			isAvailable: true,
 			pricePerHour: Number(data.support),
 		}
-		console.log(bikeData)
 
 		try {
 			const res = await createBike(bikeData).unwrap()
