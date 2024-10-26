@@ -4,11 +4,11 @@ import { TQueryParam } from "@/types/bikes.type"
 const bikeApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		createBike: builder.mutation({
-			query: (data) => {
+			query: (formData) => {
 				return {
 					url: "/bikes",
 					method: "POST",
-					body: data,
+					body: formData,
 				}
 			},
 			invalidatesTags: ["bike"],

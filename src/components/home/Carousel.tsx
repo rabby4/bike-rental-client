@@ -20,9 +20,9 @@ const Carousel = () => {
 				]}
 			>
 				<CarouselContent>
-					<CarouselItem>
-						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-1 bg-cover bg-no-repeat md:px-10 px-5">
-							<div className="container ">
+					<CarouselItem className="-z-20">
+						<div className="p-1 lg:h-[65vh] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-1 bg-center bg-cover bg-no-repeat md:px-10 px-5">
+							<div className="container z-10">
 								<div className="grid lg:grid-cols-2">
 									<div className="md:space-y-5 dark:text-black">
 										<h1 className="lg:text-[85px] md:text-6xl text-3xl font-orbitron font-semibold">
@@ -32,17 +32,16 @@ const Carousel = () => {
 											It's the most advanced, best performing alloy race bike
 											ever made. Fitting, since aluminum is the 13th element.
 										</p>
-										<Button className="bg-accent-foreground rounded-none hover:text-white lg:px-10 md:px-7 px-5 lg:py-7 py-5 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase lg:text-base md:text-xs">
+										<Button className="bg-accent-foreground rounded-none hover:text-white lg:px-10 md:px-7 px-5 lg:py-7 py-5 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase lg:text-base md:text-xs cursor-pointer z-20">
 											<NavLink to={"/bikes"}>Discover Now</NavLink>
 										</Button>
 									</div>
-									<div></div>
 								</div>
 							</div>
 						</div>
 					</CarouselItem>
 					<CarouselItem>
-						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-3 bg-cover bg-no-repeat md:px-10 px-5">
+						<div className="p-1 lg:h-[65vh] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-3 bg-center bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
 								<div className="grid lg:grid-cols-2">
 									<div className="md:space-y-5">
@@ -63,7 +62,7 @@ const Carousel = () => {
 						</div>
 					</CarouselItem>
 					<CarouselItem>
-						<div className="p-1 lg:h-[calc(100vh-100px)] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-2 bg-cover bg-no-repeat md:px-10 px-5">
+						<div className="p-1 lg:h-[65vh] md:h-[500px] h-[300px] w-full flex items-center bg-carousel-2 bg-center bg-cover bg-no-repeat md:px-10 px-5">
 							<div className="container ">
 								<div className="grid lg:grid-cols-2">
 									<div className="md:space-y-5 dark:text-black">
@@ -85,7 +84,7 @@ const Carousel = () => {
 					</CarouselItem>
 				</CarouselContent>
 			</Slider>
-			<div className="lg:max-w-5xl mx-auto lg:-mt-20 md:-mt-10 z-20">
+			<div className="lg:max-w-5xl mx-auto lg:-mt-14 md:-mt-18 z-20">
 				<FilterForm />
 			</div>
 		</div>

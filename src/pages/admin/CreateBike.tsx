@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import bikeApi from "@/redux/features/bike/bikeApi"
-import { createBikeSchema } from "@/schemas/bikeSchema"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { Upload } from "lucide-react"
+import { useState } from "react"
 import {
 	Controller,
 	FieldValues,
@@ -29,18 +29,32 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const CreateBike = () => {
+	const [image, setImage] = useState<File[]>([])
+	const [imagePreviews, setImagePreviews] = useState<string[]>([])
 	const [createBike] = bikeApi.useCreateBikeMutation()
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
-	} = useForm({
-		resolver: zodResolver(createBikeSchema),
-	})
+	} = useForm({})
 	const navigate = useNavigate()
+
+	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const files = event.target.files
+		if (files) {
+			const fileArray = Array.from(files)
+			setImage(fileArray)
+
+			// Generate preview URLs for each file
+			const previewUrls = fileArray.map((file) => URL.createObjectURL(file))
+			setImagePreviews(previewUrls)
+		}
+	}
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Upload processing...")
+
+		const formData = new FormData()
 
 		const bikeData = {
 			...data,
@@ -53,8 +67,11 @@ const CreateBike = () => {
 			pricePerHour: Number(data.support),
 		}
 
+		formData.append("data", JSON.stringify(bikeData))
+		formData.append("image", image[0])
+
 		try {
-			const res = await createBike(bikeData).unwrap()
+			const res = await createBike(formData).unwrap()
 			toast.success(res.message, { id: toastId })
 			console.log(res)
 			if (res.success) {
@@ -66,9 +83,9 @@ const CreateBike = () => {
 		}
 	}
 	return (
-		<div className="w-full lg:p-24 md:p-10 pt-8">
+		<div className="w-full lg:p-10 md:p-5">
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-10 mt-10">
+				<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-10 ">
 					<div className="col-span-2">
 						<Card x-chunk="dashboard-07-chunk-0">
 							<CardHeader>
@@ -84,7 +101,7 @@ const CreateBike = () => {
 										<Controller
 											name="name"
 											control={control}
-											rules={{ required: true }}
+											// rules={{ required: true }}
 											render={({ field }) => (
 												<>
 													<Input
@@ -109,7 +126,7 @@ const CreateBike = () => {
 											<Controller
 												name="brand"
 												control={control}
-												rules={{ required: true }}
+												// rules={{ required: true }}
 												render={({ field }) => (
 													<>
 														<Select
@@ -149,7 +166,7 @@ const CreateBike = () => {
 											<Controller
 												name="model"
 												control={control}
-												rules={{ required: true }}
+												// rules={{ required: true }}
 												render={({ field }) => (
 													<>
 														<Input
@@ -175,7 +192,7 @@ const CreateBike = () => {
 											<Controller
 												name="cc"
 												control={control}
-												rules={{ required: true }}
+												// rules={{ required: true }}
 												render={({ field }) => (
 													<>
 														<Input
@@ -198,7 +215,7 @@ const CreateBike = () => {
 											<Controller
 												name="year"
 												control={control}
-												rules={{ required: true }}
+												// rules={{ required: true }}
 												render={({ field }) => (
 													<>
 														<Input
@@ -221,7 +238,7 @@ const CreateBike = () => {
 											<Controller
 												name="frame"
 												control={control}
-												rules={{ required: true }}
+												// rules={{ required: true }}
 												render={({ field }) => (
 													<>
 														<Input
@@ -247,7 +264,7 @@ const CreateBike = () => {
 											<Controller
 												name="support"
 												control={control}
-												rules={{ required: true }}
+												// rules={{ required: true }}
 												render={({ field }) => (
 													<>
 														<Input
@@ -350,7 +367,7 @@ const CreateBike = () => {
 											<Controller
 												name="weight"
 												control={control}
-												rules={{ required: true }}
+												// rules={{ required: true }}
 												render={({ field }) => (
 													<>
 														<Input
@@ -374,7 +391,7 @@ const CreateBike = () => {
 										<Controller
 											name="description"
 											control={control}
-											rules={{ required: true }}
+											// rules={{ required: true }}
 											render={({ field }) => (
 												<>
 													<Textarea
@@ -409,7 +426,7 @@ const CreateBike = () => {
 										<Controller
 											name="pricePerHour"
 											control={control}
-											rules={{ required: true }}
+											// rules={{ required: true }}
 											render={({ field }) => (
 												<>
 													<Input
@@ -440,33 +457,41 @@ const CreateBike = () => {
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2 font-inter">
-									<Controller
-										name="image"
-										control={control}
-										rules={{ required: true }}
-										render={({ field }) => (
-											<>
-												<Input {...field} type="text" className="w-full " />
-												{errors.image?.message && (
-													<p className="text-red-500 text-xs">
-														{errors.image?.message as string}
-													</p>
-												)}
-											</>
-										)}
+									<label
+										htmlFor="image"
+										className="size-full bg-default-100 rounded-md text-center p-5 cursor-pointer border border-dashed border-default-300 flex justify-center items-center gap-4"
+									>
+										<Upload size={20} /> Upload Images
+									</label>
+									<Input
+										id="image"
+										type="file"
+										className="hidden"
+										onChange={handleFileUpload}
 									/>
+								</div>
+								<div className="flex gap-5 flex-wrap my-5">
+									{imagePreviews.length > 0 &&
+										imagePreviews.map((preview, index) => (
+											<img
+												key={index}
+												src={preview}
+												alt="Preview bike image"
+												className="w-full object-cover rounded-md"
+											/>
+										))}
 								</div>
 							</CardContent>
 						</Card>
-						<div className="grid grid-cols-2 items-center justify-between gap-2">
-							<Button
+						<div className="grid grid-cols-1 items-center justify-between gap-2">
+							{/* <Button
 								type="reset"
 								variant="outline"
 								size="sm"
 								className="hover:text-white font-orbitron tracking-wider hover:bg-red-600 duration-500 rounded-none px-10 py-5"
 							>
 								Discard
-							</Button>
+							</Button> */}
 							<Button
 								type="submit"
 								size="sm"

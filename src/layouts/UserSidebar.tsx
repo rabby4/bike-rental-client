@@ -31,7 +31,7 @@ const UserSidebar = () => {
 	}
 	return (
 		<>
-			<div className="lg:h-[89vh] my-5 border-r bg-muted/40 block lg:p-5 md:p-2 rounded-md">
+			<div className="lg:h-auto my-5 border-r bg-muted/40 block lg:p-5 md:p-2 rounded-md">
 				<div className="flex h-full max-h-screen flex-col gap-2 w-fit">
 					<div className="flex-1 font-inter">
 						<nav className="grid grid-cols-1 items-start px-2 text-base font-medium lg:px-4">

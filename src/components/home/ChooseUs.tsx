@@ -18,7 +18,8 @@ const ChooseUs = () => {
 							Fully Insured Rental Service
 						</h2>
 						<p className="font-inter lg:text-right text-center">
-							Tempore usmod incididunt labore lorem ipsum enim sed veniam
+							Ride worry-free with our fully insured rentals, covering potential
+							damages for a safer ride.
 						</p>
 					</div>
 					<div className="space-y-5">
@@ -26,7 +27,8 @@ const ChooseUs = () => {
 							Different Types of Bikes
 						</h2>
 						<p className="font-inter lg:text-right text-center">
-							Labore tempore usmod incididunt lorem ipsum enim sed veniam
+							From mountain trails to city streets, choose the perfect bike for
+							every adventure
 						</p>
 					</div>
 				</div>
@@ -44,18 +46,20 @@ const ChooseUs = () => {
 				>
 					<div className="space-y-5">
 						<h2 className="font-orbitron text-3xl font-bold lg:text-left text-center">
-							Fully Insured Rental Service
+							Flexible Rental Plans
 						</h2>
 						<p className="font-inter lg:text-left text-center">
-							Tempore usmod incididunt labore lorem ipsum enim sed veniam
+							Enjoy flexible rental options daily, weekly, or monthly to suit
+							your schedule and budget.
 						</p>
 					</div>
 					<div className="space-y-5">
 						<h2 className="font-orbitron text-3xl font-bold lg:text-left text-center">
-							Different Types of Bikes
+							Easy Booking and Support
 						</h2>
 						<p className="font-inter lg:text-left text-center">
-							Labore tempore usmod incididunt lorem ipsum enim sed veniam
+							Book online with ease, and rely on our team for support at every
+							step.
 						</p>
 					</div>
 				</div>

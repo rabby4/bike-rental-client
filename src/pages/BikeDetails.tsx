@@ -31,20 +31,21 @@ import rentApi from "@/redux/features/rent/rentApi"
 import { toast } from "sonner"
 import UseAnimations from "react-useanimations"
 import activity from "react-useanimations/lib/activity"
-import { useAppSelector } from "@/redux/hook"
+import { useAppDispatch, useAppSelector } from "@/redux/hook"
 import { currentUser } from "@/redux/features/auth/userSlice"
+import { TBike } from "@/types/bikes.type"
+import { addBike } from "@/redux/features/bike/bikeSlice"
 
 const BikeDetails = () => {
 	const { id } = useParams()
 	const user = useAppSelector(currentUser)
+	const dispatch = useAppDispatch()
 	const [createRent] = rentApi.useRentBikeMutation()
 	const { data: singleBikeData, isLoading } = bikeApi.useGetSingleBikeQuery(
 		id,
 		{ pollingInterval: 10000 }
 	)
-
 	const bike = singleBikeData?.data
-
 	const { control, handleSubmit } = useForm({})
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -106,6 +107,11 @@ const BikeDetails = () => {
 		}
 	}
 
+	const handleCompare = (data: TBike) => {
+		dispatch(addBike(data))
+		toast.success("Successfully add to compare list!")
+	}
+
 	if (isLoading) {
 		return (
 			<div className="flex justify-center items-center h-screen">
@@ -126,7 +132,10 @@ const BikeDetails = () => {
 					<div className="col-span-2 space-y-10">
 						<h2 className="text-4xl font-orbitron font-bold">{bike.name}</h2>
 						<div className="space-x-10 font-orbitron">
-							<Button className="hover:bg-accent-foreground bg-transparent text-black hover:text-white border">
+							<Button
+								onClick={() => handleCompare(bike)}
+								className="hover:bg-accent-foreground bg-transparent text-black hover:text-white border"
+							>
 								<PlusCircle className="mr-2 size-4" /> Compare Bike
 							</Button>
 							<Button className="hover:bg-accent-foreground bg-transparent text-black hover:text-white border">

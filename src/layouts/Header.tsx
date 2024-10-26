@@ -64,7 +64,7 @@ const Header = () => {
 
 	return (
 		<>
-			<div className="py-4">
+			<div className="py-4 shadow-xl sticky top-0 z-50 bg-white">
 				<div className="w-full container grid lg:grid-cols-3 grid-cols-2 justify-between items-center align-middle xl:px-0 md:px-10 px-5">
 					<div className="flex-1 flex lg:justify-center md:justify-center justify-start lg:order-2 order-3 lg:col-span-1 sm:col-span-2 md:bg-[#f5f5f5] lg:bg-transparent py-2">
 						<div className="md:block hidden">
