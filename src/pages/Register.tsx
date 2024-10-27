@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Eye, EyeOff, Github, Mail } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import {
@@ -235,7 +235,7 @@ const Register = () => {
 						</Button>
 					</form>
 
-					<div className="grid grid-cols-2 gap-2 font-inter mt-2">
+					{/* <div className="grid grid-cols-2 gap-2 font-inter mt-2">
 						<Button variant="outline" className="w-full gap-2">
 							<Mail size={18} />
 							Login with Google
@@ -244,7 +244,7 @@ const Register = () => {
 							<Github size={20} />
 							Login with Github
 						</Button>
-					</div>
+					</div> */}
 					<div className="mt-4 text-center text-sm">
 						Already have an account?
 						<Link

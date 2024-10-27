@@ -166,14 +166,14 @@ const Login = () => {
 							Sign In
 						</Button>
 					</form>
-					<div className="grid grid-cols-2 gap-2 font-inter mt-2">
+					{/* <div className="grid grid-cols-2 gap-2 font-inter mt-2">
 						<Button variant="outline" className="w-full gap-2">
 							Login with Google
 						</Button>
 						<Button variant="outline" className="w-full gap-2">
 							Login with Github
 						</Button>
-					</div>
+					</div> */}
 					<div className="mt-4 text-center text-sm">
 						Don&apos;t have an account?
 						<Link

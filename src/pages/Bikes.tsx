@@ -12,14 +12,16 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import bikeApi from "@/redux/features/bike/bikeApi"
-
 import { TBike, TQueryParam } from "@/types/bikes.type"
 import { Search } from "lucide-react"
 import { ChangeEvent, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import UseAnimations from "react-useanimations"
 import activity from "react-useanimations/lib/activity"
 
 const Bikes = () => {
+	const location = useLocation()
+	const navigate = useNavigate()
 	const [brand, setBrand] = useState("")
 	const [category, setCategory] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
@@ -32,31 +34,58 @@ const Bikes = () => {
 		(bike: TBike) => bike.isAvailable === true
 	)
 
+	// Function to parse query parameters from the URL
+	const getQueryParams = () => {
+		const searchParams = new URLSearchParams(location.search)
+		return {
+			brand: searchParams.get("brand") || "",
+			category: searchParams.get("category") || "",
+			searchTerm: searchParams.get("searchTerm") || "",
+		}
+	}
+
+	// Set initial state based on URL query parameters
+	useEffect(() => {
+		const { brand, category, searchTerm } = getQueryParams()
+		setBrand(brand)
+		setCategory(category)
+		setSearchTerm(searchTerm)
+	}, [location.search])
+
+	// Update filter parameters when brand, category, or searchTerm changes
 	useEffect(() => {
 		const params = []
-
-		if (brand) {
-			params.push({ name: "brand", value: brand })
-		}
-		if (category) {
-			params.push({ name: "category", value: category })
-		}
-		if (searchTerm) {
-			params.push({ name: "searchTerm", value: searchTerm })
-		}
+		if (brand) params.push({ name: "brand", value: brand })
+		if (category) params.push({ name: "category", value: category })
+		if (searchTerm) params.push({ name: "searchTerm", value: searchTerm })
 
 		setParams(params)
 	}, [brand, category, searchTerm])
 
+	// Handle search input change
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value)
 	}
 
+	// Reset filters and update the URL
 	const handleResetFilter = () => {
-		setParams([])
+		setBrand("")
+		setCategory("")
 		setSearchTerm("")
+		setParams([])
+		navigate("/bikes") // Reset URL to remove query parameters
 	}
 
+	// Handle filter selections
+	// const handleFilter = () => {
+	// 	const queryParams = new URLSearchParams()
+	// 	if (brand) queryParams.append("brand", brand)
+	// 	if (category) queryParams.append("category", category)
+	// 	if (searchTerm) queryParams.append("searchTerm", searchTerm)
+	// 	navigate(`/bikes?${queryParams.toString()}`)
+	// }
+
+	// Show loading animation while data is being fetched
 	if (isLoading) {
 		return (
 			<div className="flex justify-center items-center h-screen">
@@ -87,7 +116,7 @@ const Bikes = () => {
 									<Input
 										type="search"
 										placeholder="Search..."
-										className="w-full bg-background pl-8 "
+										className="w-full bg-background pl-8"
 										value={searchTerm}
 										onChange={handleChange}
 									/>
@@ -99,7 +128,10 @@ const Bikes = () => {
 									Filter by Category
 								</h2>
 								<div className="w-full md:w-auto mb-2 md:mb-0 rounded-full font-inter">
-									<Select onValueChange={(value) => setCategory(value)}>
+									<Select
+										onValueChange={(value) => setCategory(value)}
+										value={category}
+									>
 										<SelectTrigger>
 											<SelectValue placeholder="Select A Category" />
 										</SelectTrigger>
@@ -130,7 +162,10 @@ const Bikes = () => {
 									Filter by Brand
 								</h2>
 								<div className="w-full rounded-full md:w-auto mb-2 md:mb-0 font-inter">
-									<Select onValueChange={(value) => setBrand(value)}>
+									<Select
+										onValueChange={(value) => setBrand(value)}
+										value={brand}
+									>
 										<SelectTrigger>
 											<SelectValue placeholder="Select A Brand" />
 										</SelectTrigger>
@@ -152,12 +187,17 @@ const Bikes = () => {
 
 							<Button
 								onClick={handleResetFilter}
-								className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full font-orbitron tracking-wider self-end
-								"
+								className="bg-accent-foreground hover:bg-gray-200 hover:text-black w-full font-orbitron tracking-wider self-end"
 							>
 								Reset Filter
 							</Button>
 						</div>
+						{/* <Button
+							onClick={handleFilter} // Trigger the filter and update URL
+							className="mt-4 bg-primary font-orbitron tracking-wider self-end"
+						>
+							Apply Filter
+						</Button> */}
 					</CardContent>
 				</Card>
 			</div>
@@ -165,23 +205,21 @@ const Bikes = () => {
 				<div className="my-20">
 					<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
 						{bikes && bikes.length > 0 ? (
-							bikes?.map((bike: TBike) => (
+							bikes.map((bike: TBike) => (
 								<BikeCard key={bike._id} bike={bike} />
 							))
 						) : (
-							<>
-								<div className="w-1/3 py-20 mx-auto col-span-full">
-									<img
-										src="https://i.ibb.co/2hx2jQf/folder.png"
-										alt=""
-										width={"300px"}
-										className="mx-auto"
-									/>
-									<h2 className="text-center font-orbitron lg:text-5xl md:text-3xl text-xl font-bold">
-										Bike not found
-									</h2>
-								</div>
-							</>
+							<div className="w-1/3 py-20 mx-auto col-span-full">
+								<img
+									src="https://i.ibb.co/2hx2jQf/folder.png"
+									alt=""
+									width={"300px"}
+									className="mx-auto"
+								/>
+								<h2 className="text-center font-orbitron lg:text-5xl md:text-3xl text-xl font-bold">
+									Bike not found
+								</h2>
+							</div>
 						)}
 					</div>
 				</div>

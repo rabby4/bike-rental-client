@@ -62,8 +62,6 @@ const BikeDetails = () => {
 	const [selected, setSelected] = useState<Date>()
 	const [timeValue, setTimeValue] = useState<string>("00:00")
 
-	console.log(allReviews)
-
 	const totalRating = allReviews?.reduce(
 		(sum: number, review: TReview) => sum + review?.rating,
 		0

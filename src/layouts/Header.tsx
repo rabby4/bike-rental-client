@@ -2,6 +2,15 @@ import { ModeToggle } from "@/components/theme/mode-toggle"
 import { useTheme } from "@/components/theme/theme-provider"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog"
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
 import {
 	DropdownMenu,
@@ -12,6 +21,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
 import {
 	NavigationMenu,
 	NavigationMenuItem,
@@ -38,6 +48,7 @@ import {
 	Settings,
 	User,
 } from "lucide-react"
+import { useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
@@ -49,6 +60,15 @@ const Header = () => {
 	const user = useAppSelector(currentUser)
 	const { data } = authApi.useGetMeQuery(token)
 	const navigate = useNavigate()
+	const [isOpen, setIsOpen] = useState(false)
+	const [searchTerm, setSearchTerm] = useState("")
+
+	const handleSearch = () => {
+		if (searchTerm.trim()) {
+			navigate(`/bikes?searchTerm=${encodeURIComponent(searchTerm)}`)
+			setIsOpen(false)
+		}
+	}
 
 	const userImage = data?.data?.image
 
@@ -200,9 +220,42 @@ const Header = () => {
 						<NavigationMenu>
 							<NavigationMenuList className="font-ralway">
 								<NavigationMenuItem>
-									<NavLink to={"/"} className={navigationMenuTriggerStyle()}>
-										<Search />
-									</NavLink>
+									<Dialog open={isOpen} onOpenChange={setIsOpen}>
+										<DialogTrigger asChild>
+											<Button variant="link">
+												<Search />
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="sm:max-w-[425px]">
+											<DialogHeader>
+												<DialogTitle className="font-orbitron text-xl">
+													Search Bike
+												</DialogTitle>
+												<DialogDescription>
+													Search your favorite bike and enjoy your ride.
+												</DialogDescription>
+											</DialogHeader>
+											<div className="grid gap-4 py-4">
+												<div className="">
+													<Input
+														id="name"
+														placeholder="Search bike..."
+														className=""
+														value={searchTerm}
+														onChange={(e) => setSearchTerm(e.target.value)}
+													/>
+												</div>
+											</div>
+											<DialogFooter>
+												<Button
+													className="bg-accent-foreground w-full font-orbitron tracking-wider px-10"
+													onClick={handleSearch}
+												>
+													Search
+												</Button>
+											</DialogFooter>
+										</DialogContent>
+									</Dialog>
 								</NavigationMenuItem>
 								<NavigationMenuItem className="relative">
 									<NavLink
