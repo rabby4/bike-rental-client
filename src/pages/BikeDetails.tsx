@@ -3,7 +3,7 @@ import { setHours, setMinutes } from "date-fns"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
+// import { Checkbox } from "@/components/ui/checkbox"
 import {
 	Dialog,
 	DialogContent,
@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import bikeApi from "@/redux/features/bike/bikeApi"
-import { PlusCircle, Share2 } from "lucide-react"
+import { PlusCircle, Share2, Star, StarIcon } from "lucide-react"
 import {
 	Controller,
 	FieldValues,
@@ -35,6 +35,12 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook"
 import { currentUser } from "@/redux/features/auth/userSlice"
 import { TBike } from "@/types/bikes.type"
 import { addBike } from "@/redux/features/bike/bikeSlice"
+import { Rating } from "@smastrom/react-rating"
+import "@smastrom/react-rating/style.css"
+import reviewApi from "@/redux/features/review/reviewApi"
+import { TReview } from "@/types/review.type"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import moment from "moment"
 
 const BikeDetails = () => {
 	const { id } = useParams()
@@ -46,14 +52,47 @@ const BikeDetails = () => {
 		{ pollingInterval: 10000 }
 	)
 	const bike = singleBikeData?.data
+	const [createReview] = reviewApi.useCreateReviewMutation()
+	const { data: bikeReviews } = reviewApi.useGetReviewsQuery(bike?._id, {
+		pollingInterval: 10000,
+	})
+	const allReviews = bikeReviews?.data
 	const { control, handleSubmit } = useForm({})
-
-	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		console.log(data)
-	}
-
+	const [rating, setRating] = useState(0)
 	const [selected, setSelected] = useState<Date>()
 	const [timeValue, setTimeValue] = useState<string>("00:00")
+
+	console.log(allReviews)
+
+	const totalRating = allReviews?.reduce(
+		(sum: number, review: TReview) => sum + review?.rating,
+		0
+	)
+	const averageRating = totalRating / allReviews?.length
+
+	function onChange(newValue: number) {
+		setRating(newValue)
+	}
+
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		const toastId = toast.loading("Review processing...")
+
+		const reviewData = {
+			...data,
+			rating: rating,
+			userId: user?.id,
+			bikeId: bike._id,
+		}
+		try {
+			const res = await createReview(reviewData).unwrap()
+			toast.success(res.message, { id: toastId })
+			if (res.success) {
+				toast.success(res.message, { id: toastId })
+			}
+		} catch (error) {
+			toast.error("Failed to add review...", { id: toastId })
+		}
+	}
 
 	const handleTimeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
 		const time = e.target.value
@@ -112,6 +151,24 @@ const BikeDetails = () => {
 		toast.success("Successfully add to compare list!")
 	}
 
+	const avgRating = (rating: number) => {
+		const stars = []
+		for (let i = 1; i <= 5; i++) {
+			stars.push(
+				i <= rating ? (
+					<Star
+						key={i}
+						size={18}
+						className="text-yellow-500 fill-yellow-500 "
+					/>
+				) : (
+					<StarIcon key={i} size={18} className="text-yellow-500" />
+				)
+			)
+		}
+		return stars
+	}
+
 	if (isLoading) {
 		return (
 			<div className="flex justify-center items-center h-screen">
@@ -156,8 +213,9 @@ const BikeDetails = () => {
 									Leave a Comment
 								</h2>
 								<p className="font-inter">
-									Your email address will not be published. Required fields are
-									marked *
+									We will store your information. Don't worry your personal
+									information will not be published. Required fields are marked
+									*
 								</p>
 							</div>
 
@@ -167,7 +225,19 @@ const BikeDetails = () => {
 							>
 								<div className="">
 									<div className="">
-										<Label>Comment</Label>
+										<Label>Your Rating *</Label>
+										<Rating
+											style={{ maxWidth: 180 }}
+											value={rating}
+											onChange={onChange}
+											transition="zoom"
+											isRequired
+										/>
+									</div>
+								</div>
+								<div className="">
+									<div className="">
+										<Label>Comment *</Label>
 										<Controller
 											name="comment"
 											control={control}
@@ -176,49 +246,11 @@ const BikeDetails = () => {
 												<Textarea
 													{...field}
 													placeholder="What's on you minds..."
+													rows={8}
 												/>
 											)}
 										/>
 									</div>
-								</div>
-								<div className="grid grid-cols-2 gap-2">
-									<div className="grid gap-2">
-										<Label>Your Name</Label>
-										<Controller
-											name="name"
-											control={control}
-											rules={{ required: true }}
-											render={({ field }) => (
-												<Input
-													{...field}
-													type="text"
-													placeholder="Enter you full name"
-												/>
-											)}
-										/>
-									</div>
-									<div className="grid gap-2">
-										<Label>Email Address</Label>
-										<Controller
-											name="email"
-											control={control}
-											rules={{ required: true }}
-											render={({ field }) => (
-												<Input
-													{...field}
-													type="email"
-													placeholder="Enter your email"
-												/>
-											)}
-										/>
-									</div>
-								</div>
-								<div className="flex items-center space-x-2">
-									<Checkbox id="terms" />
-									<Label htmlFor="terms">
-										Save my name, email, and website in this browser for the
-										next time I comment.
-									</Label>
 								</div>
 								<Button
 									type="submit"
@@ -390,6 +422,60 @@ const BikeDetails = () => {
 												</span>
 											</li>
 										</ul>
+									</div>
+								</CardContent>
+							</Card>
+							<Card
+								className="overflow-hidden rounded-none"
+								x-chunk="dashboard-05-chunk-4"
+							>
+								<CardHeader>
+									<span className="text-2xl font-orbitron font-bold">
+										Reviews
+									</span>
+								</CardHeader>
+								<CardContent className=" text-sm">
+									<div className="grid gap-3 font-inter">
+										<div className="flex gap-3">
+											<div className="flex">{avgRating(averageRating)}</div>
+											<div className="font-inter">
+												({allReviews?.length} Rider Review)
+											</div>
+										</div>
+										<Separator />
+										<div className="grid gap-5">
+											{allReviews?.map((review: TReview) => (
+												<div key={review._id} className="flex gap-3">
+													<div className="flex">
+														<Avatar>
+															<AvatarImage
+																src={
+																	review.userId.image
+																		? review.userId.image
+																		: "https://i.ibb.co/H7zTvh7/user.png"
+																}
+																alt="user profile"
+															/>
+														</Avatar>
+													</div>
+													<div className="flex-1">
+														<div className="flex gap-3">
+															<div className="font-semibold font-orbitron">
+																{review.userId.firstName}{" "}
+																{review.userId.lastName}
+															</div>
+															<div className="text-xs text-muted-foreground">
+																• {moment(review?.createdAt).fromNow()}
+															</div>
+														</div>
+														<div className="flex">
+															{avgRating(review.rating)}
+														</div>
+														<div className="text-sm mt-2">{review.comment}</div>
+													</div>
+												</div>
+											))}
+										</div>
 									</div>
 								</CardContent>
 							</Card>

@@ -12,6 +12,9 @@ import { NavLink } from "react-router-dom"
 import { addBike } from "@/redux/features/bike/bikeSlice"
 import { useAppDispatch } from "@/redux/hook"
 import { toast } from "sonner"
+import { Star, StarIcon } from "lucide-react"
+import reviewApi from "@/redux/features/review/reviewApi"
+import { TReview } from "@/types/review.type"
 
 type BikeCardProps = {
 	bike: TBike
@@ -22,6 +25,33 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 	const handleCompare = (data: TBike) => {
 		dispatch(addBike(data))
 		toast.success("Successfully add to compare list!")
+	}
+	const { data: bikeReviews } = reviewApi.useGetReviewsQuery(bike?._id, {
+		pollingInterval: 10000,
+	})
+	const allReviews = bikeReviews?.data
+	const totalRating = allReviews?.reduce(
+		(sum: number, review: TReview) => sum + review?.rating,
+		0
+	)
+	const averageRating = totalRating / allReviews?.length
+
+	const avgRating = (rating: number) => {
+		const stars = []
+		for (let i = 1; i <= 5; i++) {
+			stars.push(
+				i <= rating ? (
+					<Star
+						key={i}
+						size={15}
+						className="text-yellow-500 fill-yellow-500 "
+					/>
+				) : (
+					<StarIcon key={i} size={15} className="text-yellow-500" />
+				)
+			)
+		}
+		return stars
 	}
 
 	return (
@@ -39,9 +69,12 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 					</div>
 				</CardHeader>
 				<CardContent className="space-y-2 pt-2 z-10 relative bg-white dark:bg-[#020817]">
-					<p className=" text-gray-400 font-inter font-light text-sm italic tracking-wider">
-						{bike.category.replace(/_/g, " ")}
-					</p>
+					<div className="flex justify-between">
+						<p className=" text-gray-400 font-inter font-light text-sm italic tracking-wider">
+							{bike.category.replace(/_/g, " ")}
+						</p>
+						<div className="flex">{avgRating(averageRating)}</div>
+					</div>
 					<CardTitle className="lg:text-2xl md:text-xl text-xl font-orbitron tracking-wider font-bold">
 						{bike?.name}
 					</CardTitle>
