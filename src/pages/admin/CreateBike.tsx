@@ -61,10 +61,10 @@ const CreateBike = () => {
 			cc: Number(data.cc),
 			year: Number(data.year),
 			frame: Number(data.frame),
-			weight: Number(data.support),
+			weight: Number(data.weight),
 			support: Number(data.support),
 			isAvailable: true,
-			pricePerHour: Number(data.support),
+			pricePerHour: Number(data.pricePerHour),
 		}
 
 		formData.append("data", JSON.stringify(bikeData))
@@ -108,7 +108,7 @@ const CreateBike = () => {
 														{...field}
 														type="text"
 														className="w-full"
-														placeholder="Write you bike title"
+														placeholder="Write your bike title"
 													/>
 													{errors.name?.message && (
 														<p className="text-red-500 text-xs">
@@ -173,7 +173,7 @@ const CreateBike = () => {
 															{...field}
 															type="text"
 															className="w-full"
-															placeholder="Write you bike Model"
+															placeholder="Write your bike Model"
 														/>
 														{errors.model?.message && (
 															<p className="text-red-500 text-xs">
@@ -199,7 +199,7 @@ const CreateBike = () => {
 															{...field}
 															type="text"
 															className="w-full"
-															placeholder="Write you bike CC"
+															placeholder="Write your bike CC"
 														/>
 														{errors.cc?.message && (
 															<p className="text-red-500 text-xs">
@@ -222,7 +222,7 @@ const CreateBike = () => {
 															{...field}
 															type="text"
 															className="w-full"
-															placeholder="Write you bike release year"
+															placeholder="Write your bike release year"
 														/>
 														{errors.year?.message && (
 															<p className="text-red-500 text-xs">
@@ -245,7 +245,7 @@ const CreateBike = () => {
 															{...field}
 															type="text"
 															className="w-full"
-															placeholder="Write you bike frame size"
+															placeholder="Write your bike frame size"
 														/>
 														{errors.frame?.message && (
 															<p className="text-red-500 text-xs">
@@ -271,7 +271,7 @@ const CreateBike = () => {
 															{...field}
 															type="text"
 															className="w-full"
-															placeholder="Write you bike Maximum support hr..."
+															placeholder="Write your bike Maximum support hr..."
 														/>
 														{errors.support?.message && (
 															<p className="text-red-500 text-xs">
@@ -374,7 +374,7 @@ const CreateBike = () => {
 															{...field}
 															type="text"
 															className="w-full"
-															placeholder="Write you bike Weight"
+															placeholder="Write your bike Weight"
 														/>
 														{errors.weight?.message && (
 															<p className="text-red-500 text-xs">
@@ -422,7 +422,7 @@ const CreateBike = () => {
 							<CardContent className="font-inter">
 								<div className="grid gap-6">
 									<div className="grid gap-3">
-										<Label>Price Per Hour</Label>
+										<Label>Price Per Minute</Label>
 										<Controller
 											name="pricePerHour"
 											control={control}
@@ -433,7 +433,7 @@ const CreateBike = () => {
 														{...field}
 														type="text"
 														className="w-full"
-														placeholder="Write you bike Weight"
+														placeholder="Write your bike Weight"
 													/>
 													{errors.pricePerHour?.message && (
 														<p className="text-red-500 text-xs">

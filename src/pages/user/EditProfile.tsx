@@ -32,7 +32,7 @@ const EditProfile = () => {
 	})
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		const toastId = toast.loading("Singing in...")
+		const toastId = toast.loading("Signing in...")
 		const userInfo = {
 			data,
 			token,

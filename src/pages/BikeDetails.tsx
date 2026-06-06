@@ -126,7 +126,8 @@ const BikeDetails = () => {
 		const toastId = toast.loading("Bike rent processing...")
 		const rentInfo = {
 			bikeId: bike._id,
-			startTime: selected?.toISOString(),
+			// the rental always starts at the moment of booking, not a future date
+			startTime: new Date().toISOString(),
 		}
 		try {
 			if (!user) {
@@ -273,7 +274,7 @@ const BikeDetails = () => {
 													Price
 												</span>
 												<span className="text-3xl font-orbitron font-bold">
-													${bike.pricePerHour} / (hr)
+													${bike.pricePerHour} / (min)
 												</span>
 											</li>
 										</ul>

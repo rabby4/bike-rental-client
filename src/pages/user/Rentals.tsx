@@ -47,6 +47,10 @@ const Rentals = () => {
 	})
 	const couponCode = couponData?.data
 	const [totalAmount, setTotalAmount] = useState(0)
+	const [appliedCoupon, setAppliedCoupon] = useState<{
+		id: string
+		code: string
+	} | null>(null)
 	const unpaidRentals = rentalBikes?.filter(
 		(bike: TRental) => bike.fullPay === false
 	)
@@ -65,13 +69,15 @@ const Rentals = () => {
 			(coupon: TCoupon) => coupon.coupon === data.coupon
 		)
 
-		if (data?.coupon === findCoupon?.coupon) {
-			if (findCoupon?.couponType === "percentage") {
-				const amount = (findBike?.totalCost / 100) * (100 - findCoupon?.deal)
+		if (findCoupon && data?.coupon === findCoupon.coupon) {
+			if (findCoupon.couponType === "percentage") {
+				const amount = (findBike?.totalCost / 100) * (100 - findCoupon.deal)
 				setTotalAmount(amount)
-			} else if (findCoupon?.couponType === "flat") {
-				const amount = findBike?.totalCost - findCoupon?.deal
+				setAppliedCoupon({ id: String(data?.bikeId), code: findCoupon.coupon })
+			} else if (findCoupon.couponType === "flat") {
+				const amount = findBike?.totalCost - findCoupon.deal
 				setTotalAmount(amount)
+				setAppliedCoupon({ id: String(data?.bikeId), code: findCoupon.coupon })
 			}
 		}
 	}
@@ -81,6 +87,10 @@ const Rentals = () => {
 		const paymentInfo = {
 			id,
 			token,
+			body:
+				appliedCoupon && appliedCoupon.id === id
+					? { couponCode: appliedCoupon.code }
+					: undefined,
 		}
 		const unpaid = unpaidRentals.find((rent: TRental) => rent._id === id)
 
@@ -200,7 +210,7 @@ const Rentals = () => {
 																	{...field}
 																	type="text"
 																	className="w-full"
-																	placeholder="Write you coupon deal"
+																	placeholder="Write your coupon deal"
 																/>
 															)}
 														/>
@@ -305,7 +315,7 @@ const Rentals = () => {
 														? moment(bike?.returnTime).format(
 																"DD-MM-YYYY, h:mm a"
 														  )
-														: "Did`t return yet"}
+														: "Didn't return yet"}
 												</TableCell>
 
 												<TableCell className="hidden md:table-cell">

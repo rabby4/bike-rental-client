@@ -26,7 +26,8 @@ const Register = () => {
 	const [showPassword, setShowPassword] = useState(false)
 	const [registration] = authApi.useRegistrationMutation()
 	const navigate = useNavigate()
-
+	// const [image, setImage] = useState<File[]>([])
+	// const [imagePreviews, setImagePreviews] = useState<string[]>([])
 	const {
 		control,
 		handleSubmit,
@@ -35,13 +36,31 @@ const Register = () => {
 		resolver: zodResolver(userSchema),
 	})
 
+	// 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+	// 		const files = event.target.files
+	// 		if (files) {
+	// 			const fileArray = Array.from(files)
+	// 			setImage(fileArray)
+	//
+	// 			// Generate preview URLs for each file
+	// 			const previewUrls = fileArray.map((file) => URL.createObjectURL(file))
+	// 			setImagePreviews(previewUrls)
+	// 		}
+	// 	}
+
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		const toastId = toast.loading("Singing in...")
+		const toastId = toast.loading("Signing in...")
+
+		// const formData = new FormData()
 
 		const userInfo = {
 			...data,
 			role: "user",
 		}
+
+		// formData.append("data", JSON.stringify(userInfo))
+		// formData.append("image", image[0])
+
 		try {
 			const res = await registration(userInfo).unwrap()
 			toast.success(res.message, { id: toastId })
@@ -175,6 +194,31 @@ const Register = () => {
 									</>
 								)}
 							/>
+							{/* <div className="grid gap-2 font-inter">
+								<label
+									htmlFor="image"
+									className="size-full bg-default-100 rounded-md text-center p-5 cursor-pointer border border-dashed border-default-300 flex justify-center items-center gap-4"
+								>
+									<Upload size={20} /> Upload Images
+								</label>
+								<Input
+									id="image"
+									type="file"
+									className="hidden"
+									onChange={handleFileUpload}
+								/>
+							</div> */}
+							{/* <div className="flex gap-5 flex-wrap">
+								{imagePreviews.length > 0 &&
+									imagePreviews.map((preview, index) => (
+										<img
+											key={index}
+											src={preview}
+											alt="Preview bike image"
+											className="w-24 h-24 object-cover rounded-md"
+										/>
+									))}
+							</div> */}
 						</div>
 						<div className="grid gap-2">
 							<Label htmlFor="email">Email</Label>

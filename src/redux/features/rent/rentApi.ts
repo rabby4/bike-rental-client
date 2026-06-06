@@ -38,6 +38,7 @@ const rentApi = baseApi.injectEndpoints({
 					url: `/rentals/${paymentInfo.id}/full-payment`,
 					method: "PATCH",
 					headers: { Authorization: paymentInfo.token },
+					body: paymentInfo.body,
 				}
 			},
 			invalidatesTags: ["rent"],

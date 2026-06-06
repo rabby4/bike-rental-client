@@ -114,7 +114,7 @@ const UpdateBike = () => {
 													{...field}
 													type="text"
 													className="w-full"
-													placeholder="Write you bike title"
+													placeholder="Write your bike title"
 												/>
 											)}
 										/>
@@ -165,7 +165,7 @@ const UpdateBike = () => {
 														{...field}
 														type="text"
 														className="w-full"
-														placeholder="Write you bike Model"
+														placeholder="Write your bike Model"
 													/>
 												)}
 											/>
@@ -184,7 +184,7 @@ const UpdateBike = () => {
 														{...field}
 														type="text"
 														className="w-full"
-														placeholder="Write you bike CC"
+														placeholder="Write your bike CC"
 													/>
 												)}
 											/>
@@ -200,7 +200,7 @@ const UpdateBike = () => {
 														{...field}
 														type="text"
 														className="w-full"
-														placeholder="Write you bike release year"
+														placeholder="Write your bike release year"
 													/>
 												)}
 											/>
@@ -216,7 +216,7 @@ const UpdateBike = () => {
 														{...field}
 														type="text"
 														className="w-full"
-														placeholder="Write you bike frame size"
+														placeholder="Write your bike frame size"
 													/>
 												)}
 											/>
@@ -235,7 +235,7 @@ const UpdateBike = () => {
 														{...field}
 														type="text"
 														className="w-full"
-														placeholder="Write you bike Maximum support hr..."
+														placeholder="Write your bike Maximum support hr..."
 													/>
 												)}
 											/>
@@ -317,7 +317,7 @@ const UpdateBike = () => {
 														{...field}
 														type="text"
 														className="w-full"
-														placeholder="Write you bike Weight"
+														placeholder="Write your bike Weight"
 													/>
 												)}
 											/>
@@ -352,7 +352,7 @@ const UpdateBike = () => {
 							<CardContent className="font-inter">
 								<div className="grid gap-6">
 									<div className="grid gap-3">
-										<Label>Price Per Hour</Label>
+										<Label>Price Per Minute</Label>
 										<Controller
 											name="pricePerHour"
 											control={control}
@@ -362,7 +362,7 @@ const UpdateBike = () => {
 													{...field}
 													type="text"
 													className="w-full"
-													placeholder="Write you bike Weight"
+													placeholder="Write your bike Weight"
 												/>
 											)}
 										/>

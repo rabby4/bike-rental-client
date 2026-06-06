@@ -8,7 +8,7 @@ const BikeInfo = () => {
 					Image
 				</TableHead>
 				<TableHead className="p-4">Name</TableHead>
-				<TableHead className="p-4">Price Per Hour</TableHead>
+				<TableHead className="p-4">Price Per Minute</TableHead>
 				<TableHead className="p-4">Brand</TableHead>
 				<TableHead className="hidden md:table-cell p-4">Model</TableHead>
 				<TableHead className="hidden md:table-cell p-4">Bike CC</TableHead>

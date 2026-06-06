@@ -93,11 +93,19 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "create-bike",
-						element: <CreateBike />,
+						element: (
+							<ProtectedRoute role="admin">
+								<CreateBike />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "coupon",
-						element: <Coupon />,
+						element: (
+							<ProtectedRoute role="admin">
+								<Coupon />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "all-bikes",
@@ -109,19 +117,35 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "update-bike/:id",
-						element: <UpdateBike />,
+						element: (
+							<ProtectedRoute role="admin">
+								<UpdateBike />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "bike-management",
-						element: <BikeManagement />,
+						element: (
+							<ProtectedRoute role="admin">
+								<BikeManagement />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "user-management",
-						element: <UserManagement />,
+						element: (
+							<ProtectedRoute role="admin">
+								<UserManagement />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "return-bike",
-						element: <ReturnBike />,
+						element: (
+							<ProtectedRoute role="admin">
+								<ReturnBike />
+							</ProtectedRoute>
+						),
 					},
 				],
 			},

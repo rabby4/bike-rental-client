@@ -56,7 +56,7 @@ const Coupon = () => {
 												{...field}
 												type="text"
 												className="w-full"
-												placeholder="Write you coupon code"
+												placeholder="Write your coupon code"
 											/>
 										)}
 									/>
@@ -72,7 +72,7 @@ const Coupon = () => {
 												{...field}
 												type="text"
 												className="w-full"
-												placeholder="Write you coupon deal"
+												placeholder="Write your coupon deal"
 											/>
 										)}
 									/>

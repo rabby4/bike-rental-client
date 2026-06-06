@@ -25,6 +25,14 @@ import { setUser } from "@/redux/features/auth/userSlice"
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query" // Import types
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema } from "@/schemas/userSchema"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog"
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false)
@@ -126,12 +134,12 @@ const Login = () => {
 						<div className="grid gap-2 relative">
 							<div className="flex items-center">
 								<Label htmlFor="password">Password</Label>
-								<Link
+								{/* <Link
 									to="#"
 									className="ml-auto inline-block text-sm underline hover:text-accent-foreground duration-300"
 								>
 									Forgot your password?
-								</Link>
+								</Link> */}
 							</div>
 							<Controller
 								name="password"
@@ -182,6 +190,22 @@ const Login = () => {
 						>
 							Sign up
 						</Link>
+					</div>
+					<div className="mt-4 text-center text-sm">
+						<Dialog>
+							<DialogTrigger asChild>
+								<Button variant="link">Demo Credentials</Button>
+							</DialogTrigger>
+							<DialogContent className="sm:max-w-[425px]">
+								<DialogHeader>
+									<DialogTitle>User Credentials</DialogTitle>
+									<DialogDescription>
+										<strong>Email: </strong>
+										demo123@gmail.com <br /> <strong>Password:</strong> demo123
+									</DialogDescription>
+								</DialogHeader>
+							</DialogContent>
+						</Dialog>
 					</div>
 				</CardContent>
 			</Card>

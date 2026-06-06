@@ -117,7 +117,7 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike }) => {
 							className="w-full bg-accent-foreground hover:text-white md:px-10 md:py-6 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase dark:hover:text-black"
 						>
 							<NavLink to={`/bike-details/${bike._id}`}>
-								View Details - (${bike.pricePerHour} / hr)
+								View Details - (${bike.pricePerHour} / min)
 							</NavLink>
 						</Button>
 					</CardFooter>

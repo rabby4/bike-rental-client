@@ -1,84 +1,84 @@
-import { Bike, Copy } from "lucide-react"
-import { useState } from "react"
+import { Bike } from "lucide-react"
+// import { useState } from "react"
 import { Link } from "react-router-dom"
-import { toast } from "sonner"
-import { ISpinWheelProps, SpinWheel } from "spin-wheel-game"
+// import { toast } from "sonner"
+// import { ISpinWheelProps, SpinWheel } from "spin-wheel-game"
 import { Button } from "../ui/button"
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "../ui/dialog"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
-import couponApi from "@/redux/features/coupon/couponApi"
-import { TCoupon, TSegment } from "@/types/coupon.type"
-
-const segmentsColor = [
-	"#e23a2e",
-	"#1a73e8",
-	"#fbbf12",
-	"#279847",
-	"#C51605",
-	"#16325B",
-	"#674636",
-	"#821131",
-	"#FF8225",
-	"#EF5A6F",
-]
+// import {
+// 	Dialog,
+// 	DialogContent,
+// 	DialogDescription,
+// 	DialogHeader,
+// 	DialogTitle,
+// 	DialogTrigger,
+// } from "../ui/dialog"
+// import { Input } from "../ui/input"
+// import { Label } from "../ui/label"
+// import couponApi from "@/redux/features/coupon/couponApi"
+// import { TCoupon, TSegment } from "@/types/coupon.type"
+//
+// const segmentsColor = [
+// 	"#e23a2e",
+// 	"#1a73e8",
+// 	"#fbbf12",
+// 	"#279847",
+// 	"#C51605",
+// 	"#16325B",
+// 	"#674636",
+// 	"#821131",
+// 	"#FF8225",
+// 	"#EF5A6F",
+// ]
 
 const Discount = () => {
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
-	const [couponCode, setCouponCode] = useState("")
-	const { data: couponData } = couponApi.useGetCouponQuery(undefined, {
-		pollingInterval: 10000,
-	})
+	// const [isDialogOpen, setIsDialogOpen] = useState(false)
+	// const [couponCode, setCouponCode] = useState("")
+	// const { data: couponData } = couponApi.useGetCouponQuery(undefined, {
+	// 	pollingInterval: 10000,
+	// })
 
-	const segments = couponData?.data?.map((item: TCoupon) => ({
-		segmentText: `${item.deal}${item.couponType === "percentage" ? "%" : "Tk"}`,
-		segColor: segmentsColor[Math.ceil(Math.random() * 10)],
-		couponCode: item.coupon,
-	}))
+	// const segments = couponData?.data?.map((item: TCoupon) => ({
+	// 	segmentText: `${item.deal}${item.couponType === "percentage" ? "%" : "Tk"}`,
+	// 	segColor: segmentsColor[Math.ceil(Math.random() * 10)],
+	// 	couponCode: item.coupon,
+	// }))
 
-	const handleSpinFinish = (result: string) => {
-		const selectedSegment = segments.find(
-			(segment: TSegment) => segment.segmentText === result
-		)
-		if (selectedSegment) {
-			setCouponCode(selectedSegment.couponCode)
-		}
-
-		setIsDialogOpen(true)
-	}
-	const handleCopyClick = () => {
-		navigator.clipboard
-			.writeText(couponCode)
-			.then(() => {
-				toast.success("Coupon code copied success!")
-			})
-			.catch((err) => {
-				console.error("Failed to copy coupon", err)
-			})
-	}
-
-	const spinWheelProps: ISpinWheelProps = {
-		segments,
-		onFinished: handleSpinFinish,
-		primaryColor: "#32a852",
-		contrastColor: "white",
-		buttonText: "",
-		isOnlyOnce: true,
-		size: 290,
-		upDuration: Math.floor(Math.random() * (200 - 100 + 1)) + 100,
-		downDuration: Math.floor(Math.random() * (200 - 100 + 1)) + 600,
-		fontFamily: "Orbitron",
-		arrowLocation: "top",
-		showTextOnSpin: false,
-		isSpinSound: false,
-	}
+	// 	const handleSpinFinish = (result: string) => {
+	// 		const selectedSegment = segments.find(
+	// 			(segment: TSegment) => segment.segmentText === result
+	// 		)
+	// 		if (selectedSegment) {
+	// 			setCouponCode(selectedSegment.couponCode)
+	// 		}
+	//
+	// 		setIsDialogOpen(true)
+	// 	}
+	// 	const handleCopyClick = () => {
+	// 		navigator.clipboard
+	// 			.writeText(couponCode)
+	// 			.then(() => {
+	// 				toast.success("Coupon code copied success!")
+	// 			})
+	// 			.catch((err) => {
+	// 				console.error("Failed to copy coupon", err)
+	// 			})
+	// 	}
+	//
+	// 	const spinWheelProps: ISpinWheelProps = {
+	// 		segments,
+	// 		onFinished: handleSpinFinish,
+	// 		primaryColor: "#32a852",
+	// 		contrastColor: "white",
+	// 		buttonText: "",
+	// 		isOnlyOnce: true,
+	// 		size: 290,
+	// 		upDuration: Math.floor(Math.random() * (200 - 100 + 1)) + 100,
+	// 		downDuration: Math.floor(Math.random() * (200 - 100 + 1)) + 600,
+	// 		fontFamily: "Orbitron",
+	// 		arrowLocation: "top",
+	// 		showTextOnSpin: false,
+	// 		isSpinSound: false,
+	// 	}
 
 	return (
 		<div className="container mb-28">
@@ -90,9 +90,12 @@ const Discount = () => {
 				</div>
 				<div className="text-center space-y-5 mt-5">
 					<h2 className="md:text-4xl text-3xl font-orbitron font-bold mt-5 text-center">
-						Click the below button and get up to 25% discount.
+						Rent a bike and get up to 25% discount.
 					</h2>
-					<Dialog>
+					<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-6 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
+						Rent Now
+					</Button>
+					{/* <Dialog>
 						<DialogTrigger asChild>
 							<Button className="bg-accent-foreground rounded-none hover:text-white md:px-10 md:py-6 px-7 md:font-bold md:mt-0 mt-5 font-orbitron tracking-wider uppercase">
 								Wheel Spin Now
@@ -131,7 +134,7 @@ const Discount = () => {
 								</Dialog>
 							</h2>
 						</DialogContent>
-					</Dialog>
+					</Dialog> */}
 				</div>
 			</div>
 
